@@ -1,0 +1,19 @@
+# https://developers.cloudflare.com/workers/static-assets/headers
+# https://opennext.js.org/cloudflare/caching#static-assets-caching
+/_next/static/*
+  Cache-Control: public,max-age=31536000,immutable
+
+/_next/image*
+  Cache-Control: public,max-age=31536000,immutable
+
+/partners/*
+  Cache-Control: public,max-age=31536000,immutable
+
+/site-logo.svg
+  Cache-Control: public,max-age=31536000,immutable
+
+/saudi-emblem.svg
+  Cache-Control: public,max-age=31536000,immutable
+
+/saudi-emblem.png
+  Cache-Control: public,max-age=31536000,immutable

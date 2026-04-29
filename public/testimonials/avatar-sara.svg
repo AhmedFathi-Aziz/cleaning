@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="saraBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="76" fill="url(#saraBg)"/>
+  <text x="80" y="102" text-anchor="middle" fill="#ffffff" font-size="56" font-family="Tahoma,Arial,sans-serif" font-weight="700">3</text>
+</svg>

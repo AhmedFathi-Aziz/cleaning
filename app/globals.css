@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 16px;
+}
+
+.hydro-shadow {
+  box-shadow: 0 12px 40px rgba(0, 35, 111, 0.06);
+}
+
+.liquid-gradient {
+  background: linear-gradient(135deg, #00236f 0%, #1e3a8a 100%);
+}
+
+.partners-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: partners-marquee 42s linear infinite;
+}
+
+.partners-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 1.25rem;
+  padding-inline-end: 1.25rem;
+}
+
+.partners-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes partners-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

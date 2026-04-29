@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <rect width="900" height="600" fill="#006c35"/>
+  <g fill="#fff">
+    <text x="450" y="245" text-anchor="middle" font-family="Arial, sans-serif" font-size="62" font-weight="700">D' %DG %D' 'DDG E-E/ 13HD 'DDG</text>
+    <rect x="260" y="350" width="330" height="18" rx="9"/>
+    <rect x="560" y="325" width="120" height="20" rx="10" transform="rotate(18 560 325)"/>
+    <rect x="265" y="340" width="35" height="35" rx="6"/>
+  </g>
+</svg>
