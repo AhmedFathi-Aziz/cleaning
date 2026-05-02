@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ContactPageJsonLd } from "@/components/ContactPageJsonLd";
 import { SiteContact } from "@/components/SiteContact";
 import { brandEmail, brandNameAr, brandPhoneDisplay } from "@/lib/brand";
-import { heroImageUrl, siteUrl } from "@/lib/site";
+import { heroImageUrl } from "@/lib/site";
 
 const pageTitle = `تواصل مع ${brandNameAr} | هاتف وواتساب وحجز تنظيف في السعودية`;
 const pageDescription = `اتصلوا بـ ${brandNameAr} للحجز والاستفسار: ${brandPhoneDisplay}، بريد ${brandEmail}. تنظيف منازل ومكاتب، غسيل سجاد، تنظيف واجهات، ورش حشرات في الرياض وجميع أنحاء المملكة خلال أوقات العمل.`;

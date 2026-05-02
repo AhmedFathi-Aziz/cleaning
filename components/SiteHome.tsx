@@ -1,21 +1,17 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+import { CycleGallery } from "@/components/cycle-gallery";
 import { PartnersTrustHeading } from "@/components/PartnersTrustHeading";
+import { Icon } from "@/components/Icon";
 import { images } from "@/lib/assets";
 import { brandEmail, brandPhone, brandPhoneDisplay, brandWhatsapp } from "@/lib/brand";
-import { homePartners } from "@/lib/partners";
 import { featureArticles } from "@/lib/feature-articles";
+import { homePartners } from "@/lib/partners";
 import { getServiceArticle } from "@/lib/service-articles";
-import { Icon } from "@/components/Icon";
-
-const CycleGallery = dynamic(() => import("@/components/cycle-gallery").then((mod) => mod.CycleGallery), {
-  loading: () => <div className="h-60 rounded-2xl bg-surface-container-low" aria-hidden />,
-});
 
 const stats = [
   { value: 50000, label: "موقع تم تنظيفه", icon: "apartment" },

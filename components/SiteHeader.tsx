@@ -14,6 +14,7 @@ function navClass(active: boolean) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const path = pathname ?? "";
 
   return (
     <header
@@ -41,8 +42,8 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/"
-                className={navClass(pathname === "/")}
-                aria-current={pathname === "/" ? "page" : undefined}
+                className={navClass(path === "/")}
+                aria-current={path === "/" ? "page" : undefined}
               >
                 الرئيسية
               </Link>
@@ -50,8 +51,8 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/services"
-                className={navClass(pathname.startsWith("/services"))}
-                aria-current={pathname.startsWith("/services") ? "page" : undefined}
+                className={navClass(path.startsWith("/services"))}
+                aria-current={path.startsWith("/services") ? "page" : undefined}
               >
                 الخدمات
               </Link>
@@ -59,8 +60,8 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/about"
-                className={navClass(pathname.startsWith("/about"))}
-                aria-current={pathname.startsWith("/about") ? "page" : undefined}
+                className={navClass(path.startsWith("/about"))}
+                aria-current={path.startsWith("/about") ? "page" : undefined}
               >
                 من نحن
               </Link>
@@ -68,8 +69,8 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/blog"
-                className={navClass(pathname.startsWith("/blog"))}
-                aria-current={pathname.startsWith("/blog") ? "page" : undefined}
+                className={navClass(path.startsWith("/blog"))}
+                aria-current={path.startsWith("/blog") ? "page" : undefined}
               >
                 المدونة
               </Link>
@@ -77,8 +78,8 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/contact"
-                className={navClass(pathname === "/contact")}
-                aria-current={pathname === "/contact" ? "page" : undefined}
+                className={navClass(path === "/contact")}
+                aria-current={path === "/contact" ? "page" : undefined}
               >
                 اتصل بنا
               </Link>

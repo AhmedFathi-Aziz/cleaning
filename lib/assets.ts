@@ -4,8 +4,14 @@ export const images = {
     "https://lh3.googleusercontent.com/aida-public/AB6AXuDZzarQBnJkjYma7N-VjCwXGKcbcsRO7mcJX3NNXo1zVPLjDLE8RsVVAvGOYnL0-HWqlgh0KTcFeP6bNs8Rl9kWYrJRey-xccudtDBAOrI_3mMuJSDAB04LnH_b5rC-k9ziDwYfxPDwOGxfQ77LFrCiMh4G18H-ECbTo1-a3xkROq1Skrd6W8ZC7s30rCKt9yPBGbmMwCERMliFbSzG4DG2aXZFmr2UrD8rYuA1MFkzdJiCeYzcqFX85WRaXubQC8BfLaajwsNFlKoX",
   carpet:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCmVlQDGzt4kNR6_hExlctPBMY_QvBTHVJYnRtQmHBdLy1uJTFkQ6SvX0cFa6gL4KL7bFEGTGdaedeemcUPteiL1CxinEbEFklNzuTPQQ0zL7wvEGBa3H0EC4QidOiVVTp6TEj3ReHOF3TMTmR_vgPhWgvLH6zxaSZnIrLHoQDsTWj2W9VYjRFzJFglOsL0PWNsKDZiItM6Fy0XsLfkTPU7kaB3ZXX-CtFo3VYl-iHjhhwesr0LMkf1lyfqOx1OHMvjFQm7Zx5ZXEGL",
+  sofaCleaning:
+    "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=900",
+  waterTankCleaning:
+    "https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=900",
   facade:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAYwudxC08hJYsOz3UzZw5XRDUhmW0Vn0x_Qljj5_k-GBaoZpyuHSuH73kHVvadLGqYNI6HgZQGtHBCIiW1sV3PXvphDlxctBUnV0Sh31UZmKUGAiDlK3eKe2APliUijftWgJ06NpTUqUNtM3h_SKAfmq_nvZUqBqThnmdbACQ_TXrg1SYp4ZPSh8qVBWCkINt4xFkLpphp897Scem7YDmpnW0i_t9AL7C4o4jjqNzSj7_030mz50DCDw8IFhUAvrtpyrVdlmIFXkIe",
+  gardenCleaning:
+    "https://images.pexels.com/photos/413227/pexels-photo-413227.jpeg?auto=compress&cs=tinysrgb&w=900",
   servicesVilla:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuBs_tOO_6pFLtZt2ilk7ietjIzHceNll9Exn5DzGRJvC_GOcMWMDRVyXGPqiGli4OsEPLlCxr2mntlutel0FzlZPoiRRg4rfbDea_rWBeRcbeURzdSOQG-UMBHLkbfNGLt9YG7VwaHotpwuxgfzIT2Vqe0SXtjPWhOvi1vSSzjvbEAN2Q88EefOYIdaLaJQKNsztbJeMxqAC0dtVYxdEZmMENHwjc_g22FVA8lOcIfLTZkv18Co78LSxO7k4j8jioc4i5PsA84wKZjE",
   servicesMajlis:

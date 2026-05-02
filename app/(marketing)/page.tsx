@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
+import { HomeLatestPublishing } from "@/components/HomeLatestPublishing";
 import { SiteHome } from "@/components/SiteHome";
 import { brandNameAr } from "@/lib/brand";
+import { loadPosts } from "@/lib/post-store";
+import { staticNationalNewsArticles } from "@/lib/static-national-news";
 import { heroImageUrl, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -37,6 +40,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <SiteHome />;
+export default async function Home() {
+  const blogPosts = await loadPosts();
+
+  return (
+    <>
+      <SiteHome />
+      <HomeLatestPublishing newsArticles={staticNationalNewsArticles} blogPosts={blogPosts} />
+    </>
+  );
 }
