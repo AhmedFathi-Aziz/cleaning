@@ -1,7 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Icon } from "@/components/Icon";
-import { brandAddressAr, brandEmail, brandNameAr, brandNameEn, brandPhone } from "@/lib/brand";
+import {
+  brandAddressAr,
+  brandEmail,
+  brandLogoPath,
+  brandNameAr,
+  brandNameEn,
+  brandPhone,
+} from "@/lib/brand";
 
 export function SiteFooter() {
   return (
@@ -13,7 +21,21 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 text-right md:grid-cols-4">
         {/* min-h يحدّ فرق الارتفاع بين خط الاحتياط وCairo عند الالتفاف — يقلّل CLS في Lighthouse */}
         <div className="min-h-[11.5rem] space-y-6 md:min-h-0">
-          <div className="font-headline text-xl font-bold text-blue-900 dark:text-blue-100">{brandNameAr}</div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 hover:opacity-90"
+            aria-label="السعودية للتنظيف — الصفحة الرئيسية"
+          >
+            <Image
+              src={brandLogoPath}
+              alt=""
+              width={48}
+              height={48}
+              className="h-11 w-11 shrink-0 object-contain"
+              aria-hidden="true"
+            />
+            <span className="font-headline text-xl font-bold text-blue-900 dark:text-blue-100">{brandNameAr}</span>
+          </Link>
           <p className="min-h-[7.5rem] text-sm leading-relaxed tracking-normal text-slate-600 dark:text-slate-400 md:min-h-[6.5rem]">
             {brandNameAr} شركة تنظيف ومكافحة حشرات في الرياض؛ موسوعة أحياء ودليل آفات على الموقع، مع خدمة منظّمة
             ومواد مناسبة وفريق مدرّب واحترام المواعيد.

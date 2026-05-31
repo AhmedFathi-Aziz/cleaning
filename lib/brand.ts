@@ -9,8 +9,10 @@ export const brandAddressAr = "الرياض، المملكة العربية ال
 /** عرض موحّد في صفحة اتصل بنا وبيانات الهيكلة — يتوافق مع ساعات العمل في Schema */
 export const brandWorkingHoursAr =
   "يومياً من 8:00 صباحاً إلى 10:00 مساءً بتوقيت المملكة العربية السعودية";
-/** شعار WebP مضغوط (~128px) للهيدر والشهادات — الملف اسمه تاريخي */
+/** شعار WebP شفاف للهيدر والـ JSON-LD — يُحدَّث من `npm run brand:logo` */
 export const brandLogoPath = "/saudi-emblem-192.webp";
+/** نسخة أكبر للـ OG/schema عند الحاجة */
+export const brandLogoLargePath = "/saudi-emblem-512.webp";
 
 /** وصف الشركة بالعربية لـ JSON-LD ونتائج البحث عن العلامة التجارية */
 export const brandDescriptionAr =

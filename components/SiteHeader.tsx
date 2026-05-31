@@ -77,9 +77,9 @@ export function SiteHeader() {
               <Image
                 src={brandLogoPath}
                 alt=""
-                width={36}
-                height={36}
-                className="h-8 w-8 shrink-0 object-contain"
+                width={40}
+                height={40}
+                className="h-9 w-9 shrink-0 object-contain"
                 aria-hidden="true"
               />
               <span className="truncate">السعودية للتنظيف</span>
