@@ -5,8 +5,8 @@ import { SiteContact } from "@/components/SiteContact";
 import { brandEmail, brandNameAr, brandPhoneDisplay } from "@/lib/brand";
 import { heroImageUrl } from "@/lib/site";
 
-const pageTitle = `تواصل مع ${brandNameAr} | هاتف وواتساب وحجز تنظيف في السعودية`;
-const pageDescription = `اتصلوا بـ ${brandNameAr} للحجز والاستفسار: ${brandPhoneDisplay}، بريد ${brandEmail}. تنظيف منازل ومكاتب، غسيل سجاد، تنظيف واجهات، ورش حشرات في الرياض وجميع أنحاء المملكة خلال أوقات العمل.`;
+const pageTitle = `تواصل مع ${brandNameAr} | هاتف وواتساب وحجز تنظيف في الرياض`;
+const pageDescription = `اتصلوا بـ ${brandNameAr} للحجز والاستفسار: ${brandPhoneDisplay}، وبريد ${brandEmail}. تنظيف منازل ومكاتب، غسيل سجاد، تنظيف واجهات، ومكافحة حشرات في أحياء الرياض خلال أوقات العمل المعلنة.`;
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "رقم شركة تنظيف",
     "تنظيف مكاتب السعودية",
     "غسيل سجاد حجز",
-    "ورش حشرات استفسار",
+    "مكافحة حشرات استفسار",
   ],
   alternates: { canonical: "/contact" },
   openGraph: {

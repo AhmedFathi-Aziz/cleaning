@@ -1,7 +1,9 @@
-export type Neighborhood = {
-  name: string;
-  slug: string;
-};
+import {
+  neighborhoodLocalDetails,
+  type NeighborhoodLocalDetail,
+} from "./neighborhood-local-details";
+
+export type Neighborhood = { name: string; slug: string } & NeighborhoodLocalDetail;
 
 export type CityLocation = {
   name: string;
@@ -9,7 +11,15 @@ export type CityLocation = {
   neighborhoods: Neighborhood[];
 };
 
-export const locations: CityLocation[] = [
+type NeighborhoodSeed = { name: string; slug: string };
+
+type CitySeed = {
+  name: string;
+  slug: string;
+  neighborhoods: NeighborhoodSeed[];
+};
+
+const citiesSeed: CitySeed[] = [
   {
     name: "الرياض",
     slug: "riyadh",
@@ -22,6 +32,42 @@ export const locations: CityLocation[] = [
       { name: "حطين", slug: "hittin" },
       { name: "الملقا", slug: "al-malqa" },
       { name: "الروضة", slug: "al-rawdah" },
+      { name: "النخيل", slug: "al-nakheel" },
+      { name: "الرحمانية", slug: "al-rahmaniyah" },
+      { name: "الورود", slug: "al-wurud" },
+      { name: "المروج", slug: "al-murooj" },
+      { name: "الغدير", slug: "al-ghadir" },
+      { name: "السليمانية", slug: "al-sulaimaniyah" },
+      { name: "العزيزية", slug: "al-aziziyah" },
+      { name: "السويدي", slug: "al-suwaidi" },
+      { name: "الشفا", slug: "al-shifa" },
+      { name: "النسيم", slug: "al-naseem" },
+      { name: "المروة", slug: "al-marwah" },
+      { name: "الفلاح", slug: "al-falah" },
+      { name: "الحمراء", slug: "al-hamra" },
+      { name: "العريجاء", slug: "al-urayja" },
+      { name: "المنسية", slug: "al-munsiyah" },
+      { name: "القدس", slug: "al-quds" },
+      { name: "الورد", slug: "al-ward" },
+      { name: "المنار", slug: "al-manar" },
+      { name: "الفيحاء", slug: "al-fayha" },
+      { name: "الخليج", slug: "al-khaleej" },
+      { name: "النزهة", slug: "al-nuzha" },
+      { name: "الأمل", slug: "al-amal" },
+      { name: "السلام", slug: "al-salam" },
+      { name: "ظهرة لبن", slug: "dhahrat-laban" },
+      { name: "الشهداء", slug: "al-shuhada" },
+      { name: "المعيزيلة", slug: "al-maizilah" },
+      { name: "الملك فهد", slug: "king-fahd" },
+      { name: "الدرعية", slug: "al-diriyah" },
+      { name: "المصيف", slug: "al-masif" },
+      { name: "الوادي", slug: "al-wadi" },
+      { name: "الدوبية", slug: "al-dubiyah" },
+      { name: "عتيقة", slug: "utaiqah" },
+      { name: "البطحاء", slug: "al-batha" },
+      { name: "الصناعية", slug: "al-sinaiyah" },
+      { name: "مشرق", slug: "al-mashreq" },
+      { name: "طويق", slug: "tuwaiq" },
     ],
   },
   {
@@ -36,6 +82,7 @@ export const locations: CityLocation[] = [
       { name: "النهضة", slug: "al-nahdah" },
       { name: "الزهراء", slug: "al-zahra" },
       { name: "النزهة", slug: "al-nuzhah" },
+      { name: "أبحر", slug: "abhur" },
     ],
   },
   {
@@ -197,6 +244,20 @@ export const locations: CityLocation[] = [
     ],
   },
 ];
+
+function mergeNeighborhood(citySlug: string, seed: NeighborhoodSeed): Neighborhood {
+  const key = `${citySlug}/${seed.slug}`;
+  const detail = neighborhoodLocalDetails[key];
+  if (!detail) {
+    throw new Error(`Missing neighborhoodLocalDetails for "${key}"`);
+  }
+  return { ...seed, ...detail };
+}
+
+export const locations: CityLocation[] = citiesSeed.map((city) => ({
+  ...city,
+  neighborhoods: city.neighborhoods.map((n) => mergeNeighborhood(city.slug, n)),
+}));
 
 export function getCityBySlug(slug: string) {
   return locations.find((city) => city.slug === slug);

@@ -12,8 +12,8 @@ const jobs = [
   {
     file: "hero.webp",
     url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDYfBjP5Ey9nThryin2nuNlYWzHfEW7pRPs-4KAsXcLNbTIKZQ9AhRKBnao3bkjQHEGmQDG7wepLkyzuqDxCwLMw9ovIge2usCRh8VsFIu_8SChm4kG0oEcnrleLXDKvAqyy1124mFUYrudSJYhtRsjQGx3wcOuLHoWXcv2-5lWTgECLU0mivgAVnHbrLoypZ7GCYeZi9gwD9IIGunO7Ivqbblfibq8Tihgy6k6w_hWLi9i9b9o3hdOI1KT75gFAKpPyakMjSt9V74E=s2048",
-    width: 1600,
-    quality: 72,
+    width: 1400,
+    quality: 68,
   },
   {
     file: "deep-clean.webp",
@@ -24,14 +24,14 @@ const jobs = [
   {
     file: "carpet.webp",
     url: "https://lh3.googleusercontent.com/aida-public/AB6AXuCmVlQDGzt4kNR6_hExlctPBMY_QvBTHVJYnRtQmHBdLy1uJTFkQ6SvX0cFa6gL4KL7bFEGTGdaedeemcUPteiL1CxinEbEFklNzuTPQQ0zL7wvEGBa3H0EC4QidOiVVTp6TEj3ReHOF3TMTmR_vgPhWgvLH6zxaSZnIrLHoQDsTWj2W9VYjRFzJFglOsL0PWNsKDZiItM6Fy0XsLfkTPU7kaB3ZXX-CtFo3VYl-iHjhhwesr0LMkf1lyfqOx1OHMvjFQm7Zx5ZXEGL=s1600",
-    width: 800,
-    quality: 75,
+    width: 480,
+    quality: 52,
   },
   {
     file: "facade.webp",
     url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAYwudxC08hJYsOz3UzZw5XRDUhmW0Vn0x_Qljj5_k-GBaoZpyuHSuH73kHVvadLGqYNI6HgZQGtHBCIiW1sV3PXvphDlxctBUnV0Sh31UZmKUGAiDlK3eKe2APliUijftWgJ06NpTUqUNtM3h_SKAfmq_nvZUqBqThnmdbACQ_TXrg1SYp4ZPSh8qVBWCkINt4xFkLpphp897Scem7YDmpnW0i_t9AL7C4o4jjqNzSj7_030mz50DCDw8IFhUAvrtpyrVdlmIFXkIe=s1600",
-    width: 900,
-    quality: 75,
+    width: 520,
+    quality: 52,
   },
   {
     file: "services-villa.webp",

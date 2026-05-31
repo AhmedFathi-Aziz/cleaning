@@ -9,27 +9,21 @@ import {
   brandWhatsapp,
 } from "@/lib/brand";
 import type { ServiceArticle } from "@/lib/service-articles";
+import { absoluteUrl } from "@/lib/seo";
+import { buildServicePageJsonLdTocItems } from "@/lib/service-page-toc";
+import { MOCK_LOCAL_BUSINESS_AGGREGATE_RATING, SCHEMA_ORG_CONTEXT } from "@/lib/schema-org/constants";
+import { buildAreaServedWithLocalFocus, buildPrimarySaudiCitiesAreaServed } from "@/lib/schema-org/areas-served";
 import { heroImageUrl, siteUrl } from "@/lib/site";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
+import { locations } from "@/src/data/locations";
+
+import { StructuredDataScript } from "@/components/StructuredDataScript";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 function JsonLdScript({ graph }: { graph: JsonValue }) {
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
-    />
-  );
+  return <StructuredDataScript data={graph} />;
 }
-
-const serviceAggregateRating = {
-  "@type": "AggregateRating",
-  ratingValue: "5.0",
-  reviewCount: 128,
-  bestRating: "5",
-  worstRating: "1",
-};
 
 function placeSchema(city: CityLocation, neighborhood?: Neighborhood) {
   return {
@@ -44,13 +38,48 @@ function placeSchema(city: CityLocation, neighborhood?: Neighborhood) {
   };
 }
 
+function faqPageNode(
+  canonicalUrl: string,
+  faqs: ServiceArticle["faqs"],
+  fragment: string,
+): JsonValue | null {
+  if (!faqs?.length) return null;
+  return {
+    "@type": "FAQPage",
+    "@id": `${canonicalUrl}#${fragment}`,
+    url: canonicalUrl,
+    inLanguage: "ar-SA",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 const orgLogoId = `${siteUrl}/#logo`;
 const brandId = `${siteUrl}/#brand`;
 const organizationId = `${siteUrl}/#organization`;
 const localBusinessId = `${siteUrl}/#localbusiness`;
 
-/** يُحقن من `layout` — يتضمّن Brand + Organization + CleaningService (LocalBusiness) بالعربية لكل الصفحات */
-export function buildSiteJsonLd() {
+const KNOWS_ABOUT: string[] = [
+  "تنظيف منازل",
+  "تنظيف مكاتب",
+  "تنظيف عميق",
+  "غسيل سجاد وموكيت",
+  "تنظيف واجهات زجاجية",
+  "مكافحة حشرات",
+  "تعقيم خزانات مياه",
+];
+
+/**
+ * Sitewide graph: WebSite, navigation, Brand, Organization, LocalBusiness.
+ * LocalBusiness uses explicit KSA city coverage + mock AggregateRating (update in `lib/schema-org/constants.ts`).
+ */
+export function buildSiteJsonLd(): JsonValue {
   const postalAddress = {
     "@type": "PostalAddress",
     streetAddress: brandAddressAr,
@@ -59,7 +88,7 @@ export function buildSiteJsonLd() {
     addressCountry: "SA",
   };
 
-  const sharedContactPoints = [
+  const sharedContactPoints: JsonValue[] = [
     {
       "@type": "ContactPoint",
       telephone: brandPhone,
@@ -78,7 +107,7 @@ export function buildSiteJsonLd() {
     },
   ];
 
-  const openingHoursSpecification = [
+  const openingHoursSpecification: JsonValue[] = [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -87,15 +116,10 @@ export function buildSiteJsonLd() {
     },
   ];
 
-  const areaServedMain = [
-    { "@type": "Country", name: "المملكة العربية السعودية" },
-    { "@type": "City", name: "الرياض" },
-    { "@type": "City", name: "جدة" },
-    { "@type": "City", name: "الدمام" },
-  ];
+  const areaServed = buildPrimarySaudiCitiesAreaServed() as unknown as JsonValue[];
 
   return {
-    "@context": "https://schema.org",
+    "@context": SCHEMA_ORG_CONTEXT,
     "@graph": [
       {
         "@type": "WebSite",
@@ -103,25 +127,34 @@ export function buildSiteJsonLd() {
         url: `${siteUrl}/`,
         name: brandNameAr,
         alternateName: brandNameEn,
+        description: brandDescriptionAr,
         inLanguage: "ar-SA",
         publisher: { "@id": organizationId },
-        potentialAction: {
-          "@type": "SearchAction",
-          target: `${siteUrl}/services?search={search_term_string}`,
-          "query-input": "required name=search_term_string",
-        },
       },
       {
         "@type": "SiteNavigationElement",
         "@id": `${siteUrl}/#main-navigation`,
-        name: ["الرئيسية", "الخدمات", "من نحن", "المدونة", "اتصل بنا", "مناطق التغطية"],
+        name: [
+          "الرئيسية",
+          "الخدمات",
+          "تقدير السعر",
+          "مناطق الخدمة",
+          "من نحن",
+          "المدونة",
+          "الأخبار الوطنية",
+          "الوظائف",
+          "اتصل بنا",
+        ],
         url: [
           `${siteUrl}/`,
           `${siteUrl}/services`,
+          `${siteUrl}/estimate`,
+          `${siteUrl}/areas`,
           `${siteUrl}/about`,
           `${siteUrl}/blog`,
+          `${siteUrl}/news`,
+          `${siteUrl}/careers`,
           `${siteUrl}/contact`,
-          `${siteUrl}/areas`,
         ],
       },
       {
@@ -129,8 +162,8 @@ export function buildSiteJsonLd() {
         "@id": orgLogoId,
         url: `${siteUrl}${brandLogoPath}`,
         contentUrl: `${siteUrl}${brandLogoPath}`,
-        width: 512,
-        height: 512,
+        width: 128,
+        height: 128,
         caption: `${brandNameAr} — الشعار`,
       },
       {
@@ -155,10 +188,11 @@ export function buildSiteJsonLd() {
         brand: { "@id": brandId },
         email: brandEmail,
         contactPoint: sharedContactPoints,
+        knowsAbout: KNOWS_ABOUT,
         sameAs: [],
       },
       {
-        "@type": "CleaningService",
+        "@type": "LocalBusiness",
         "@id": localBusinessId,
         name: brandNameAr,
         alternateName: brandNameEn,
@@ -169,12 +203,12 @@ export function buildSiteJsonLd() {
         image: heroImageUrl,
         logo: { "@id": orgLogoId },
         priceRange: "$$",
-        aggregateRating: serviceAggregateRating,
+        aggregateRating: MOCK_LOCAL_BUSINESS_AGGREGATE_RATING,
         parentOrganization: { "@id": organizationId },
         address: postalAddress,
         contactPoint: sharedContactPoints,
         openingHoursSpecification,
-        areaServed: areaServedMain,
+        areaServed,
       },
     ],
   };
@@ -183,39 +217,62 @@ export function buildSiteJsonLd() {
 export function ServicePageJsonLd({ service }: { service: ServiceArticle }) {
   const canonicalUrl = `${siteUrl}/services/${service.slug}`;
 
+  const tocItems = buildServicePageJsonLdTocItems(service, canonicalUrl) as unknown as JsonValue[];
+
+  const graphNodes: JsonValue[] = [
+    {
+      "@type": "Service",
+      "@id": `${canonicalUrl}#service`,
+      name: service.title,
+      description: service.excerpt,
+      image: absoluteUrl(service.image),
+      provider: { "@id": `${siteUrl}/#localbusiness` },
+      serviceType: service.shortTitle,
+      inLanguage: "ar-SA",
+      areaServed: buildPrimarySaudiCitiesAreaServed() as unknown as JsonValue[],
+      url: canonicalUrl,
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "الرئيسية",
+          item: siteUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "الخدمات",
+          item: `${siteUrl}/services`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: service.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${canonicalUrl}#toc`,
+      name: "محتوى الصفحة",
+      numberOfItems: tocItems.length,
+      itemListElement: tocItems,
+    },
+  ];
+
+  const faqNode = faqPageNode(canonicalUrl, service.faqs, "faq");
+  if (faqNode) graphNodes.push(faqNode);
+
   return (
     <JsonLdScript
       graph={{
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Service",
-            "@id": `${canonicalUrl}#service`,
-            name: service.title,
-            description: service.excerpt,
-            image: service.image,
-            provider: { "@id": `${siteUrl}/#localbusiness` },
-            serviceType: service.shortTitle,
-            aggregateRating: serviceAggregateRating,
-            areaServed: {
-              "@type": "Country",
-              name: "المملكة العربية السعودية",
-            },
-            url: canonicalUrl,
-          },
-          {
-            "@type": "FAQPage",
-            "@id": `${canonicalUrl}#faq`,
-            mainEntity: service.faqs.map((faq) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })),
-          },
-        ],
+        "@context": SCHEMA_ORG_CONTEXT,
+        "@graph": graphNodes,
       }}
     />
   );
@@ -231,37 +288,126 @@ export function ServiceLocationJsonLd({
   neighborhood: Neighborhood;
 }) {
   const canonicalUrl = `${siteUrl}/services/${service.slug}/${city.slug}/${neighborhood.slug}`;
-  const localBusinessId = `${canonicalUrl}#localbusiness`;
+  const localBusinessNodeId = `${canonicalUrl}#localbusiness`;
+  const serviceDescription = `خدمة ${service.shortTitle} في حي ${neighborhood.name} بمدينة ${city.name}. ${neighborhood.nearbyLandmarksAr}`;
+
+  const graphNodes: JsonValue[] = [
+    {
+      "@type": "LocalBusiness",
+      "@id": localBusinessNodeId,
+      name: `${brandNameAr} - ${service.shortTitle} ${neighborhood.name} ${city.name}`,
+      image: absoluteUrl(service.image),
+      url: canonicalUrl,
+      telephone: brandPhone,
+      email: brandEmail,
+      priceRange: "$$",
+      parentOrganization: { "@id": `${siteUrl}/#organization` },
+      address: placeSchema(city, neighborhood).address,
+      areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
+      description: serviceDescription,
+    },
+    {
+      "@type": "Service",
+      "@id": `${canonicalUrl}#service`,
+      name: `${service.shortTitle} في حي ${neighborhood.name} ${city.name}`,
+      description: serviceDescription,
+      provider: { "@id": localBusinessNodeId },
+      serviceType: service.shortTitle,
+      areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
+      url: canonicalUrl,
+    },
+  ];
+
+  const faqNode = faqPageNode(canonicalUrl, service.faqs, "faq");
+  if (faqNode) graphNodes.push(faqNode);
 
   return (
     <JsonLdScript
       graph={{
-        "@context": "https://schema.org",
+        "@context": SCHEMA_ORG_CONTEXT,
+        "@graph": graphNodes,
+      }}
+    />
+  );
+}
+
+/**
+ * JSON-LD لصفحات `/cleaning/[city]/[district]` — تركيز على «تنظيف منازل وشقق» مع canonical منفصل عن صفحة الحي العامة.
+ */
+export function CleaningProgrammaticDistrictJsonLd({
+  city,
+  neighborhood,
+  cleaningPath,
+}: {
+  city: CityLocation;
+  neighborhood: Neighborhood;
+  /** مثل `/cleaning/jeddah/al-safa` */
+  cleaningPath: string;
+}) {
+  const canonicalUrl = `${siteUrl}${cleaningPath}`;
+  const cityAreasUrl = `${siteUrl}/areas#city-${city.slug}`;
+  const cleaningHubUrl = `${siteUrl}/cleaning`;
+  const localBusinessNodeId = `${canonicalUrl}#localbusiness`;
+  const primaryDescription = `تنظيف منازل وشقق في حي ${neighborhood.name} بمدينة ${city.name}. ${neighborhood.nearbyLandmarksAr}`;
+
+  return (
+    <JsonLdScript
+      graph={{
+        "@context": SCHEMA_ORG_CONTEXT,
         "@graph": [
           {
             "@type": "LocalBusiness",
-            "@id": localBusinessId,
-            name: `${brandNameAr} - ${service.shortTitle} ${neighborhood.name} ${city.name}`,
-            image: service.image,
+            "@id": localBusinessNodeId,
+            name: `${brandNameAr} — تنظيف منازل ${neighborhood.name} ${city.name}`,
+            image: heroImageUrl,
             url: canonicalUrl,
             telephone: brandPhone,
             email: brandEmail,
             priceRange: "$$",
             parentOrganization: { "@id": `${siteUrl}/#organization` },
-            aggregateRating: serviceAggregateRating,
             address: placeSchema(city, neighborhood).address,
-            areaServed: placeSchema(city, neighborhood),
+            areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
+            description: primaryDescription,
           },
           {
             "@type": "Service",
             "@id": `${canonicalUrl}#service`,
-            name: `${service.shortTitle} في حي ${neighborhood.name} ${city.name}`,
-            description: `خدمة ${service.shortTitle} في حي ${neighborhood.name} بمدينة ${city.name}.`,
-            provider: { "@id": localBusinessId },
-            serviceType: service.shortTitle,
-            aggregateRating: serviceAggregateRating,
-            areaServed: placeSchema(city, neighborhood),
+            name: `تنظيف منازل وشقق في حي ${neighborhood.name} ${city.name}`,
+            description: primaryDescription,
+            provider: { "@id": localBusinessNodeId },
+            serviceType: "تنظيف منازل",
+            areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
             url: canonicalUrl,
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${canonicalUrl}#breadcrumb`,
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "الرئيسية",
+                item: `${siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "تنظيف منازل حسب الحي",
+                item: cleaningHubUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: city.name,
+                item: cityAreasUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 4,
+                name: `حي ${neighborhood.name}`,
+                item: canonicalUrl,
+              },
+            ],
           },
         ],
       }}
@@ -277,16 +423,18 @@ export function NeighborhoodPageJsonLd({
   neighborhood: Neighborhood;
 }) {
   const canonicalUrl = `${siteUrl}/${city.slug}/${neighborhood.slug}`;
-  const localBusinessId = `${canonicalUrl}#localbusiness`;
+  const cityAreasUrl = `${siteUrl}/areas#city-${city.slug}`;
+  const localBusinessNodeId = `${canonicalUrl}#localbusiness`;
+  const primaryDescription = `خدمات تنظيف عامة للمنازل والمنشآت في حي ${neighborhood.name} بمدينة ${city.name}. ${neighborhood.nearbyLandmarksAr}`;
 
   return (
     <JsonLdScript
       graph={{
-        "@context": "https://schema.org",
+        "@context": SCHEMA_ORG_CONTEXT,
         "@graph": [
           {
             "@type": "LocalBusiness",
-            "@id": localBusinessId,
+            "@id": localBusinessNodeId,
             name: `${brandNameAr} - ${neighborhood.name} ${city.name}`,
             image: heroImageUrl,
             url: canonicalUrl,
@@ -295,20 +443,78 @@ export function NeighborhoodPageJsonLd({
             priceRange: "$$",
             parentOrganization: { "@id": `${siteUrl}/#organization` },
             address: placeSchema(city, neighborhood).address,
-            areaServed: placeSchema(city, neighborhood),
+            areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
+            description: primaryDescription,
           },
           {
             "@type": "Service",
             "@id": `${canonicalUrl}#service`,
             name: `خدمات التنظيف العامة في حي ${neighborhood.name} ${city.name}`,
-            description: `خدمات تنظيف عامة للمنازل والمنشآت في حي ${neighborhood.name} بمدينة ${city.name}.`,
-            provider: { "@id": localBusinessId },
+            description: primaryDescription,
+            provider: { "@id": localBusinessNodeId },
             serviceType: "خدمات التنظيف العامة",
-            areaServed: placeSchema(city, neighborhood),
+            areaServed: buildAreaServedWithLocalFocus(city, neighborhood) as unknown as JsonValue[],
             url: canonicalUrl,
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${canonicalUrl}#breadcrumb`,
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "الرئيسية",
+                item: `${siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: city.name,
+                item: cityAreasUrl,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: neighborhood.name,
+                item: canonicalUrl,
+              },
+            ],
           },
         ],
       }}
     />
   );
+}
+
+/** ItemList JSON-LD for `/areas` geographic coverage */
+export function AreasCoverageJsonLd() {
+  const itemListElement: JsonValue[] = [];
+  let position = 0;
+  for (const city of locations) {
+    for (const n of city.neighborhoods) {
+      position += 1;
+      const url = `${siteUrl}/${city.slug}/${n.slug}`;
+      itemListElement.push({
+        "@type": "ListItem",
+        position,
+        item: {
+          "@type": "WebPage",
+          "@id": url,
+          url,
+          name: `خدمات تنظيف حي ${n.name} ${city.name}`,
+        },
+      });
+    }
+  }
+
+  const graph: JsonValue = {
+    "@context": SCHEMA_ORG_CONTEXT,
+    "@type": "ItemList",
+    name: "مناطق تغطية خدمات التنظيف في السعودية",
+    description: "صفحات الأحياء المدعومة مع روابط إلى المحتوى المحلي.",
+    numberOfItems: itemListElement.length,
+    itemListElement,
+  };
+
+  return <JsonLdScript graph={graph} />;
 }

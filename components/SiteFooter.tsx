@@ -7,15 +7,16 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="mt-auto min-h-[420px] w-full bg-slate-50 px-8 py-16 [contain-intrinsic-size:420px] [content-visibility:auto] dark:bg-slate-950"
+      className="w-full shrink-0 bg-slate-50 px-4 py-12 dark:bg-slate-950 sm:px-6 sm:py-14 md:px-8 md:py-16"
       role="contentinfo"
     >
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 text-right md:grid-cols-4">
-        <div className="space-y-6">
+        {/* min-h يحدّ فرق الارتفاع بين خط الاحتياط وCairo عند الالتفاف — يقلّل CLS في Lighthouse */}
+        <div className="min-h-[11.5rem] space-y-6 md:min-h-0">
           <div className="font-headline text-xl font-bold text-blue-900 dark:text-blue-100">{brandNameAr}</div>
-          <p className="text-sm leading-relaxed tracking-normal text-slate-600 dark:text-slate-400">
-            {brandNameAr} شركة تنظيف في المملكة العربية السعودية؛ نسعى لتقديم أفضل الخدمات بأحدث الأساليب وأعلى
-            معايير الأمان.
+          <p className="min-h-[7.5rem] text-sm leading-relaxed tracking-normal text-slate-600 dark:text-slate-400 md:min-h-[6.5rem]">
+            {brandNameAr} شركة تنظيف ومكافحة حشرات في الرياض؛ موسوعة أحياء ودليل آفات على الموقع، مع خدمة منظّمة
+            ومواد مناسبة وفريق مدرّب واحترام المواعيد.
           </p>
         </div>
         <nav className="space-y-6" aria-label="روابط سريعة">
@@ -23,7 +24,7 @@ export function SiteFooter() {
           <ul className="space-y-4">
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/"
               >
                 الرئيسية
@@ -31,7 +32,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/services"
               >
                 الخدمات
@@ -39,7 +40,31 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/guides/pest"
+              >
+                موسوعة الحشرات
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/cleaning"
+              >
+                أحياء الرياض
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/estimate"
+              >
+                حاسبة تقدير السعر
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/about"
               >
                 من نحن
@@ -47,7 +72,7 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/blog"
               >
                 المدونة
@@ -55,15 +80,23 @@ export function SiteFooter() {
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
-                href="/admin"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/news"
               >
-                لوحة المحرر
+                الأخبار الوطنية
               </Link>
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/careers"
+              >
+                الوظائف
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/contact"
               >
                 اتصل بنا
@@ -76,23 +109,23 @@ export function SiteFooter() {
           <ul className="space-y-4">
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
-                href="#"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/privacy"
               >
                 سياسة الخصوصية
               </Link>
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
-                href="#"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/terms"
               >
                 شروط الاستخدام
               </Link>
             </li>
             <li>
               <Link
-                className="block min-h-6 text-slate-600 transition-transform duration-200 hover:-translate-x-1 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/areas"
               >
                 مناطق التغطية
@@ -108,28 +141,28 @@ export function SiteFooter() {
               {brandEmail}
             </a>
           </p>
-          <div className="flex justify-end gap-4 text-blue-900" aria-label="وسائل التواصل">
+          <div className="flex justify-end gap-3 text-blue-900" aria-label="وسائل التواصل">
             <a
               href={`tel:${brandPhone}`}
-              className="cursor-pointer transition-transform hover:scale-110"
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-transparent text-blue-900 transition-colors hover:border-blue-900/15 hover:bg-blue-900/5"
               aria-label="اتصل بنا الآن عبر الهاتف"
             >
               <Icon name="phone_in_talk" className="text-xl" />
             </a>
             <a
               href={`mailto:${brandEmail}`}
-              className="cursor-pointer transition-transform hover:scale-110"
+              className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border border-transparent text-blue-900 transition-colors hover:border-blue-900/15 hover:bg-blue-900/5"
               aria-label="راسلنا عبر البريد الإلكتروني"
             >
               <Icon name="mail" className="text-xl" />
             </a>
           </div>
         </div>
-      </div>
-      <div className="mx-auto mt-16 max-w-7xl border-t border-slate-200 pt-8 text-center md:text-right dark:border-slate-800">
-        <p className="text-sm text-slate-500">
-          © 2026 {brandNameAr} — {brandNameEn}. شركة تنظيف مرخّصة في المملكة العربية السعودية.
-        </p>
+        <div className="mt-16 border-t border-slate-200 pt-8 text-center md:col-span-4 md:text-right dark:border-slate-800">
+          <p className="text-sm text-slate-500">
+            © 2026 {brandNameAr} — {brandNameEn}. تنظيف ومكافحة حشرات في الرياض.
+          </p>
+        </div>
       </div>
     </footer>
   );

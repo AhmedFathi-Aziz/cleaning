@@ -1,52 +1,68 @@
 import type { Metadata } from "next";
 
+import { HomeFaqSection } from "@/components/HomeFaqSection";
 import { HomeLatestPublishing } from "@/components/HomeLatestPublishing";
+import { HomeNationalNewsSection } from "@/components/HomeNationalNewsSection";
+import { HomeServiceAreasTeaser } from "@/components/HomeServiceAreasTeaser";
+import { HomeUsefulGuide } from "@/components/HomeUsefulGuide";
 import { SiteHome } from "@/components/SiteHome";
 import { brandNameAr } from "@/lib/brand";
+import { loadNationalNews } from "@/lib/national-news-store";
 import { loadPosts } from "@/lib/post-store";
-import { staticNationalNewsArticles } from "@/lib/static-national-news";
-import { heroImageUrl, siteUrl } from "@/lib/site";
+import { heroImageUrl, ogImageHeight, ogImageWidth, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "شركة تنظيف ورش حشرات في السعودية",
+  title: "شركة تنظيف منازل ومكافحة حشرات في الرياض",
   description:
-    "خدمات تنظيف ورش حشرات في المملكة العربية السعودية: تنظيف منازل، تنظيف مكاتب، تنظيف عميق، غسيل سجاد، تنظيف واجهات ومكافحة حشرات بمواد آمنة وفريق مدرب.",
+    "تنظيف منازل ومكاتب في الرياض: تنظيف عميق، غسيل سجاد وموكيت، تنظيف واجهات، ومكافحة حشرات. موسوعة أحياء ودليل حشرات وأسئلة شائعة — للحجز والاستفسار.",
   keywords: [
-    "شركة تنظيف في السعودية",
-    "خدمات تنظيف",
-    "تنظيف منازل",
-    "تنظيف مكاتب",
-    "رش حشرات",
-    "مكافحة حشرات",
-    "غسيل سجاد",
-    "تنظيف واجهات",
+    "شركة تنظيف الرياض",
+    "مكافحة حشرات الرياض",
+    "رش حشرات الرياض",
+    "تنظيف منازل الرياض",
+    "تنظيف مكاتب الرياض",
+    "غسيل سجاد الرياض",
+    "تنظيف واجهات الرياض",
+    "تنظيف عميق الرياض",
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    title: "السعودية للتنظيف | خدمات تنظيف ورش حشرات في المملكة",
+    title: "السعودية للتنظيف | تنظيف منازل ومكافحة حشرات في الرياض",
     description:
-      "احجز خدمات تنظيف احترافية ورش حشرات للمنازل والمنشآت في السعودية مع فريق مدرب ومواد آمنة.",
+      "احجز تنظيفاً عميقاً أو غسيل سجاد أو مكافحة حشرات في الرياض مع خطة واضحة قبل التنفيذ وفريق يغطي أحياء العاصمة.",
     url: siteUrl,
     type: "website",
     locale: "ar_SA",
     siteName: brandNameAr,
-    images: [{ url: heroImageUrl, alt: "خدمات تنظيف احترافية في السعودية" }],
+    images: [
+      {
+        url: heroImageUrl,
+        width: ogImageWidth,
+        height: ogImageHeight,
+        alt: "خدمات تنظيف احترافية في السعودية",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "شركة تنظيف ورش حشرات في السعودية",
-    description: "تنظيف منازل ومكاتب، رش حشرات، غسيل سجاد وتنظيف واجهات في المملكة.",
+    title: "شركة تنظيف منازل ومكافحة حشرات في الرياض",
+    description: "تنظيف منازل ومكاتب، غسيل سجاد، تنظيف واجهات، ومكافحة حشرات في أحياء الرياض.",
     images: [heroImageUrl],
   },
 };
 
-export default async function Home() {
-  const blogPosts = await loadPosts();
+export default function Home() {
+  const blogPosts = loadPosts();
+  const newsArticles = loadNationalNews();
 
   return (
     <>
       <SiteHome />
-      <HomeLatestPublishing newsArticles={staticNationalNewsArticles} blogPosts={blogPosts} />
+      <HomeUsefulGuide />
+      <HomeNationalNewsSection articles={newsArticles} />
+      <HomeLatestPublishing newsArticles={[]} blogPosts={blogPosts} />
+      <HomeFaqSection />
+      <HomeServiceAreasTeaser />
     </>
   );
 }

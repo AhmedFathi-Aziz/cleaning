@@ -1,3 +1,5 @@
+import { riyadhNeighborhoodDetails } from "./riyadh-neighborhood-details";
+
 /**
  * محتوى مرجعي فريد لكل حي (مسافة زمنية تقريبية + معالم/سياق محلي)
  * لتقليل تشابه الصفحات البرمجية وتحسين الإشارات لجودة المحتوى.
@@ -90,6 +92,11 @@ export const neighborhoodLocalDetails: Record<string, NeighborhoodLocalDetail> =
     approxDriveMinutesFromTeamStaging: 18,
     nearbyLandmarksAr:
       "تنوّع بين عمائر قديمة ومجددة؛ السلالم المشتركة والمواقف تحت الأرض تحتاج ضغطاً وممسحة دورية لمنع تراكم الرطوبة والروائح.",
+  },
+  "jeddah/abhur": {
+    approxDriveMinutesFromTeamStaging: 22,
+    nearbyLandmarksAr:
+      "منطقة ساحلية ومجمعات سكنية فاخرة قرب البحر؛ تكرّر طلبات تنظيف الشرفات والواجهات الزجاجية وإزالة أثر الرطوبة والملح بعد الرياح.",
   },
   // الدمام
   "dammam/al-shati": {
@@ -504,4 +511,5 @@ export const neighborhoodLocalDetails: Record<string, NeighborhoodLocalDetail> =
     nearbyLandmarksAr:
       "شوارع متفرعة؛ المنازل ذات المدخل الخلفي للمطبخ تناسب إخراج أكياس النفايات بسرعة أثناء التنظيف العميق.",
   },
+  ...riyadhNeighborhoodDetails,
 };

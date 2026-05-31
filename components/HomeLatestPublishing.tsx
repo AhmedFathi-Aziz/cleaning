@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
 import { Icon } from "@/components/Icon";
 import type { BlogPost } from "@/lib/post-types";
 import type { NationalNewsArticle } from "@/lib/national-news-types";
@@ -15,15 +16,6 @@ function blogCoverSrc(post: BlogPost): string | null {
   if (post.coverImage?.trim()) return post.coverImage.trim();
   if (post.coverKey) return `/api/media/${encodeURIComponent(post.coverKey)}`;
   return null;
-}
-
-/** لون تدرّج ثابت من slug لتجنّب وميض التخطيط */
-function gradientFromSlug(slug: string): string {
-  let h = 216;
-  for (let i = 0; i < slug.length; i += 1) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
-  const hue = h % 360;
-  const hue2 = (hue + 48) % 360;
-  return `linear-gradient(135deg, hsl(${hue} 42% 26%) 0%, hsl(${hue2} 48% 16%) 100%)`;
 }
 
 type Props = {
@@ -42,7 +34,7 @@ function BlogCoverImage({ post, title }: { post: BlogPost; title: string }) {
       width={720}
       height={405}
       className="absolute inset-0 h-full w-full object-cover"
-      sizes="(max-width: 768px) 92vw, (max-width: 1200px) 44vw, 520px"
+      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 360px"
       loading="lazy"
       unoptimized={!src.startsWith("/")}
     />
@@ -65,22 +57,15 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
       <div className="mx-auto max-w-7xl text-right">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-8">
           <div>
-            <p className="mb-2 text-sm font-extrabold text-secondary">مجلة ومعرض أخبار</p>
+            <p className="mb-2 text-sm font-extrabold text-secondary">مدونة النصائح</p>
             <h2 id="latest-publishing-heading" className="font-headline text-2xl font-extrabold text-primary md:text-4xl">
-              آخر ما نشرناه
+              آخر مقالات المدونة
             </h2>
             <p className="mt-3 max-w-2xl text-sm font-medium leading-8 text-on-surface-variant md:text-base">
-              موضوعات مختارة من المدونة والأخبار الوطنية — تحديث مستمر وروابط واضحة لكل مقال.
+              نصائح عملية حول التنظيف ومكافحة الحشرات — مع روابط مباشرة لكل مقال.
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap justify-end gap-3">
-            <Link
-              href="/news"
-              className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-5 py-2.5 text-sm font-bold text-primary shadow-sm transition hover:border-primary/35 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800"
-            >
-              كل الأخبار الوطنية
-              <Icon name="arrow_back" className="text-lg" />
-            </Link>
             <Link
               href="/blog"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-white shadow-md transition hover:opacity-95"
@@ -91,7 +76,7 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
           </div>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="mt-12 flex flex-col gap-12 lg:gap-16">
           {news.length > 0 ? (
             <div>
               <h3 className="mb-6 flex items-center gap-2 font-headline text-lg font-extrabold text-primary md:text-xl">
@@ -100,23 +85,19 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                 </span>
                 أخبار وطنية
               </h3>
-              <ul className="flex flex-col gap-6">
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {news.map((item) => (
-                  <li key={`home-news-${item.slug}`}>
-                    <article className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(30,58,138,0.06)] transition hover:border-primary/25 hover:shadow-[0_18px_50px_rgba(30,58,138,0.1)] dark:border-slate-800 dark:bg-slate-900">
-                      <Link href={`/news/${encodeURIComponent(item.slug)}`} className="group flex flex-col sm:flex-row sm:items-stretch">
-                        <div
-                          className="relative aspect-[16/10] w-full shrink-0 overflow-hidden sm:w-[min(42%,240px)] sm:min-h-[200px] sm:max-w-[240px]"
-                          aria-hidden
-                        >
-                          <div
-                            className="absolute inset-0 flex items-center justify-center"
-                            style={{ background: gradientFromSlug(item.slug) }}
-                          >
-                            <Icon name="newspaper" className="text-5xl text-white/35 md:text-6xl" />
-                          </div>
+                  <li key={`home-news-${item.slug}`} className="min-w-0">
+                    <article className="flex h-full overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(30,58,138,0.06)] transition hover:border-primary/25 hover:shadow-[0_18px_50px_rgba(30,58,138,0.1)] dark:border-slate-800 dark:bg-slate-900">
+                      <Link href={`/news/${encodeURIComponent(item.slug)}`} className="group flex h-full min-h-[280px] flex-col sm:min-h-0">
+                        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden" aria-hidden>
+                          <BlogCoverPlaceholder
+                            slug={item.slug}
+                            icon="newspaper"
+                            className="absolute inset-0 size-full"
+                          />
                         </div>
-                        <div className="flex min-h-[200px] min-w-0 flex-1 flex-col justify-center p-6 sm:p-7">
+                        <div className="flex min-h-[180px] flex-1 flex-col justify-center p-5 sm:p-6">
                           <time className="text-xs font-semibold text-secondary" dateTime={item.publishedAt}>
                             {new Date(item.publishedAt).toLocaleDateString("ar-SA", {
                               year: "numeric",
@@ -151,29 +132,25 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                 </span>
                 مدونة النصائح والتنظيف
               </h3>
-              <ul className="flex flex-col gap-6">
+              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {blogs.map((post) => {
                   const hasCover = Boolean(blogCoverSrc(post));
                   return (
-                    <li key={`home-blog-${post.slug}`}>
-                      <article className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(30,58,138,0.06)] transition hover:border-primary/25 hover:shadow-[0_18px_50px_rgba(30,58,138,0.1)] dark:border-slate-800 dark:bg-slate-900">
-                        <Link href={`/blog/${encodeURIComponent(post.slug)}`} className="group flex flex-col sm:flex-row sm:items-stretch">
-                          <div
-                            className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-slate-100 sm:w-[min(42%,240px)] sm:min-h-[200px] sm:max-w-[240px] dark:bg-slate-800"
-                          >
+                    <li key={`home-blog-${post.slug}`} className="min-w-0">
+                      <article className="flex h-full overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-[0_12px_40px_rgba(30,58,138,0.06)] transition hover:border-primary/25 hover:shadow-[0_18px_50px_rgba(30,58,138,0.1)] dark:border-slate-800 dark:bg-slate-900">
+                        <Link href={`/blog/${encodeURIComponent(post.slug)}`} className="group flex h-full min-h-[280px] flex-col sm:min-h-0">
+                          <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-800">
                             {hasCover ? (
                               <BlogCoverImage post={post} title={post.title} />
                             ) : (
-                              <div
-                                className="absolute inset-0 flex items-center justify-center"
-                                style={{ background: gradientFromSlug(post.slug) }}
-                                aria-hidden
-                              >
-                                <Icon name="shield_person" className="text-5xl text-white/35 md:text-6xl" />
-                              </div>
+                              <BlogCoverPlaceholder
+                                slug={post.slug}
+                                icon="shield_person"
+                                className="absolute inset-0 size-full"
+                              />
                             )}
                           </div>
-                          <div className="flex min-h-[200px] min-w-0 flex-1 flex-col justify-center p-6 sm:p-7">
+                          <div className="flex min-h-[180px] flex-1 flex-col justify-center p-5 sm:p-6">
                             <time className="text-xs font-semibold text-secondary" dateTime={post.publishedAt}>
                               {new Date(post.publishedAt).toLocaleDateString("ar-SA", {
                                 year: "numeric",

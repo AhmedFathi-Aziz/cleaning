@@ -3,7 +3,7 @@
 import { Icon } from "@/components/Icon";
 
 const stats = [
-  { value: "50,000+", label: "موقع تم تنظيفه", icon: "apartment" },
+  { value: "50,000+", label: "زيارة تنظيف مكتملة", icon: "apartment" },
   { value: "15+", label: "عاماً من الخبرة", icon: "calendar_month" },
   { value: "500+", label: "موظف محترف", icon: "engineering" },
   { value: "10,000+", label: "عميل سعيد", icon: "sentiment_satisfied" },

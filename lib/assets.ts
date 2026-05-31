@@ -1,15 +1,19 @@
+/**
+ * صور مضغوطة محلياً (`npm run images:build`) — أخف من روابط googleusercontent وتُحسّن LCP.
+ *
+ * تسمية الملفات (SEO صور): تجنّب أسماء الكاميرا مثل `IMG_1234.jpg` أو `DSC0001.jpg`.
+ * فضّل أسماء وصفية قصيرة: `hero.webp`، `deep-clean-living-room.webp`، `facade-glass-jeddah.webp`.
+ * للتحقق من المجلد: `npm run images:check-seo`. استبدل روابط الستوك التكرارية بصور حقيقية من الميدان عند الإمكان.
+ */
 export const images = {
-  hero: "https://lh3.googleusercontent.com/aida-public/AB6AXuDYfBjP5Ey9nThryin2nuNlYWzHfEW7pRPs-4KAsXcLNbTIKZQ9AhRKBnao3bkjQHEGmQDG7wepLkyzuqDxCwLMw9ovIge2usCRh8VsFIu_8SChm4kG0oEcnrleLXDKvAqyy1124mFUYrudSJYhtRsjQGx3wcOuLHoWXcv2-5lWTgECLU0mivgAVnHbrLoypZ7GCYeZi9gwD9IIGunO7Ivqbblfibq8Tihgy6k6w_hWLi9i9b9o3hdOI1KT75gFAKpPyakMjSt9V74E",
-  deepClean:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDZzarQBnJkjYma7N-VjCwXGKcbcsRO7mcJX3NNXo1zVPLjDLE8RsVVAvGOYnL0-HWqlgh0KTcFeP6bNs8Rl9kWYrJRey-xccudtDBAOrI_3mMuJSDAB04LnH_b5rC-k9ziDwYfxPDwOGxfQ77LFrCiMh4G18H-ECbTo1-a3xkROq1Skrd6W8ZC7s30rCKt9yPBGbmMwCERMliFbSzG4DG2aXZFmr2UrD8rYuA1MFkzdJiCeYzcqFX85WRaXubQC8BfLaajwsNFlKoX",
-  carpet:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCmVlQDGzt4kNR6_hExlctPBMY_QvBTHVJYnRtQmHBdLy1uJTFkQ6SvX0cFa6gL4KL7bFEGTGdaedeemcUPteiL1CxinEbEFklNzuTPQQ0zL7wvEGBa3H0EC4QidOiVVTp6TEj3ReHOF3TMTmR_vgPhWgvLH6zxaSZnIrLHoQDsTWj2W9VYjRFzJFglOsL0PWNsKDZiItM6Fy0XsLfkTPU7kaB3ZXX-CtFo3VYl-iHjhhwesr0LMkf1lyfqOx1OHMvjFQm7Zx5ZXEGL",
+  hero: "/images/hero.webp",
+  deepClean: "/images/deep-clean.webp",
+  carpet: "/images/carpet.webp",
   sofaCleaning:
     "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=900",
   waterTankCleaning:
     "https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=900",
-  facade:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAYwudxC08hJYsOz3UzZw5XRDUhmW0Vn0x_Qljj5_k-GBaoZpyuHSuH73kHVvadLGqYNI6HgZQGtHBCIiW1sV3PXvphDlxctBUnV0Sh31UZmKUGAiDlK3eKe2APliUijftWgJ06NpTUqUNtM3h_SKAfmq_nvZUqBqThnmdbACQ_TXrg1SYp4ZPSh8qVBWCkINt4xFkLpphp897Scem7YDmpnW0i_t9AL7C4o4jjqNzSj7_030mz50DCDw8IFhUAvrtpyrVdlmIFXkIe",
+  facade: "/images/facade.webp",
   gardenCleaning:
     "https://images.pexels.com/photos/413227/pexels-photo-413227.jpeg?auto=compress&cs=tinysrgb&w=900",
   servicesVilla:
@@ -28,4 +32,6 @@ export const images = {
     "https://images.pexels.com/photos/4107277/pexels-photo-4107277.jpeg?auto=compress&cs=tinysrgb&w=900",
   featureSchedule:
     "https://images.pexels.com/photos/7033891/pexels-photo-7033891.jpeg?auto=compress&cs=tinysrgb&w=900",
+  /** نموذج بصري لشكل تقرير كشف تسربات (SVG) — صفحة التقدير ومحتوى التسربات */
+  leakDetectionReportSample: "/images/leak-detection-report-sample.svg",
 } as const;

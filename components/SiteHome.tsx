@@ -1,49 +1,28 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
-import { CycleGallery } from "@/components/cycle-gallery";
-import { PartnersTrustHeading } from "@/components/PartnersTrustHeading";
 import { Icon } from "@/components/Icon";
+import { PartnersMarquee } from "@/components/home/PartnersMarquee";
+import { StatsStrip } from "@/components/home/StatsStrip";
 import { images } from "@/lib/assets";
-import { brandEmail, brandPhone, brandPhoneDisplay, brandWhatsapp } from "@/lib/brand";
+import { brandEmail, brandLogoPath, brandNameAr, brandPhone, brandPhoneDisplay, brandWhatsapp } from "@/lib/brand";
+import { buildServiceHeroImageAlt, buildServiceHeroImageTitle, homeHeroImageAlt } from "@/lib/image-seo";
 import { featureArticles } from "@/lib/feature-articles";
-import { homePartners } from "@/lib/partners";
 import { getServiceArticle } from "@/lib/service-articles";
-
-const stats = [
-  { value: 50000, label: "موقع تم تنظيفه", icon: "apartment" },
-  { value: 15, label: "عاماً من الخبرة", icon: "calendar_month" },
-  { value: 500, label: "موظف محترف", icon: "engineering" },
-  { value: 10000, label: "عميل سعيد", icon: "sentiment_satisfied" },
-];
 
 const testimonials = [
   {
     name: "سارة الأحمد",
-    image: "/testimonials/avatar-sara.svg",
-    text: "طلبت تنظيف شامل للبيت بعد التشطيب، وبصراحة النتيجة فرقت جداً. الشباب وصلوا في الموعد واشتغلوا بهدوء واهتمام بالتفاصيل.",
+    text: "طلبت تنظيفاً شاملاً للمنزل بعد التشطيب، وكان أثر الخدمة واضحاً. الفريق وافى في الموعد، وعمل بهدوء واهتمام بالتفاصيل.",
   },
   {
     name: "محمد العتيبي",
-    image: "/testimonials/avatar-mohammed.svg",
-    text: "كنت محتاج رش حشرات للفيلا لأن الموضوع كان مزعجنا، وبعد الخدمة اختفت المشكلة. تعاملهم محترم وشرحوا لي كل خطوة قبل ما يبدأوا.",
+    text: "كنت بحاجة إلى مكافحة حشرات للفيلا؛ كانت المشكلة مزعجة، وتحسّن الوضع بعد الزيارة. التعامل محترم، وشرحوا لي الخطوات قبل البدء.",
   },
   {
     name: "فيصل الشهري",
-    image: "/testimonials/avatar-faisal.svg",
-    text: "جربتهم في تنظيف الواجهات والزجاج، والشغل طلع مرتب أكثر مما توقعت. أهم شيء عندي إنهم كانوا واضحين في السعر وما فيه أي تأخير.",
+    text: "جربت خدمة تنظيف الواجهات والزجاج، والنتيجة أنظف مما توقّعت. أقدّر وضوح السعر والالتزام بالوقت دون مماطلة.",
   },
-];
-
-const galleryImages = [
-  { src: images.deepClean, alt: "تنظيف عميق لغرفة معيشة حديثة" },
-  { src: images.carpet, alt: "غسيل سجاد احترافي بمعدات متخصصة" },
-  { src: images.facade, alt: "تنظيف واجهات زجاجية باحترافية" },
-  { src: images.featureTeam, alt: "فريق تنظيف متخصص أثناء العمل" },
-  { src: images.featureMaterials, alt: "معدات ومواد تنظيف احترافية" },
 ];
 
 const contactPhone = brandPhoneDisplay;
@@ -53,153 +32,115 @@ const deepHomeCleaning = getServiceArticle("deep-home-cleaning");
 const carpetCleaning = getServiceArticle("carpet-cleaning");
 const facadeCleaning = getServiceArticle("facade-cleaning");
 
-function AnimatedCounter({ value, start }: { value: number; start: boolean }) {
-  const [current, setCurrent] = useState(0);
+/** تدرجات لبطاقات «لماذا تختارنا» — لوحة قريبة من بطاقات الخدمات (أزرق ليلي + تركواز عميق) */
+const featureCardGradientClass: Record<string, string> = {
+  "trained-cleaning-team": "bg-gradient-to-br from-[#021b44] to-[#03307e]",
+  "safe-cleaning-materials": "bg-[#03413d]",
+  "punctual-cleaning-service": "bg-gradient-to-br from-[#02306c] to-[#03307e]",
+};
 
-  useEffect(() => {
-    if (!start) return;
+/** روابط ثانوية فوق الخلفية الداكنة — نص وأيقونات بنفس لون متباين */
+const heroGhostLinkClass =
+  "group inline-flex min-h-12 items-center justify-center gap-2 text-sm font-bold text-white transition-colors hover:text-white sm:min-h-0 sm:text-sm md:text-base [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.85)]";
 
-    const duration = 1400;
-    const startTime = performance.now();
-    const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrent(Math.round(value * eased));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    const frameId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameId);
-  }, [start, value]);
+const heroGhostIconClass =
+  "shrink-0 text-white [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.55))]";
 
-  return <>{current.toLocaleString("en-US")}</>;
-}
+const heroGhostArrowClass =
+  "shrink-0 text-white [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.55))] transition-transform group-hover:-translate-x-1";
 
-function StatsStrip() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-white px-6 py-20 md:px-8 md:py-24" aria-label="إحصائيات الشركة">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-primary/20 to-transparent" aria-hidden />
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="group flex flex-col items-center rounded-2xl border border-primary/10 bg-white px-6 py-8 text-center shadow-[0_16px_45px_rgba(0,35,111,0.06)] transition-all duration-500 hover:bg-white hover:shadow-[0_22px_60px_rgba(0,35,111,0.1)]"
-          >
-            <span className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-              <Icon name={stat.icon} className="text-3xl" />
-            </span>
-            <p className="mb-2 text-sm font-bold text-[#716f68]">أكثر من</p>
-            <p className="font-headline text-5xl font-extrabold leading-none tracking-tight text-primary md:text-6xl">
-              <AnimatedCounter value={stat.value} start={isVisible} />
-            </p>
-            <p className="mt-4 text-base font-extrabold text-[#4f4b43]">{stat.label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function PartnersMarquee() {
-  return (
-    <section className="relative overflow-hidden bg-surface-container-lowest px-8 pb-28 pt-2" aria-labelledby="partners-heading">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-primary/12 to-transparent" aria-hidden />
-      <div className="relative mx-auto max-w-7xl">
-        <PartnersTrustHeading
-          headingId="partners-heading"
-          title="شركاؤنا وجهات وثقت بنا"
-          subtitle="نفخر بتقديم خدماتنا لجهات ومرافق متنوعة بمعايير التزام وجودة عالية."
-        />
-
-        <CycleGallery
-          images={homePartners.map((partner) => ({
-            src: partner.logo,
-            alt: `شعار ${partner.name}`,
-          }))}
-          cardWidth={220}
-          cardHeight={130}
-          speedPxPerSec={72}
-          imageFit="contain"
-        />
-      </div>
-    </section>
-  );
-}
+/**
+ * روابط قسم المقدمة — مظهر رسمي: لون أساسي وحدّ سفلي واضح، وتمييز باللون الثانوي عند التمرير/التركيز.
+ * بدون underline الافتراضي حتى لا تختلط بالنص الرمادي.
+ */
+const homeIntroLinkClass =
+  "relative inline font-bold text-primary no-underline decoration-transparent [text-decoration-skip-ink:none] border-0 border-b-2 border-primary/40 pb-px transition-colors duration-200 hover:border-secondary hover:text-secondary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50 focus-visible:ring-offset-2 dark:border-sky-400/50 dark:text-sky-200 dark:hover:border-sky-300 dark:hover:text-sky-50 dark:focus-visible:ring-sky-400/60 dark:focus-visible:ring-offset-slate-900";
 
 export function SiteHome() {
   return (
     <main id="main-content">
-      <section className="relative flex min-h-[720px] items-center overflow-hidden px-8" aria-labelledby="hero-heading">
-        <div className="absolute inset-0 z-0" aria-hidden>
+      <section
+        className="relative flex min-h-[clamp(26rem,88svh,45rem)] items-start overflow-hidden px-4 pb-10 pt-24 sm:min-h-[clamp(28rem,85svh,45rem)] sm:items-center sm:px-6 sm:pb-12 sm:pt-28 md:min-h-[720px] md:px-8 md:pb-16 md:pt-32"
+        aria-labelledby="hero-heading"
+      >
+        <div className="absolute inset-0 z-0 min-h-[inherit]" aria-hidden>
           <Image
             src={images.hero}
-            alt="داخل فيلا سعودية حديثة بنوافذ زجاجية عالية وإضاءة طبيعية وأرضيات رخام نظيفة"
-            fill
+            alt={homeHeroImageAlt}
+            title={homeHeroImageAlt}
+            width={512}
+            height={512}
             priority
+            fetchPriority="high"
             sizes="100vw"
-            className="object-cover"
+            quality={68}
+            className="absolute inset-0 h-full w-full min-h-full object-cover object-center brightness-[0.96] contrast-[1.02]"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-background/90 via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/34" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-black/14 to-black/22" aria-hidden />
+          {/* تعتيم موجّه خلف عمود النص (النوافذ الساطعة تبتلع الأبيض بدونه) */}
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-black/38 via-black/22 to-black/30 md:bg-[radial-gradient(ellipse_115%_95%_at_88%_38%,rgba(15,23,42,0.78),rgba(15,23,42,0.28)_48%,transparent_62%)]"
+            aria-hidden
+          />
         </div>
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 md:grid-cols-2">
-          <div className="space-y-7 pe-4">
-            <p className="inline-flex items-center gap-4 rounded-xl border border-white/20 bg-gradient-to-l from-[#082f6f] via-[#0f4c81] to-[#5f7f95] px-5 py-3 text-xs font-extrabold text-white shadow-[0_18px_45px_rgba(8,47,111,0.18)] backdrop-blur-md md:text-sm">
-              <span className="h-10 w-1 rounded-full bg-white/85" aria-hidden="true" />
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-white">
+        <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-7xl grid-cols-1 gap-0 md:grid-cols-2 md:gap-8 lg:gap-12">
+          <div className="relative min-w-0 md:pe-4">
+            <div
+              className="pointer-events-none absolute -inset-x-2 -inset-y-3 z-0 rounded-[1.75rem] bg-gradient-to-bl from-slate-950/70 via-slate-950/48 to-slate-950/20 ring-1 ring-white/12 backdrop-blur-[2px] sm:-inset-x-3 sm:-inset-y-4 sm:rounded-[2rem] md:from-slate-950/55 md:via-slate-950/32 md:to-transparent md:ring-white/10"
+              aria-hidden
+            />
+            <div className="relative z-[1] space-y-4 sm:space-y-5 md:space-y-6">
+            <p className="flex w-full max-w-full flex-wrap items-center gap-2.5 rounded-xl border border-white/22 bg-gradient-to-l from-slate-900/82 via-slate-800/72 to-slate-800/58 px-4 py-2.5 text-xs font-extrabold text-white shadow-[0_14px_36px_rgba(0,0,0,0.2)] backdrop-blur-md sm:inline-flex sm:w-auto sm:max-w-none sm:gap-3 sm:px-4 sm:py-3 sm:text-xs md:text-sm">
+              <span className="hidden h-10 w-1 shrink-0 rounded-full bg-white/55 sm:block" aria-hidden="true" />
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/12 text-white">
                 <Icon name="verified_user" className="text-xl" />
               </span>
-              <span>خدمات تنظيف ورش الحشرات في المملكة العربية السعودية</span>
+              <span>تنظيف منازل ومكاتب ومكافحة حشرات — تغطية شاملة في أحياء الرياض</span>
             </p>
-            <h1 id="hero-heading" className="font-headline text-4xl font-extrabold leading-tight tracking-tight text-primary md:text-6xl">
-              نظافة مثالية
+            <h1
+              id="hero-heading"
+              className="font-headline text-[clamp(1.35rem,3vw+0.4rem,2.35rem)] font-extrabold leading-[1.18] tracking-tight text-white sm:text-3xl md:text-4xl md:leading-[1.15] md:text-balance [text-shadow:0_2px_12px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.85)]"
+            >
+              تنظيف ومكافحة حشرات
               <br />
-              <span className="text-secondary">لمنزلك ومنشأتك</span>
+              <span className="text-[#dce8f2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5),0_1px_2px_rgba(0,0,0,0.75)]">في الرياض — موسوعة خدمات منزلية</span>
             </h1>
-            <p className="max-w-lg text-lg font-medium leading-relaxed text-on-surface-variant">
-              نعيد تعريف مفهوم النظافة من خلال دقة التنفيذ والعناية بأدق التفاصيل، لنمنحك المساحة التي تستحقها للراحة والإبداع.
+            <p className="max-w-lg text-sm font-semibold leading-[1.7] text-white sm:text-base md:max-w-xl md:text-lg md:leading-[1.65] [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.9)]">
+              ننفّذ تنظيفاً عميقاً للمنازل والمكاتب في الرياض، وغسيل سجاد وموكيت، وتنظيف واجهات، ومكافحة حشرات وفق خطة
+              واضحة — مع أدلة عملية لكل حي ونوع آفة على الموقع.
             </p>
-            <div className="flex flex-wrap items-center gap-6 pt-4" id="book">
-              <Link href="/contact" className="liquid-gradient hydro-shadow inline-block rounded-full px-9 py-4 text-center text-base font-bold text-on-primary transition-transform hover:scale-105 active:scale-95">
+            <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6 sm:pt-4" id="book">
+              <Link
+                href="/contact"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-[#2a4f5c] via-[#234652] to-[#1a383f] px-8 py-3 text-center text-sm font-bold text-white shadow-[0_8px_28px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] transition-transform hover:scale-[1.03] hover:from-[#325c6a] hover:via-[#2a5159] hover:to-[#1f4249] active:scale-[0.98] sm:min-h-0 sm:px-9 sm:py-3.5 sm:text-sm md:px-10 md:text-base"
+              >
                 احجز الآن
               </Link>
-              <Link href="/services" className="group flex items-center gap-2 font-bold text-primary transition-colors hover:text-secondary">
+              <Link href="/services" className={heroGhostLinkClass}>
                 <span>اكتشف خدماتنا</span>
-                <Icon name="arrow_back" className="transition-transform group-hover:-translate-x-1" />
+                <Icon name="arrow_back" className={heroGhostArrowClass} />
+              </Link>
+              <Link href="/areas" className={heroGhostLinkClass}>
+                <Icon name="location_on" className={`text-[1.15rem] ${heroGhostIconClass}`} />
+                <span>مناطق الخدمة</span>
+                <Icon name="arrow_back" className={heroGhostArrowClass} />
               </Link>
             </div>
+            </div>
           </div>
-          <div className="mt-12 flex items-center justify-center md:mt-0 md:justify-end">
-            <div className="w-full max-w-sm rounded-3xl border border-white/20 bg-gradient-to-br from-[#06337f]/95 via-[#06418f]/92 to-[#35c6c2]/88 p-6 text-right text-white shadow-[0_24px_70px_rgba(6,51,127,0.22)] backdrop-blur-xl">
+          <div className="mt-10 flex min-w-0 items-center justify-center md:mt-0 md:justify-end">
+            <div className="w-full max-w-sm rounded-3xl border border-white/22 bg-gradient-to-br from-slate-900/88 via-[#152f4d]/85 to-[#1c4558]/80 p-5 text-right text-white shadow-[0_20px_56px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-6">
               <div className="mb-6 flex items-center justify-between gap-4">
-                <span className="rounded-full bg-white/12 px-4 py-2 text-xs font-extrabold text-white">تواصل سريع</span>
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 text-white shadow-lg">
+                <span className="rounded-full bg-white/12 px-3.5 py-1.5 text-xs font-extrabold text-white/95 sm:px-4 sm:py-2 sm:text-sm">تواصل سريع</span>
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white shadow-lg">
                   <Icon name="support_agent" className="text-2xl" />
                 </span>
               </div>
 
-              <h2 className="font-headline text-2xl font-extrabold text-white">احجز خدمتك الآن</h2>
-              <p className="mt-3 text-sm font-medium leading-7 text-white/82">
-                فريقنا جاهز لاستقبال طلبات التنظيف ورش الحشرات وتحديد الموعد المناسب لك.
+              <h2 className="font-headline text-xl font-extrabold text-white/95 sm:text-2xl">احجز خدمتك الآن</h2>
+              <p className="mt-2.5 text-sm font-semibold leading-7 text-white/85 sm:text-base sm:leading-7">
+                فريق التنسيق جاهز لاستقبال طلبات التنظيف ومكافحة الحشرات وتحديد موعد يناسبك.
               </p>
 
               <div className="mt-6 space-y-3">
@@ -208,25 +149,25 @@ export function SiteHome() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="تواصل معنا عبر واتساب في تبويب جديد"
-                  className="flex items-center justify-between rounded-2xl bg-white px-5 py-4 text-sm font-extrabold text-[#06337f] shadow-[0_14px_35px_rgba(6,51,127,0.22)] transition-transform hover:-translate-y-0.5"
+                  className="hero-whatsapp-cta flex items-center justify-between rounded-2xl bg-white px-5 py-3.5 text-sm font-extrabold shadow-[0_12px_28px_rgba(15,23,42,0.14)] transition-transform hover:-translate-y-0.5 hover:bg-slate-50"
                 >
-                  <span>تواصل عبر واتساب</span>
-                  <Icon name="chat" className="" />
+                  <span className="text-slate-900">تواصل عبر واتساب</span>
+                  <Icon name="chat" className="text-slate-800" />
                 </a>
                 <a
                   href={`tel:${contactPhoneHref}`}
                   aria-label={`اتصل بنا على ${contactPhone}`}
-                  className="flex items-center justify-between rounded-2xl border border-white/18 bg-white/10 px-5 py-4 text-sm font-bold text-white transition-colors hover:bg-white/15"
+                  className="flex items-center justify-between rounded-2xl border border-white/18 bg-white/10 px-5 py-3.5 text-sm font-bold text-white/92 transition-colors hover:bg-white/14"
                 >
                   <span dir="ltr">{contactPhone}</span>
-                  <Icon name="phone_in_talk" className="text-[#35c6c2]" />
+                  <Icon name="phone_in_talk" className="text-[#9ec9dc]" />
                 </a>
                 <a
                   href={`mailto:${brandEmail}`}
-                  className="flex items-center justify-between rounded-2xl border border-white/18 bg-white/10 px-5 py-4 text-sm font-bold text-white transition-colors hover:bg-white/15"
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-white/18 bg-white/10 px-4 py-3.5 text-xs font-bold text-white/92 transition-colors hover:bg-white/14 sm:px-5 sm:text-sm"
                 >
-                  <span>{brandEmail}</span>
-                  <Icon name="mail" className="text-[#35c6c2]" />
+                  <span className="min-w-0 break-all text-end">{brandEmail}</span>
+                  <Icon name="mail" className="text-[#9ec9dc]" />
                 </a>
               </div>
             </div>
@@ -234,14 +175,67 @@ export function SiteHome() {
         </div>
       </section>
 
-      <section id="about-features" className="bg-surface-container-lowest px-8 py-28" aria-labelledby="features-heading">
+      <section
+        className="relative overflow-hidden border-b border-slate-200/70 bg-[#f8fafc] px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20 dark:border-slate-800 dark:bg-slate-950"
+        aria-labelledby="home-intro-heading"
+      >
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_85%_60%_at_100%_0%,rgba(30,58,94,0.07),transparent_55%),radial-gradient(ellipse_70%_50%_at_0%_100%,rgba(15,118,110,0.05),transparent_50%)]"
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-primary/20 to-transparent" aria-hidden />
+
+        <div className="relative mx-auto max-w-3xl text-right lg:max-w-4xl">
+          <div className="rounded-[1.75rem] border border-slate-200/90 bg-white/90 p-6 shadow-[0_20px_50px_rgba(15,23,42,0.06),0_2px_8px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] backdrop-blur-sm dark:border-slate-700/80 dark:bg-slate-900/75 dark:shadow-[0_24px_60px_rgba(0,0,0,0.35)] dark:ring-white/[0.06] sm:rounded-[2rem] sm:p-8 md:p-10">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-secondary/90 sm:text-sm">
+              خدماتنا في الرياض
+            </p>
+            <h2
+              id="home-intro-heading"
+              className="mt-3 font-headline text-2xl font-extrabold leading-snug tracking-tight text-primary sm:text-3xl md:text-[2rem] md:leading-tight"
+            >
+              شركة تنظيف ومكافحة حشرات في الرياض
+            </h2>
+            <div
+              className="mt-4 h-1 w-14 rounded-full bg-gradient-to-l from-secondary via-primary to-primary/40 sm:w-16"
+              role="presentation"
+            />
+            <p className="mt-6 text-[0.9375rem] font-medium leading-[2] text-slate-600 dark:text-slate-300 sm:text-base sm:leading-[2.05]">
+              سواء احتجت{" "}
+              <Link href="/services/deep-home-cleaning" className={homeIntroLinkClass}>
+                تنظيفاً عميقاً للمنزل
+              </Link>
+              ، أو{" "}
+              <Link href="/services/carpet-cleaning" className={homeIntroLinkClass}>
+                غسيل سجاد وموكيت
+              </Link>
+              ، أو{" "}
+              <Link href="/services/facade-cleaning" className={homeIntroLinkClass}>
+                تنظيف واجهات
+              </Link>
+              ، أو خطة لمكافحة الحشرات، نركّز على شرح الخطوات قبل التنفيذ، ومواد مناسبة للمساحة، والالتزام بالمواعيد
+              المتفق عليها. اطّلع على{" "}
+              <Link href="/areas" className={homeIntroLinkClass}>
+                مناطق التغطية
+              </Link>{" "}
+              أو{" "}
+              <Link href="/contact" className={homeIntroLinkClass}>
+                اطلب استشارة أو حجزاً
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about-features" className="bg-surface-container-lowest px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-28" aria-labelledby="features-heading">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h2 id="features-heading" className="mb-4 text-sm font-bold uppercase tracking-widest text-secondary">
+          <div className="mb-12 text-center md:mb-16">
+            <h2 id="features-heading" className="mb-4 text-xs font-bold uppercase tracking-widest text-secondary sm:text-sm">
               لماذا تختارنا
             </h2>
-            <p className="mx-auto max-w-2xl font-headline text-4xl font-extrabold leading-tight text-primary md:text-5xl">
-              نقدم خدمات استثنائية بمعايير عالمية
+            <p className="mx-auto max-w-2xl font-headline text-3xl font-extrabold leading-tight text-primary sm:text-4xl md:text-5xl">
+              جودة تنفيذ ومواد مناسبة وخطوات واضحة
             </p>
             <div className="mx-auto mt-2 h-1 w-16 rounded-full bg-secondary-container" role="presentation" />
           </div>
@@ -250,8 +244,15 @@ export function SiteHome() {
             {featureArticles.map((feature) => (
               <article key={feature.slug} className="group overflow-hidden rounded-2xl bg-surface-container-lowest shadow-[0_10px_32px_rgba(30,58,138,0.06)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(30,58,138,0.11)]">
                 <Link href={`/features/${feature.slug}`} aria-label={`اقرأ مقال ${feature.cardTitle}`}>
-                <div className="relative h-52 overflow-hidden bg-primary-container/10">
-                  <Image src={feature.image} alt={feature.cardTitle} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="relative h-52 overflow-hidden rounded-t-2xl">
+                  <div
+                    className={`absolute inset-0 ${featureCardGradientClass[feature.slug] ?? "bg-gradient-to-br from-[#021b44] to-[#03307e]"} motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105`}
+                    aria-hidden
+                  />
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/[0.07]"
+                    aria-hidden
+                  />
                 </div>
                 <div className="p-6 text-right">
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-primary/10 bg-primary text-white shadow-[0_10px_24px_rgba(0,35,111,0.16)]">
@@ -273,41 +274,37 @@ export function SiteHome() {
 
       <PartnersMarquee />
 
-      <section className="bg-surface-container-lowest px-8 pb-32" aria-labelledby="gallery-heading">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10 text-center">
-            <h2 id="gallery-heading" className="font-headline text-3xl font-extrabold text-primary md:text-4xl">
-              من أعمالنا
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl leading-relaxed text-on-surface-variant">
-              لقطات من خدمات التنظيف والعناية بالمساحات باستخدام معدات احترافية.
-            </p>
-          </div>
-          <CycleGallery images={galleryImages} cardWidth={280} cardHeight={240} speedPxPerSec={48} />
-        </div>
-      </section>
-
-      <section id="services" className="px-8 py-32" aria-labelledby="services-heading">
+      <section id="services" className="px-4 py-20 sm:px-6 sm:py-24 md:px-8 md:py-32" aria-labelledby="services-heading">
         <div className="mx-auto max-w-7xl">
           <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div className="space-y-4">
-              <h2 id="services-heading" className="font-headline text-4xl font-extrabold text-primary">
+              <h2 id="services-heading" className="font-headline text-3xl font-extrabold text-primary sm:text-4xl">
                 خدماتنا المتميزة
               </h2>
               <div className="h-1.5 w-24 rounded-full bg-secondary-container" role="presentation" />
             </div>
-            <p className="max-w-md text-on-surface-variant md:text-start">
-              نقدم حلولاً متكاملة لتنظيف كافة أنواع المساحات بأحدث التقنيات والمعدات.
+            <p className="max-w-md text-sm text-on-surface-variant sm:text-base md:text-start">
+              حلول تنظيف للمنازل والمكاتب والسجاد والواجهات، مع خيارات مكافحة حشرات عند الحاجة، وفريق يضبط الخطة
+              حسب مساحتك.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
-            <article className="group relative h-[500px] overflow-hidden rounded-full shadow-2xl md:col-span-8">
+            <article className="group relative min-h-[min(75svh,28rem)] overflow-hidden rounded-3xl shadow-2xl sm:min-h-[26rem] md:col-span-8 md:h-[500px] md:rounded-[2.5rem] lg:rounded-full">
               <Link href="/services/deep-home-cleaning" className="absolute inset-0 block" aria-label="تفاصيل خدمة تنظيف المنازل العميق">
-              <Image src={images.deepClean} alt="تنظيف عميق لغرفة معيشة حديثة باستخدام معدات بخار" fill sizes="(min-width: 768px) 66vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image
+                src={images.deepClean}
+                alt={deepHomeCleaning ? buildServiceHeroImageAlt(deepHomeCleaning) : "تنظيف عميق للمنزل"}
+                title={deepHomeCleaning ? buildServiceHeroImageTitle(deepHomeCleaning) : undefined}
+                fill
+                sizes="(min-width: 768px) 66vw, 100vw"
+                quality={62}
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent" aria-hidden />
-              <div className="absolute bottom-0 p-12 text-white">
-                <h3 className="mb-4 text-3xl font-bold">{deepHomeCleaning?.shortTitle}</h3>
-                <p className="mb-6 max-w-md text-white/80">{deepHomeCleaning?.excerpt}</p>
+              <div className="absolute bottom-0 p-6 text-white sm:p-8 md:p-12">
+                <h3 className="mb-3 text-2xl font-bold sm:mb-4 sm:text-3xl">{deepHomeCleaning?.shortTitle}</h3>
+                <p className="mb-4 max-w-md text-sm text-white/85 sm:mb-6 sm:text-base">{deepHomeCleaning?.excerpt}</p>
                 <span className="inline-flex items-center gap-2 text-sm font-bold text-white">
                   اقرأ تفاصيل الخدمة
                   <Icon name="arrow_back" className="text-lg" />
@@ -316,23 +313,45 @@ export function SiteHome() {
               </Link>
             </article>
             <div className="flex flex-col gap-8 md:col-span-4">
-              <article className="group relative min-h-[220px] flex-1 overflow-hidden rounded-full shadow-xl">
+              <article className="group relative min-h-[13.5rem] flex-1 overflow-hidden rounded-3xl shadow-xl sm:min-h-[15rem] md:min-h-[220px] md:rounded-[2rem] lg:rounded-full">
                 <Link href="/services/carpet-cleaning" className="absolute inset-0 block" aria-label="تفاصيل خدمة غسيل السجاد">
-                <Image src={images.carpet} alt="غسيل سجاد احترافي" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <Image
+                  src={images.carpet}
+                  alt={carpetCleaning ? buildServiceHeroImageAlt(carpetCleaning) : "غسيل سجاد وموكيت"}
+                  title={carpetCleaning ? buildServiceHeroImageTitle(carpetCleaning) : undefined}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  quality={62}
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" aria-hidden />
-                <div className="absolute bottom-0 p-8 text-white">
-                  <h3 className="text-xl font-bold">{carpetCleaning?.shortTitle}</h3>
-                  <span className="mt-2 inline-flex text-xs font-bold text-white/85">اقرأ التفاصيل</span>
+                <div className="absolute bottom-0 p-5 text-white sm:p-8">
+                  <h3 className="text-lg font-bold sm:text-xl">{carpetCleaning?.shortTitle}</h3>
+                  <span className="mt-2 inline-flex text-xs font-bold text-white/85">
+                    تفاصيل خدمة {carpetCleaning?.shortTitle ?? "غسيل السجاد"}
+                  </span>
                 </div>
                 </Link>
               </article>
-              <article className="group relative min-h-[220px] flex-1 overflow-hidden rounded-full shadow-xl">
+              <article className="group relative min-h-[13.5rem] flex-1 overflow-hidden rounded-3xl shadow-xl sm:min-h-[15rem] md:min-h-[220px] md:rounded-[2rem] lg:rounded-full">
                 <Link href="/services/facade-cleaning" className="absolute inset-0 block" aria-label="تفاصيل خدمة تنظيف الواجهات">
-                <Image src={images.facade} alt="عامل تنظيف واجهات زجاجية" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <Image
+                  src={images.facade}
+                  alt={facadeCleaning ? buildServiceHeroImageAlt(facadeCleaning) : "تنظيف واجهات زجاجية"}
+                  title={facadeCleaning ? buildServiceHeroImageTitle(facadeCleaning) : undefined}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  quality={62}
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" aria-hidden />
-                <div className="absolute bottom-0 p-8 text-white">
-                  <h3 className="text-xl font-bold">{facadeCleaning?.shortTitle}</h3>
-                  <span className="mt-2 inline-flex text-xs font-bold text-white/85">اقرأ التفاصيل</span>
+                <div className="absolute bottom-0 p-5 text-white sm:p-8">
+                  <h3 className="text-lg font-bold sm:text-xl">{facadeCleaning?.shortTitle}</h3>
+                  <span className="mt-2 inline-flex text-xs font-bold text-white/85">
+                    تفاصيل خدمة {facadeCleaning?.shortTitle ?? "تنظيف الواجهات"}
+                  </span>
                 </div>
                 </Link>
               </article>
@@ -341,26 +360,25 @@ export function SiteHome() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#062a73] to-[#031a49] px-6 py-24 text-white md:px-8 md:py-28" aria-labelledby="testimonials-heading">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#062a73] to-[#031a49] px-4 py-16 text-white sm:px-6 sm:py-20 md:px-8 md:py-28" aria-labelledby="testimonials-heading">
         <div className="relative z-10 mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[#d9e8ff] backdrop-blur-sm">
               <Icon name="verified_user" className="text-lg" />
               تقييمات موثوقة من عملائنا الكرام
             </p>
-            <h2 id="testimonials-heading" className="mb-4 font-headline text-4xl font-extrabold leading-tight text-white md:text-5xl">
+            <h2 id="testimonials-heading" className="mb-4 font-headline text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl">
               ثقة <span className="text-[#c8ddff]">آلاف العملاء</span>
             </h2>
             <p className="mx-auto max-w-xl text-base leading-relaxed text-white/70">
-              شهادات حقيقية من عملائنا يعكسون التزامنا بتقديم خدمات متميزة بجودة عالمية
+              تجارب عملاء تعكس التزامنا بخدمة منظّمة، وتواصل واضح، ونتيجة تليق بمنزلك أو منشأتك.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-7 md:grid-cols-3 md:gap-6 lg:gap-8">
-            {testimonials.map((item, index) => (
+            {testimonials.map((item) => (
               <figure
                 key={item.name}
-                style={{ animationDelay: `${index * 85}ms` }}
-                className="group relative overflow-hidden rounded-3xl border border-white/18 bg-white/[0.07] p-7 shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 motion-safe:animate-fade-up-soft motion-safe:[animation-fill-mode:both] motion-safe:hover:-translate-y-1 motion-safe:hover:border-white/28 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_28px_60px_rgba(0,0,0,0.28)] motion-reduce:animate-none"
+                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/18 bg-white/[0.07] p-7 shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-xl transition duration-300 motion-safe:hover:-translate-y-1 motion-safe:hover:border-white/28 motion-safe:hover:bg-white/[0.11] motion-safe:hover:shadow-[0_28px_60px_rgba(0,0,0,0.28)] md:p-8"
               >
                 <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-l from-transparent via-white/40 to-transparent" aria-hidden />
                 <div className="mb-5 flex justify-center gap-1 text-amber-300/95" aria-hidden="true">
@@ -370,26 +388,26 @@ export function SiteHome() {
                     </span>
                   ))}
                 </div>
-                <blockquote>
-                  <p className="text-right text-sm font-semibold leading-[1.85] text-white/92 md:text-[0.9375rem]">
+                <blockquote className="flex min-h-0 flex-1 flex-col justify-center py-1">
+                  <p className="text-center text-sm font-semibold leading-[1.85] text-white/92 md:text-[0.9375rem]">
                     «{item.text}»
                   </p>
                 </blockquote>
-                <figcaption className="mt-6 flex items-center gap-4 border-t border-white/15 pt-6">
-                  <div className="relative h-[3.75rem] w-[3.75rem] flex-shrink-0 overflow-hidden rounded-2xl border border-white/25 bg-white/[0.12] shadow-[0_12px_28px_rgba(0,0,0,0.28)] ring-2 ring-white/10 transition-transform duration-300 group-hover:scale-[1.03]">
+                <figcaption className="mt-6 flex shrink-0 flex-wrap items-center justify-center gap-3 border-t border-white/12 pt-6">
+                  <cite className="not-italic text-sm font-bold tracking-tight text-white sm:text-base">{item.name}</cite>
+                  <div
+                    className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/35 bg-white p-2 shadow-[0_10px_28px_rgba(0,0,0,0.22)] ring-2 ring-white/15 transition-transform duration-300 group-hover:scale-[1.06] sm:h-14 sm:w-14 sm:p-2.5"
+                    aria-hidden
+                  >
                     <Image
-                      src={item.image}
-                      alt=""
-                      fill
-                      sizes="60px"
-                      className="object-cover object-center"
+                      src={brandLogoPath}
+                      alt={`شعار ${brandNameAr} — بجانب تقييم عميل`}
+                      width={48}
+                      height={48}
+                      sizes="48px"
+                      className="h-8 w-8 object-contain sm:h-9 sm:w-9"
                       loading="lazy"
-                      unoptimized
                     />
-                  </div>
-                  <div className="min-w-0 flex-1 text-right">
-                    <cite className="not-italic block text-base font-bold tracking-tight text-white">{item.name}</cite>
-                    <span className="mt-1 block text-xs font-medium text-[#b8cef7]/95">عميل · تجربة موثّقة</span>
                   </div>
                 </figcaption>
               </figure>

@@ -2,16 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  /**
+   * تمرير جدول المحتويات: شريط يظهر عند التمرير فوق المنطقة (أنظف من الشريط الدائم)
+   */
+  .toc-nav-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  .toc-nav-scroll:hover {
+    scrollbar-color: rgb(148 163 184 / 0.65) transparent;
+  }
+  .toc-nav-scroll::-webkit-scrollbar {
+    width: 5px;
+  }
+  .toc-nav-scroll::-webkit-scrollbar-track {
+    margin-block: 4px;
+    background: transparent;
+  }
+  .toc-nav-scroll::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: transparent;
+  }
+  .toc-nav-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: rgb(148 163 184 / 0.7);
+  }
+
+  /** شريط تمرير خفيف للقوائم الطويلة (موبايل) — نحيف دائماً */
+  .scrollbar-toc {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(203 213 225 / 0.85) transparent;
+  }
+  .scrollbar-toc::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  .scrollbar-toc::-webkit-scrollbar-track {
+    margin-block: 6px;
+    background: transparent;
+  }
+  .scrollbar-toc::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: rgb(203 213 225 / 0.9);
+  }
+  .scrollbar-toc::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(148 163 184 / 0.95);
+  }
+
+  /** إخفاء شريط التمرير الأفقي (موبايل) مع الإبقاء على السحب */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 html {
   font-size: 16px;
+  overflow-x: clip;
+  /* يقلّل قفزات التخطيط عند ظهور شريط التمرير */
+  scrollbar-gutter: stable;
+}
+
+body {
+  overflow-x: clip;
 }
 
 .hydro-shadow {
-  box-shadow: 0 12px 40px rgba(0, 35, 111, 0.06);
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.1);
 }
 
 .liquid-gradient {
-  background: linear-gradient(135deg, #00236f 0%, #1e3a8a 100%);
+  background: linear-gradient(135deg, #153a66 0%, #1e3f6e 100%);
+}
+
+/** زر واتساب في الـ hero: لا يرث `text-white` من بطاقة التواصل */
+.hero-whatsapp-cta {
+  color: rgb(15 23 42);
+  isolation: isolate;
+}
+.hero-whatsapp-cta:is(:hover, :focus-visible) {
+  color: rgb(15 23 42);
 }
 
 .partners-track {
@@ -38,5 +111,87 @@ html {
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@layer components {
+  /* جداول المقالات — صفوف بيضاء وعناوين ملوّنة (ليس شريطاً أزرق لكل صف) */
+  .article-table tbody tr {
+    background-color: #fff;
+    transition: background-color 0.15s ease;
+  }
+  .article-table tbody tr:nth-child(even) {
+    background-color: rgb(248 250 252 / 0.85);
+  }
+  .article-table tbody tr:hover {
+    background-color: rgb(241 245 249 / 0.95);
+  }
+  .article-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* جدول أسعار — بطاقات على الموبايل */
+  @media (max-width: 639px) {
+    .article-pricing-table {
+      min-width: 0 !important;
+    }
+    .article-pricing-table thead {
+      display: none;
+    }
+    .article-pricing-table tbody tr {
+      display: block;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid rgb(226 232 240 / 0.95);
+      background: #fff !important;
+      box-shadow: 0 4px 16px rgb(30 58 138 / 0.06);
+    }
+    .article-pricing-table tbody tr:hover {
+      background: #fff !important;
+    }
+    .article-pricing-table td {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px dashed rgb(226 232 240 / 0.9) !important;
+      padding: 0.85rem 1rem !important;
+      background: transparent !important;
+    }
+    .article-pricing-table td:last-child {
+      border-bottom: none !important;
+    }
+    .article-pricing-table td::before {
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: rgb(100 116 139);
+    }
+    .article-pricing-table td:nth-child(1)::before {
+      content: "الخدمة";
+    }
+    .article-pricing-table td:nth-child(2)::before {
+      content: "المساحة";
+    }
+    .article-pricing-table td:nth-child(3)::before {
+      content: "السعر";
+    }
+    .article-pricing-table td:first-child {
+      border-bottom: 1px solid rgb(226 232 240) !important;
+      background: rgb(248 250 252 / 0.6) !important;
+      font-size: 0.95rem;
+    }
+    .article-pricing-table td:first-child::before {
+      display: none;
+    }
+  }
+}
+
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }

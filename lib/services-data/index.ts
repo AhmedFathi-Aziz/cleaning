@@ -6,10 +6,12 @@ import { facadeCleaningArticle } from "./facade-cleaning";
 import { gardenCleaningArticle } from "./garden-cleaning";
 import { houseCleaningArticle } from "./house-cleaning";
 import { pestControlArticle } from "./pest-control";
+import { serviceRiyadhExtraFaqs } from "./riyadh-extra-faqs";
+import { serviceRiyadhExtraSections } from "./riyadh-extra-sections";
 import { sofaCleaningArticle } from "./sofa-cleaning";
 import { waterTankCleaningArticle } from "./water-tank-cleaning";
 
-export const serviceArticles: ServiceArticle[] = [
+const baseServiceArticles: ServiceArticle[] = [
   houseCleaningArticle,
   deepHomeCleaningArticle,
   carpetCleaningArticle,
@@ -19,6 +21,24 @@ export const serviceArticles: ServiceArticle[] = [
   waterTankCleaningArticle,
   gardenCleaningArticle,
 ];
+
+function enrichServiceForRiyadh(article: ServiceArticle): ServiceArticle {
+  const extraSections = serviceRiyadhExtraSections[article.slug] ?? [];
+  const extraFaqs = serviceRiyadhExtraFaqs[article.slug] ?? [];
+  const riyadhKeywords = [
+    `${article.shortTitle} الرياض`,
+    `شركة ${article.shortTitle} الرياض`,
+  ];
+
+  return {
+    ...article,
+    keywords: [...new Set([...article.keywords, ...riyadhKeywords])],
+    sections: [...article.sections, ...extraSections],
+    faqs: [...article.faqs, ...extraFaqs],
+  };
+}
+
+export const serviceArticles: ServiceArticle[] = baseServiceArticles.map(enrichServiceForRiyadh);
 
 export function getServiceArticle(slug: string): ServiceArticle | undefined {
   return serviceArticles.find((service) => service.slug === slug);

@@ -61,19 +61,20 @@ const config: Config = {
         full: "0.75rem",
       },
       fontFamily: {
-        sans: ["var(--font-cairo)", "sans-serif"],
-        headline: ["var(--font-cairo)", "sans-serif"],
-        body: ["var(--font-cairo)", "sans-serif"],
-        label: ["var(--font-cairo)", "sans-serif"],
+        sans: ["var(--font-cairo)", "Tahoma", "Arial", "sans-serif"],
+        headline: ["var(--font-cairo)", "Tahoma", "Arial", "sans-serif"],
+        body: ["var(--font-cairo)", "Tahoma", "Arial", "sans-serif"],
+        label: ["var(--font-cairo)", "Tahoma", "Arial", "sans-serif"],
       },
       keyframes: {
         "fade-up-soft": {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        /** بدون translateY لتفادي أي قياس CLS عند ظهور شعارات الشركاء */
         "partner-logo-in": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
       animation: {

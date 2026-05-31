@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
 import { NeighborhoodPageJsonLd } from "@/components/SeoJsonLd";
+import { NeighborhoodLocalContextBlock } from "@/components/NeighborhoodLocalContextBlock";
+import { NeighborhoodServicesHighlight } from "@/components/NeighborhoodServicesHighlight";
 import { brandNameAr } from "@/lib/brand";
-import { buildArabicPageMetadata } from "@/lib/seo";
+import { buildArabicPageMetadata, truncateForMetaDescription } from "@/lib/seo";
 import { serviceArticles } from "@/lib/service-articles";
-import { getCityBySlug, getLocationStaticParams, getNeighborhoodBySlug } from "@/src/data/locations";
+import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
 
 type PageProps = {
   params: Promise<{
@@ -19,7 +21,12 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getLocationStaticParams();
+  return locations.flatMap((city) =>
+    city.neighborhoods.map((neighborhood) => ({
+      citySlug: city.slug,
+      neighborhoodSlug: neighborhood.slug,
+    })),
+  );
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -27,10 +34,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const city = getCityBySlug(citySlug);
   const neighborhood = getNeighborhoodBySlug(citySlug, neighborhoodSlug);
 
-  if (!city || !neighborhood) return { title: "غير موجود" };
+  if (!city || !neighborhood) return { title: "غير موجود", robots: { index: false, follow: false } };
 
   const title = `أفضل شركة تنظيف في حي ${neighborhood.name} ${city.name} | اطلب الآن`;
-  const description = `احجز خدمات التنظيف العامة في حي ${neighborhood.name} بمدينة ${city.name} مع ${brandNameAr}: تنظيف منازل وسجاد وواجهات بمواد آمنة وفريق مدرب.`;
+  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr);
+  const description = `${snippet} احجز تنظيفاً احترافياً في حي ${neighborhood.name}، ${city.name} مع ${brandNameAr}.`;
   const canonical = `/${city.slug}/${neighborhood.slug}`;
 
   return buildArabicPageMetadata({
@@ -41,6 +49,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `شركة تنظيف ${city.name}`,
       `خدمات تنظيف في حي ${neighborhood.name}`,
       `تنظيف منازل ${city.name}`,
+      `تنظيف خزانات ${city.name}`,
+      `رش حشرات ${city.name}`,
+      `تنظيف حدائق ${city.name}`,
     ],
     canonical,
   });
@@ -60,6 +71,27 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
       <NeighborhoodPageJsonLd city={city} neighborhood={neighborhood} />
 
       <article className="mx-auto max-w-6xl text-right">
+        <nav aria-label="فتات التنقل" className="mb-5 text-sm font-bold text-slate-600">
+          <ol className="flex flex-wrap items-center justify-end gap-2">
+            <li>
+              <Link href="/" className="hover:text-primary hover:underline">
+                الرئيسية
+              </Link>
+            </li>
+            <li aria-hidden="true" className="text-slate-400">
+              /
+            </li>
+            <li>
+              <Link href={`/areas#city-${city.slug}`} className="hover:text-primary hover:underline">
+                {city.name}
+              </Link>
+            </li>
+            <li aria-hidden="true" className="text-slate-400">
+              /
+            </li>
+            <li className="text-primary">{neighborhood.name}</li>
+          </ol>
+        </nav>
         <Link href="/services" className="inline-flex items-center gap-2 text-sm font-bold text-secondary hover:underline">
           <Icon name="arrow_forward" className="text-lg" />
           العودة إلى الخدمات
@@ -84,6 +116,10 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
           </div>
         </header>
 
+        <NeighborhoodLocalContextBlock city={city} neighborhood={neighborhood} />
+
+        <NeighborhoodServicesHighlight city={city} neighborhood={neighborhood} />
+
         <section className="mt-8 grid gap-5 md:grid-cols-3">
           {serviceArticles.map((service) => (
             <Link
@@ -93,7 +129,7 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
             >
               <Icon name={service.icon} className="mb-4 text-3xl text-secondary" />
               <h2 className="font-headline text-xl font-extrabold text-primary">
-                {service.shortTitle} في {neighborhood.name}
+                {service.shortTitle} في حي {neighborhood.name}، {city.name}
               </h2>
               <p className="mt-3 text-sm leading-7 text-on-surface-variant">
                 {service.excerpt}
@@ -136,9 +172,8 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
               على تقديم نتيجة نظيفة ومنظمة تعكس جودة الخدمة في {city.name}.
             </p>
             <p>
-              هدفنا أن يجد الباحث عن شركة تنظيف في {neighborhood.name} محتوى واضحاً وخدمة قريبة من احتياجه الفعلي،
-              مع إمكانية حجز موعد مرن وتنفيذ يعتمد على فريق مدرب يعرف متطلبات الأحياء السكنية والتجارية في
-              {city.name}.
+              نحرص أن تجد في هذه الصفحة معلومات واضحة عن تنظيف حي {neighborhood.name} وخدمة قريبة من احتياجك الفعلي،
+              مع إمكانية حجز موعد مرن وتنفيذ يعتمد على فريق مدرب يعرف متطلبات الأحياء السكنية والتجارية في {city.name}.
             </p>
           </div>
         </section>

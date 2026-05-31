@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { brandNameAr } from "@/lib/brand";
 import { featureArticles, getFeatureArticle } from "@/lib/feature-articles";
 import { siteUrl } from "@/lib/site";
+import { RichParagraph } from "@/components/RichParagraph";
 import { Icon } from "@/components/Icon";
 
 type PageProps = {
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const article = getFeatureArticle(slug);
 
-  if (!article) return { title: "غير موجود" };
+  if (!article) return { title: "غير موجود", robots: { index: false, follow: false } };
 
   const canonical = `/features/${article.slug}`;
 
@@ -185,9 +186,9 @@ export default async function FeatureArticlePage({ params }: PageProps) {
                 <h2 className="font-headline text-2xl font-extrabold text-primary md:text-3xl">{section.heading}</h2>
                 <div className="mt-4 space-y-4">
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="text-base leading-9 text-on-surface-variant">
+                    <RichParagraph key={paragraph} className="text-base leading-9 text-on-surface-variant">
                       {paragraph}
-                    </p>
+                    </RichParagraph>
                   ))}
                 </div>
               </section>
@@ -204,7 +205,7 @@ export default async function FeatureArticlePage({ params }: PageProps) {
                 {article.faqs.map((faq) => (
                   <div key={faq.question} className="rounded-2xl bg-surface-container-low p-5">
                     <h3 className="font-bold text-primary">{faq.question}</h3>
-                    <p className="mt-2 leading-7 text-on-surface-variant">{faq.answer}</p>
+                    <RichParagraph className="mt-2 leading-7 text-on-surface-variant">{faq.answer}</RichParagraph>
                   </div>
                 ))}
               </div>

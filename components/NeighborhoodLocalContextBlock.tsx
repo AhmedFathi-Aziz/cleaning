@@ -13,6 +13,7 @@ export function NeighborhoodLocalContextBlock({
       <h2 className="font-headline text-2xl font-extrabold text-primary md:text-3xl">
         ما الذي يميز {neighborhood.name} ضمن خطة عملنا في {city.name}؟
       </h2>
+      <p className="mt-4 text-base leading-9 text-on-surface-variant">{neighborhood.nearbyLandmarksAr}</p>
       <p className="mt-4 text-base leading-9 text-on-surface-variant">
         نغطي حي {neighborhood.name} ضمن {city.name} بخدمات تنظيف ومكافحة حشرات مرنة، وفريق يعمل وفق مواعيد تنسّق معك
         مع مراعاة طبيعة الأحياء السكنية والتجارية في المدينة.

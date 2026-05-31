@@ -3,7 +3,7 @@ import type { ServiceArticle } from "@/lib/service-articles-types";
 
 export const sofaCleaningArticle: ServiceArticle = {
   slug: "sofa-cleaning",
-  title: "تنظيف كنب ومفروشات ومجالس في السعودية",
+  title: "تنظيف كنب ومفروشات ومجالس في الرياض",
   shortTitle: "تنظيف كنب",
   excerpt:
     "تنظيف الكنب والمجالس والمفروشات بمواد وطرق مناسبة للأنسجة لإزالة الأتربة والبقع والروائح مع الحفاظ على الألوان قدر الإمكان.",

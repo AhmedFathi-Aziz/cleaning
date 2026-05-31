@@ -4,8 +4,6 @@ import { SiteNationalNews } from "@/components/SiteNationalNews";
 import { loadNationalNews } from "@/lib/national-news-store";
 import { buildArabicPageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = buildArabicPageMetadata({
   title: "الأخبار الوطنية",
   description:
@@ -19,7 +17,7 @@ export const metadata: Metadata = buildArabicPageMetadata({
   ],
 });
 
-export default async function NationalNewsPage() {
-  const articles = await loadNationalNews();
+export default function NationalNewsPage() {
+  const articles = loadNationalNews();
   return <SiteNationalNews articles={articles} />;
 }

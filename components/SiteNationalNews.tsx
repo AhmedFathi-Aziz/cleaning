@@ -41,11 +41,15 @@ export function SiteNationalNews({ articles }: SiteNationalNewsProps) {
               <Icon name="newspaper" className="mx-auto mb-4 text-4xl text-primary/40" />
               <p className="font-headline text-lg font-bold text-primary">لا يوجد محتوى منشور حالياً</p>
               <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed">
-                أضف أخباراً من{" "}
-                <Link href="/admin" className="font-bold text-secondary underline">
-                  لوحة التحكم
-                </Link>{" "}
-                (بعد ضبط كلمة مرور المشرف) أو عبر الملف الثابت في المشروع.
+                أضف ملف JSON جديد في{" "}
+                <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs font-mono text-primary dark:bg-slate-800">
+                  content/national-news/articles/
+                </code>{" "}
+                — كل خبر في ملف، واسم الملف يحدد رابط الصفحة. راجع{" "}
+                <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs font-mono text-primary dark:bg-slate-800">
+                  content/national-news/README.md
+                </code>
+                .
               </p>
             </div>
           ) : (
@@ -74,7 +78,7 @@ export function SiteNationalNews({ articles }: SiteNationalNewsProps) {
                         href={`/news/${encodeURIComponent(item.slug)}`}
                         className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
                       >
-                        اقرأ المزيد
+                        اقرأ الخبر: {item.title}
                       </Link>
                       {item.sourceUrl ? (
                         <a

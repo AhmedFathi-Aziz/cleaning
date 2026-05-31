@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 export type CycleGalleryImage = {
   src: string | StaticImageData;
   alt: string;
+  /** يُعرض كـ HTML title على الصورة — مفيد لأدوات SEO وللمتصفحات */
+  title?: string;
 };
 
 type CycleGalleryProps = {
@@ -157,9 +159,10 @@ export function CycleGallery({
                 <Image
                   src={image.src}
                   alt={image.alt}
+                  title={image.title ?? image.alt}
                   fill
                   sizes={imageFit === "contain" ? "220px" : `${cardWidth}px`}
-                  quality={75}
+                  quality={58}
                   className={`transition-transform duration-500 ease-out group-hover:scale-[1.04] ${
                     imageFit === "contain" ? "object-contain p-2" : "object-cover"
                   }`}

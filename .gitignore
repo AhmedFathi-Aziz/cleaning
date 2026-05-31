@@ -33,6 +33,10 @@ yarn-error.log*
 .env
 .dev.vars
 
+# Google Cloud service account JSON (Indexing API, etc.) — لا تُرفع إلى Git
+*-indexing-sa.json
+google-service-account*.json
+
 # typescript
 *.tsbuildinfo
 

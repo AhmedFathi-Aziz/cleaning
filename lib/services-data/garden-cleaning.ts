@@ -3,7 +3,7 @@ import type { ServiceArticle } from "@/lib/service-articles-types";
 
 export const gardenCleaningArticle: ServiceArticle = {
   slug: "garden-cleaning",
-  title: "تنظيف الحدائق والمسطحات الخارجية في السعودية",
+  title: "تنظيف الحدائق والمسطحات الخارجية في الرياض",
   shortTitle: "تنظيف حدائق",
   excerpt:
     "تنظيف الحدائق والأرصفة والمسطحات الخضراء وإزالة الأوراق والمخلفات لتحسين مظهر الفناء والحديقة والحد من جذب الحشرات.",

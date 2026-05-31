@@ -3,7 +3,7 @@ import type { ServiceArticle } from "@/lib/service-articles-types";
 
 export const facadeCleaningArticle: ServiceArticle = {
   slug: "facade-cleaning",
-  title: "تنظيف واجهات البيوت والفلل والمباني الزجاجية",
+  title: "تنظيف واجهات البيوت والفلل في الرياض",
   shortTitle: "تنظيف واجهات البيوت",
   excerpt:
     "تنظيف واجهات منازل وفلل ومباني: زجاج، مداخل، وأسطح ظاهرة من الغبار والعوامل الجوية لتحسين المظهر والانطباع.",
@@ -13,6 +13,7 @@ export const facadeCleaningArticle: ServiceArticle = {
     "تنظيف واجهات البيوت",
     "تنظيف واجهات",
     "تنظيف واجهات زجاجية",
+    "تنظيف واجهات عالية",
     "تنظيف واجهات فلل",
     "شركة تنظيف واجهات",
   ],

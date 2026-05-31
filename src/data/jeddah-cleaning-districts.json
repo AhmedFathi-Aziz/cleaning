@@ -1,0 +1,14 @@
+{
+  "citySlug": "jeddah",
+  "districts": [
+    { "name": "الصفا", "slug": "al-safa" },
+    { "name": "أبحر", "slug": "abhur" },
+    { "name": "الروضة", "slug": "al-rawdah" },
+    { "name": "السلامة", "slug": "al-salamah" },
+    { "name": "الحمراء", "slug": "al-hamra" },
+    { "name": "الشاطئ", "slug": "al-shati" },
+    { "name": "النهضة", "slug": "al-nahdah" },
+    { "name": "الزهراء", "slug": "al-zahra" },
+    { "name": "النزهة", "slug": "al-nuzhah" }
+  ]
+}

@@ -3,34 +3,47 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build --experimental-app-only",
-    "dev": "next dev --turbopack",
-    "start": "next start",
+    "favicon:optimize": "node scripts/optimize-favicon.mjs",
+    "blog:sync": "node scripts/sync-blog-articles.mjs",
+    "blog:export-kv": "node scripts/export-kv-posts-to-md.mjs && node scripts/download-kv-blog-media.mjs && npm run blog:sync",
+    "news:sync": "node scripts/sync-national-news-articles.mjs",
+    "content:sync": "npm run blog:sync && npm run news:sync",
+    "prebuild": "node scripts/optimize-favicon.mjs && npm run content:sync",
+    "build": "next build",
+    "dev": "npm run content:sync && next dev --turbopack",
+    "start": "npx serve@14 out",
     "lint": "next lint",
-    "preview": "node scripts/clean-open-next.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "node scripts/clean-open-next.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "node scripts/clean-open-next.mjs && opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "images:build": "node scripts/build-local-images.mjs",
+    "images:check-seo": "node scripts/check-public-image-names.mjs",
+    "indexing:publish": "node scripts/publish-indexing-api.mjs",
+    "images:shrink-cards": "node scripts/shrink-webp.mjs"
   },
   "dependencies": {
+    "lucide-react": "^0.468.0",
     "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
+  "browserslist": [
+    "chrome >= 120",
+    "edge >= 120",
+    "firefox >= 121",
+    "safari >= 17.2",
+    "not dead"
+  ],
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260418.1",
-    "@opennextjs/cloudflare": "^1.19.1",
     "@types/node": "^20.17.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.20",
-    "esbuild": "^0.28.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.2.4",
+    "google-auth-library": "^10.6.2",
     "postcss": "^8.4.49",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.7.2",
-    "wrangler": "^4.85.0"
+    "typescript": "^5.7.2"
   }
 }

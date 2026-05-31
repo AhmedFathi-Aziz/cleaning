@@ -146,6 +146,16 @@ const iconPaths: Record<string, ReactNode> = {
       <circle cx="12" cy="10" r="2.5" />
     </>
   ),
+  menu: (
+    <>
+      <path d="M4 6h16M4 12h16M4 18h16" />
+    </>
+  ),
+  close: (
+    <>
+      <path d="M18 6 6 18M6 6l12 12" />
+    </>
+  ),
 };
 
 export function Icon({ name, className, ...props }: IconProps) {

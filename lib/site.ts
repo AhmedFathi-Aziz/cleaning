@@ -1,6 +1,33 @@
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://saudi-cleaning.com";
+const FALLBACK_SITE_URL = "https://saudi-cleaning.com";
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "::1", "[::1]"]);
 
-export const heroImageUrl =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuDYfBjP5Ey9nThryin2nuNlYWzHfEW7pRPs-4KAsXcLNbTIKZQ9AhRKBnao3bkjQHEGmQDG7wepLkyzuqDxCwLMw9ovIge2usCRh8VsFIu_8SChm4kG0oEcnrleLXDKvAqyy1124mFUYrudSJYhtRsjQGx3wcOuLHoWXcv2-5lWTgECLU0mivgAVnHbrLoypZ7GCYeZi9gwD9IIGunO7Ivqbblfibq8Tihgy6k6w_hWLi9i9b9o3hdOI1KT75gFAKpPyakMjSt9V74E";
+function stripTrailingSlash(url: string) {
+  return url.replace(/\/$/, "");
+}
+
+function isLocalUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    return LOCAL_HOSTNAMES.has(parsed.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
+function resolvePublicSiteUrl() {
+  const candidate = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (!candidate) return FALLBACK_SITE_URL;
+
+  const normalized = stripTrailingSlash(candidate);
+  if (isLocalUrl(normalized)) return FALLBACK_SITE_URL;
+  return normalized;
+}
+
+export const siteUrl = resolvePublicSiteUrl();
+
+/** صورة OG/LCP محلية مضغوطة — يُفضّل مطابقة `/images/hero.webp` */
+export const heroImageUrl = `${siteUrl}/images/hero.webp`;
+
+/** أبعاد `/images/hero.webp` الفعلية — يجب أن تطابق الملف لاجتياز فحص OG في Lighthouse */
+export const ogImageWidth = 512;
+export const ogImageHeight = 512;

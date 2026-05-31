@@ -2,15 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
 import { brandNameAr } from "@/lib/brand";
 import { loadPosts } from "@/lib/post-store";
 import type { BlogPost } from "@/lib/post-types";
+import { buildArabicPageMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
-
-export const metadata: Metadata = {
+export const metadata: Metadata = buildArabicPageMetadata({
   title: "مدونة التنظيف ورش الحشرات",
   description: `مقالات من ${brandNameAr} عن خدمات التنظيف، تنظيف المنازل، غسيل السجاد، تنظيف الواجهات، رش الحشرات ومكافحة الحشرات في المملكة العربية السعودية.`,
+  canonical: "/blog",
   keywords: [
     "مدونة تنظيف",
     "نصائح تنظيف منازل",
@@ -19,15 +20,7 @@ export const metadata: Metadata = {
     "غسيل سجاد",
     "تنظيف واجهات",
   ],
-  alternates: { canonical: "/blog" },
-  openGraph: {
-    title: "مدونة التنظيف ورش الحشرات | السعودية للتنظيف",
-    description: "مقالات مفيدة عن خدمات التنظيف ومكافحة الحشرات في المملكة العربية السعودية.",
-    url: "/blog",
-    type: "website",
-    locale: "ar_SA",
-  },
-};
+});
 
 function getPostImage(post: BlogPost) {
   if (post.coverImage) return post.coverImage;
@@ -35,8 +28,8 @@ function getPostImage(post: BlogPost) {
   return null;
 }
 
-export default async function BlogPage() {
-  const posts = await loadPosts();
+export default function BlogPage() {
+  const posts = loadPosts();
 
   return (
     <main className="px-8 pb-24 pt-32">
@@ -48,13 +41,7 @@ export default async function BlogPage() {
       </div>
       <div className="mx-auto mt-16 grid max-w-5xl gap-10">
         {posts.length === 0 ? (
-          <p className="text-center text-on-surface-variant">
-            لا توجد مقالات بعد. افتح{" "}
-            <Link href="/admin" className="font-bold text-secondary underline">
-              لوحة المحرر
-            </Link>{" "}
-            لإضافة مقال (بعد ضبط ADMIN_PASSWORD).
-          </p>
+          <p className="text-center text-on-surface-variant">لا توجد مقالات بعد.</p>
         ) : (
           posts.map((post) => {
             const img = getPostImage(post);
@@ -63,18 +50,20 @@ export default async function BlogPage() {
                 key={post.slug}
                 className="flex flex-col overflow-hidden rounded-2xl border border-surface-container bg-surface-container-lowest shadow-sm transition hover:shadow-md md:flex-row-reverse"
               >
-                {img ? (
-                  <div className="relative aspect-video w-full md:w-1/3">
+                <div className="relative aspect-video w-full shrink-0 overflow-hidden md:w-1/3">
+                  {img ? (
                     <Image
                       src={img}
-                      alt=""
+                      alt={`صورة غلاف المقال: ${post.title}`}
                       fill
                       className="object-cover"
                       sizes="(min-width: 768px) 33vw, 100vw"
                       unoptimized
                     />
-                  </div>
-                ) : null}
+                  ) : (
+                    <BlogCoverPlaceholder slug={post.slug} icon="shield_person" className="absolute inset-0 size-full" />
+                  )}
+                </div>
                 <div className="flex flex-1 flex-col justify-center p-8 text-right">
                   <time className="text-sm text-on-surface-variant" dateTime={post.publishedAt}>
                     {new Date(post.publishedAt).toLocaleDateString("ar-SA")}
@@ -89,7 +78,7 @@ export default async function BlogPage() {
                     href={`/blog/${encodeURIComponent(post.slug)}`}
                     className="mt-4 inline-flex font-bold text-secondary hover:underline"
                   >
-                    اقرأ المزيد
+                    اقرأ مقال «{post.title}»
                   </Link>
                 </div>
               </article>

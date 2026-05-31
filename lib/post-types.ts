@@ -14,10 +14,3 @@ export type BlogPost = {
   updatedAt?: string;
 };
 
-export const R2_POSTS_KEY = "posts.json";
-export const R2_MEDIA_PREFIX = "media/";
-/** مفتاح قائمة المقالات في KV */
-export const KV_POSTS_KEY = "posts.json";
-/** بادئة مفاتيح الصور في KV */
-export const KV_MEDIA_PREFIX = "m:";
-export const SESSION_COOKIE = "itqan_session";
