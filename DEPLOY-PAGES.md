@@ -9,14 +9,15 @@
 
 | الحقل | القيمة |
 |--------|--------|
-| Build command | `npm ci && npm run build` |
+| Build command | `npm run build` |
 | Build output directory | `out` |
 | Node version | `20` |
 
-> **مهم:** ارفع إلى Git ملفَي `package-lock.json` و`.npmrc` مع كل التعديلات. بدونهم يفشل `npm ci` على Cloudflare.
+> **مهم:** ارفع `package.json` و`package-lock.json` و`.npmrc` معاً في كل commit.
 
-إذا استمر الفشل، جرّب أمر البناء:
-`npm install && npm run build`
+**إذا فشل `npm ci` (مثل `@emnapi/core` missing):**
+- Environment variable: `SKIP_DEPENDENCY_INSTALL` = `true`
+- Build command: `npm install && npm run build`
 
 ## متغيرات البيئة (اختياري)
 
