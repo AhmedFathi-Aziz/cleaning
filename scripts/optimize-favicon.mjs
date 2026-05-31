@@ -1,23 +1,28 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { renderBrandIcon } from "./lib/render-brand-icon.mjs";
+
 const publicDir = path.join(process.cwd(), "public");
+const appDir = path.join(process.cwd(), "app");
+
+/** مصدر واحد = نفس ملف الهيدر بعد إزالة الخلفية */
 const candidates = [
+  path.join(publicDir, "brand-logo.png"),
   path.join(publicDir, "favicon.png"),
-  path.join(publicDir, "saudi-emblem.png"),
   path.join(publicDir, "brand-logo-source.png"),
 ];
 
 /** ICO واحد يحتوي PNG (مدعوم Windows/macOS/Chrome) */
-function pngToIco(pngBuffer, size) {
+function pngToIco(pngBuffer) {
   const header = Buffer.alloc(6);
   header.writeUInt16LE(0, 0);
   header.writeUInt16LE(1, 2);
   header.writeUInt16LE(1, 4);
 
   const entry = Buffer.alloc(16);
-  entry[0] = size >= 256 ? 0 : size;
-  entry[1] = size >= 256 ? 0 : size;
+  entry[0] = 32;
+  entry[1] = 32;
   entry.writeUInt16LE(1, 4);
   entry.writeUInt16LE(32, 6);
   entry.writeUInt32LE(pngBuffer.length, 8);
@@ -30,7 +35,7 @@ async function writeIcoFromExisting32() {
   const favicon32 = path.join(publicDir, "favicon-32.png");
   if (!fs.existsSync(favicon32)) return false;
   const png = fs.readFileSync(favicon32);
-  const ico = pngToIco(png, 32);
+  const ico = pngToIco(png);
   fs.writeFileSync(path.join(publicDir, "favicon.ico"), ico);
   console.log(`✓ favicon.ico ← favicon-32.png (${(ico.length / 1024).toFixed(1)} KiB)`);
   return true;
@@ -56,33 +61,46 @@ async function main() {
     return;
   }
 
-  const resizeOpts = {
-    fit: "contain",
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  };
-
   const sizes = [
+    [16, "favicon-16.png"],
     [32, "favicon-32.png"],
     [48, "favicon-48.png"],
     [180, "apple-touch-icon.png"],
   ];
 
   let favicon32 = null;
+  let favicon48 = null;
 
   for (const [size, name] of sizes) {
-    const buf = await sharp(input)
-      .resize(size, size, resizeOpts)
-      .png({ compressionLevel: 9 })
-      .toBuffer();
+    const buf = await renderBrandIcon(sharp, input, size);
     await fs.promises.writeFile(path.join(publicDir, name), buf);
     if (size === 32) favicon32 = buf;
+    if (size === 48) favicon48 = buf;
     console.log(`✓ ${name} ← ${path.basename(input)} (${(buf.length / 1024).toFixed(1)} KiB)`);
   }
 
   if (favicon32) {
-    const ico = pngToIco(favicon32, 32);
+    const ico = pngToIco(favicon32);
     await fs.promises.writeFile(path.join(publicDir, "favicon.ico"), ico);
     console.log(`✓ favicon.ico (${(ico.length / 1024).toFixed(1)} KiB)`);
+  }
+
+  const appIcon = favicon48 ?? favicon32;
+  if (appIcon) {
+    await fs.promises.mkdir(appDir, { recursive: true });
+    await fs.promises.writeFile(path.join(appDir, "icon.png"), appIcon);
+    console.log("✓ app/icon.png");
+  }
+
+  const faviconIco = path.join(publicDir, "favicon.ico");
+  const apple48 = path.join(publicDir, "apple-touch-icon.png");
+  if (fs.existsSync(faviconIco)) {
+    await fs.promises.copyFile(faviconIco, path.join(appDir, "favicon.ico"));
+    console.log("✓ app/favicon.ico");
+  }
+  if (fs.existsSync(apple48)) {
+    await fs.promises.copyFile(apple48, path.join(appDir, "apple-icon.png"));
+    console.log("✓ app/apple-icon.png");
   }
 }
 

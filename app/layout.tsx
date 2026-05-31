@@ -42,15 +42,6 @@ export const metadata: Metadata = {
   creator: brandNameAr,
   publisher: brandNameAr,
   applicationName: brandNameAr,
-  icons: {
-    icon: [
-      { url: "/favicon.ico", type: "image/x-icon", sizes: "any" },
-      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
-      { url: "/favicon-48.png", type: "image/png", sizes: "48x48" },
-    ],
-    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
-    shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
-  },
   robots: {
     index: true,
     follow: true,

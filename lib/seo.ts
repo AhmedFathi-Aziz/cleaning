@@ -79,6 +79,10 @@ const locationSeoKeywords = locations.flatMap((city) => [
 export const arabicSeoKeywords = [...new Set([...coreCleaningKeywords, ...locationSeoKeywords])];
 
 export function getMetadataBase() {
+  if (process.env.NODE_ENV === "development") {
+    const port = process.env.PORT?.trim() || "3000";
+    return new URL(`http://127.0.0.1:${port}`);
+  }
   return new URL(siteUrl);
 }
 
