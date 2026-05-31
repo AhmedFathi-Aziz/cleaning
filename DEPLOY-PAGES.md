@@ -9,9 +9,14 @@
 
 | الحقل | القيمة |
 |--------|--------|
-| Build command | `npm run build` |
+| Build command | `npm ci && npm run build` |
 | Build output directory | `out` |
-| Node version | `20` (أو أحدث LTS) |
+| Node version | `20` |
+
+> **مهم:** ارفع إلى Git ملفَي `package-lock.json` و`.npmrc` مع كل التعديلات. بدونهم يفشل `npm ci` على Cloudflare.
+
+إذا استمر الفشل، جرّب أمر البناء:
+`npm install && npm run build`
 
 ## متغيرات البيئة (اختياري)
 
