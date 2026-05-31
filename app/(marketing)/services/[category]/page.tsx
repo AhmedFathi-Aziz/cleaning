@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const heroImageAlt = buildServiceHeroImageAlt(service);
 
   return buildArabicPageMetadata({
-    title: service.title,
-    description: service.excerpt,
+    title: service.seoTitle ?? service.title,
+    description: service.seoDescription ?? service.excerpt,
     keywords: service.keywords,
     canonical,
     image: service.image,
@@ -191,6 +191,18 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                   {index + 1}
                 </div>
                 <h2 className="font-headline text-2xl font-extrabold text-primary md:text-3xl">{section.heading}</h2>
+                {index === 0 && service.contentImage ? (
+                  <figure className="relative mt-6 aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-100">
+                    <Image
+                      src={service.contentImage}
+                      alt={service.contentImageAlt ?? service.title}
+                      fill
+                      loading="lazy"
+                      sizes="(min-width: 1024px) 720px, 100vw"
+                      className="object-cover"
+                    />
+                  </figure>
+                ) : null}
                 <div className="mt-4 space-y-4">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph} className="text-base leading-9 text-on-surface-variant">

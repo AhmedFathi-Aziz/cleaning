@@ -17,7 +17,8 @@
     "images:build": "node scripts/build-local-images.mjs",
     "images:check-seo": "node scripts/check-public-image-names.mjs",
     "indexing:publish": "node scripts/publish-indexing-api.mjs",
-    "images:shrink-cards": "node scripts/shrink-webp.mjs"
+    "images:shrink-cards": "node scripts/shrink-webp.mjs",
+    "images:pages": "node scripts/optimize-page-images.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

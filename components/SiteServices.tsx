@@ -3,7 +3,14 @@ import Link from "next/link";
 
 import { images } from "@/lib/assets";
 import { Icon } from "@/components/Icon";
-import { marketingLayoutImageAlt } from "@/lib/image-seo";
+import {
+  buildServiceHeroImageAlt,
+  buildServiceHeroImageTitle,
+  marketingLayoutImageAlt,
+} from "@/lib/image-seo";
+import { serviceArticles } from "@/lib/service-articles";
+
+const [featuredService, ...otherServices] = serviceArticles;
 
 export function SiteServices() {
   return (
@@ -120,6 +127,103 @@ export function SiteServices() {
             </div>
           </div>
         </div>
+      </section>
+
+      {featuredService ? (
+        <section
+          className="mx-auto mt-24 max-w-7xl px-8"
+          aria-labelledby="featured-service-heading"
+        >
+          <div className="mb-8 flex flex-col gap-3 text-right md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-extrabold text-secondary">خدمة رئيسية في الرياض</p>
+              <h2
+                id="featured-service-heading"
+                className="font-headline mt-2 text-3xl font-extrabold text-primary md:text-4xl"
+              >
+                {featuredService.title}
+              </h2>
+            </div>
+            <p className="max-w-lg text-sm font-medium leading-7 text-on-surface-variant md:text-base">
+              دليل شامل للبحث عن شركة تنظيف موثوقة في العاصمة — مع تفاصيل الخدمة، الأحياء، والأسعار.
+            </p>
+          </div>
+
+          <Link
+            href={`/services/${featuredService.slug}`}
+            className="group relative flex min-h-[min(75svh,22rem)] overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_55px_rgba(30,58,138,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(30,58,138,0.14)] sm:min-h-[24rem] md:grid md:min-h-[28rem] md:grid-cols-[1.05fr_0.95fr] md:rounded-[2.5rem]"
+          >
+            <div className="relative min-h-[220px] bg-primary-container/10 md:min-h-full">
+              <Image
+                src={featuredService.image}
+                alt={buildServiceHeroImageAlt(featuredService)}
+                title={buildServiceHeroImageTitle(featuredService)}
+                fill
+                loading="lazy"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/15 to-transparent md:bg-gradient-to-l md:from-primary/60 md:via-primary/10 md:to-transparent"
+                aria-hidden
+              />
+            </div>
+            <div className="flex flex-col justify-center p-7 text-right md:p-10">
+              <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lg">
+                <Icon name={featuredService.icon} className="text-2xl" />
+              </span>
+              <h3 className="font-headline text-2xl font-extrabold leading-snug text-primary md:text-3xl">
+                {featuredService.title}
+              </h3>
+              <p className="mt-4 text-base font-medium leading-8 text-on-surface-variant">
+                {featuredService.excerpt}
+              </p>
+              <ul className="mt-5 space-y-2 text-sm font-semibold text-on-surface-variant">
+                {featuredService.includes.slice(0, 3).map((item) => (
+                  <li key={item} className="flex items-center justify-end gap-2">
+                    <span>{item}</span>
+                    <Icon name="check_circle" className="shrink-0 text-lg text-secondary" />
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">
+                اقرأ التفاصيل الكاملة
+                <Icon name="arrow_back" className="text-lg transition-transform group-hover:-translate-x-1" />
+              </span>
+            </div>
+          </Link>
+        </section>
+      ) : null}
+
+      <section className="mx-auto mt-16 max-w-7xl px-8 pb-8" aria-labelledby="all-services-heading">
+        <h2 id="all-services-heading" className="font-headline text-2xl font-extrabold text-primary md:text-3xl">
+          صفحات خدماتنا بالتفصيل
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm font-medium leading-7 text-on-surface-variant md:text-base">
+          اختر الخدمة المناسبة لمساحتك — كل بطاقة تفتح صفحة تفصيلية بالأسعار، الخطوات، والأسئلة الشائعة.
+        </p>
+        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {otherServices.map((service) => (
+            <li key={service.slug}>
+              <Link
+                href={`/services/${service.slug}`}
+                className="group flex h-full flex-col rounded-3xl border border-slate-100 bg-white p-6 text-right shadow-sm transition hover:-translate-y-1 hover:border-primary/20 hover:shadow-md"
+              >
+                <span className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary/10 text-secondary">
+                  <Icon name={service.icon} className="text-2xl" />
+                </span>
+                <h3 className="font-headline text-xl font-extrabold text-primary group-hover:text-secondary">
+                  {service.title}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-7 text-on-surface-variant">{service.excerpt}</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-secondary">
+                  التفاصيل
+                  <Icon name="arrow_back" className="text-base transition-transform group-hover:-translate-x-1" />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mx-auto mt-24 max-w-7xl px-8 text-right" aria-labelledby="services-guide-heading">

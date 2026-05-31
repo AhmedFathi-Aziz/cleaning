@@ -34,4 +34,6 @@ export const images = {
     "https://images.pexels.com/photos/7033891/pexels-photo-7033891.jpeg?auto=compress&cs=tinysrgb&w=900",
   /** نموذج بصري لشكل تقرير كشف تسربات (SVG) — صفحة التقدير ومحتوى التسربات */
   leakDetectionReportSample: "/images/leak-detection-report-sample.svg",
+  cleaningCompanyRiyadhHero: "/images/cleaning-company-riyadh/hero.webp",
+  cleaningCompanyRiyadhTeam: "/images/cleaning-company-riyadh/team.webp",
 } as const;
