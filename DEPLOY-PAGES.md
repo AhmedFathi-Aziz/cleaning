@@ -21,9 +21,9 @@
 
 ## النطاق المخصص
 
-1. في مشروع Pages → **Custom domains** → أضف `saudi-cleaning.com`.
-2. عيّن النطاق كـ **Primary**.
-3. ملف `public/_redirects` يوجّه `www` و`http` إلى النطاق الأساسي بـ HTTPS.
+1. في مشروع Pages → **Custom domains** → أضف `saudi-cleaning.com` و`www.saudi-cleaning.com`.
+2. عيّن **`saudi-cleaning.com`** كـ **Primary domain**.
+3. Cloudflare يوجّه `www` تلقائياً إلى النطاق الأساسي — **لا تستخدم** `_redirects` بروابط مطلقة (`https://...`)؛ Pages يقبل مسارات نسبية فقط ولن يطبّق تلك القواعد.
 
 ## إضافة محتوى
 
