@@ -21,6 +21,8 @@ export type ServiceArticle = {
   seoTitle?: string;
   seoDescription?: string;
   image: string;
+  /** كفر شعار على خلفية بيضاء — يُعرض كاملاً دون قصّ */
+  heroImageFit?: "contain" | "cover";
   /** صورة محتوى اختيارية — تُعرض داخل المقال بعد المقدمة */
   contentImage?: string;
   contentImageAlt?: string;

@@ -12,86 +12,69 @@ import type { ServiceArticle } from "@/lib/service-articles-types";
 import { serviceArticles } from "@/lib/service-articles";
 
 /** صفحات هبوط رئيسية تظهر كبطاقات مميزة في /services */
-const LANDING_SERVICE_SLUGS = ["cleaning-company-riyadh", "house-cleaning"] as const;
+const LANDING_SERVICE_SLUGS = ["cleaning-company-riyadh", "house-cleaning", "villa-cleaning-riyadh"] as const;
+
+const isLandingSlug = (slug: string): slug is (typeof LANDING_SERVICE_SLUGS)[number] =>
+  (LANDING_SERVICE_SLUGS as readonly string[]).includes(slug);
 
 const landingServices = LANDING_SERVICE_SLUGS.flatMap((slug) => {
   const article = serviceArticles.find((s) => s.slug === slug);
   return article ? [article] : [];
 });
 
-const otherServices = serviceArticles.filter(
-  (s) => !LANDING_SERVICE_SLUGS.includes(s.slug as (typeof LANDING_SERVICE_SLUGS)[number]),
-);
+const otherServices = serviceArticles.filter((s) => !isLandingSlug(s.slug));
 
-function ServiceLandingCard({
-  service,
-  imageFirst = true,
-}: {
-  service: ServiceArticle;
-  imageFirst?: boolean;
-}) {
-  const imageBlock = (
-    <div className="relative min-h-[220px] bg-primary-container/10 md:min-h-full">
-      <Image
-        src={service.image}
-        alt={buildServiceHeroImageAlt(service)}
-        title={buildServiceHeroImageTitle(service)}
-        fill
-        loading="lazy"
-        sizes="(min-width: 768px) 50vw, 100vw"
-        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-      />
-      <div
-        className={`absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/15 to-transparent ${
-          imageFirst
-            ? "md:bg-gradient-to-l md:from-primary/60 md:via-primary/10 md:to-transparent"
-            : "md:bg-gradient-to-r md:from-primary/60 md:via-primary/10 md:to-transparent"
-        }`}
-        aria-hidden
-      />
-    </div>
-  );
-
-  const textBlock = (
-    <div className="flex flex-col justify-center p-7 text-right md:p-10">
-      <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lg">
-        <Icon name={service.icon} className="text-2xl" />
-      </span>
-      <h3 className="font-headline text-2xl font-extrabold leading-snug text-primary md:text-3xl">{service.title}</h3>
-      <p className="mt-4 text-base font-medium leading-8 text-on-surface-variant">{service.excerpt}</p>
-      <ul className="mt-5 space-y-2 text-sm font-semibold text-on-surface-variant">
-        {service.includes.slice(0, 3).map((item) => (
-          <li key={item} className="flex items-center justify-end gap-2">
-            <span>{item}</span>
-            <Icon name="check_circle" className="shrink-0 text-lg text-secondary" />
-          </li>
-        ))}
-      </ul>
-      <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-secondary">
-        اقرأ التفاصيل الكاملة
-        <Icon name="arrow_back" className="text-lg transition-transform group-hover:-translate-x-1" />
-      </span>
-    </div>
-  );
+function ServicePageCard({ service }: { service: ServiceArticle }) {
+  const featured = isLandingSlug(service.slug);
 
   return (
     <Link
       href={`/services/${service.slug}`}
-      className={`group relative flex min-h-[min(75svh,22rem)] overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_55px_rgba(30,58,138,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(30,58,138,0.14)] sm:min-h-[24rem] md:min-h-[28rem] md:rounded-[2.5rem] ${
-        imageFirst ? "md:grid md:grid-cols-[1.05fr_0.95fr]" : "md:grid md:grid-cols-[0.95fr_1.05fr]"
-      }`}
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white text-right shadow-[0_12px_40px_rgba(30,58,138,0.06)] transition hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_18px_48px_rgba(30,58,138,0.12)]"
     >
-      {imageFirst ? (
-        <>
-          {imageBlock}
-          {textBlock}
-        </>
-      ) : (
-        <>
-          <div className="md:order-2">{imageBlock}</div>
-          <div className="md:order-1">{textBlock}</div>
-        </>
-      )}
+      <div
+        className={`relative aspect-square w-full shrink-0 ${
+          service.heroImageFit === "contain" ? "bg-white" : "bg-primary-container/10"
+        }`}
+      >
+        <Image
+          src={service.image}
+          alt={buildServiceHeroImageAlt(service)}
+          title={buildServiceHeroImageTitle(service)}
+          fill
+          loading="lazy"
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className={
+            service.heroImageFit === "contain"
+              ? "object-contain object-center p-2 transition-transform duration-500 group-hover:scale-[1.02]"
+              : "object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          }
+        />
+        {service.heroImageFit !== "contain" ? (
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-primary/75 via-primary/10 to-transparent"
+            aria-hidden
+          />
+        ) : null}
+        {featured ? (
+          <span className="absolute start-3 top-3 rounded-full bg-secondary px-3 py-1 text-xs font-bold text-white shadow-sm">
+            الأكثر طلباً
+          </span>
+        ) : null}
+        <span className="absolute bottom-3 end-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/95 text-primary shadow-md backdrop-blur-sm">
+          <Icon name={service.icon} className="text-2xl" />
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-headline text-lg font-extrabold leading-snug text-primary group-hover:text-secondary md:text-xl">
+          {service.title}
+        </h3>
+        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-7 text-on-surface-variant">{service.excerpt}</p>
+        <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-secondary">
+          التفاصيل والحجز
+          <Icon name="arrow_back" className="text-base transition-transform group-hover:-translate-x-1" />
+        </span>
+      </div>
     </Link>
   );
 }
@@ -126,10 +109,10 @@ export function SiteServices() {
                   أسهل على المدى القصير.
                 </p>
                 <Link
-                  href="/contact"
+                  href="/services/villa-cleaning-riyadh"
                   className="group/link flex cursor-pointer items-center gap-2 font-bold text-secondary"
                 >
-                  <span>احجز أو استفسر عن تنظيف الفلل والقصور</span>
+                  <span>تفاصيل تنظيف الفلل والقصور في الرياض</span>
                   <Icon name="arrow_back" className="text-sm transition-transform group-hover/link:-translate-x-2" />
                 </Link>
               </div>
@@ -224,15 +207,16 @@ export function SiteServices() {
               صفحات خدماتنا الأكثر طلباً
             </h2>
             <p className="mt-4 text-sm font-medium leading-7 text-on-surface-variant md:text-base">
-              دلائل تفصيلية للحجز والمقارنة — اضغط على الخدمة لقراءة الخطوات، الأحياء، والأسئلة الشائعة.
+              شركة تنظيف، تنظيف منازل، وتنظيف فلل — دلائل تفصيلية للحجز والمقارنة في الرياض.
             </p>
           </div>
-
-          <div className="space-y-10">
-            {landingServices.map((service, index) => (
-              <ServiceLandingCard key={service.slug} service={service} imageFirst={index % 2 === 0} />
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {landingServices.map((service) => (
+              <li key={service.slug} className="min-h-0">
+                <ServicePageCard service={service} />
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       ) : null}
 
@@ -241,7 +225,7 @@ export function SiteServices() {
           صفحات خدماتنا بالتفصيل
         </h2>
         <p className="mt-3 max-w-2xl text-sm font-medium leading-7 text-on-surface-variant md:text-base">
-          اختر الخدمة المناسبة لمساحتك — كل بطاقة تفتح صفحة تفصيلية بالأسعار، الخطوات، والأسئلة الشائعة.
+          اختر الخدمة المناسبة لمساحتك — كل بطاقة تفتح صفحة تفصيلية بالخطوات والأسئلة الشائعة.
         </p>
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {otherServices.map((service) => (

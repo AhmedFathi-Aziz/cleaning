@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
 import { ServicePageJsonLd } from "@/components/SeoJsonLd";
+import { ServiceArticleParagraph } from "@/components/ServiceArticleParagraph";
 import { ServicePageTableOfContents } from "@/components/ServicePageTableOfContents";
 import { ServicePestGuidesPromo } from "@/components/ServicePestGuidesPromo";
 import { ServiceRiyadhAreasTeaser } from "@/components/ServiceRiyadhAreasTeaser";
@@ -74,9 +75,20 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className={
+              service.heroImageFit === "contain"
+                ? "object-contain object-center p-3 md:p-5"
+                : "object-cover"
+            }
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-white via-white/90 to-white/55" aria-hidden />
+          <div
+            className={
+              service.heroImageFit === "contain"
+                ? "absolute inset-0 bg-gradient-to-l from-white via-white/95 to-white/70 md:max-w-[58%]"
+                : "absolute inset-0 bg-gradient-to-l from-white via-white/90 to-white/55"
+            }
+            aria-hidden
+          />
           <div className="relative z-10 w-full p-7 md:p-10">
             <div className="max-w-3xl">
               <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lg">
@@ -206,7 +218,10 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                 <div className="mt-4 space-y-4">
                   {section.paragraphs.map((paragraph, paragraphIndex) => (
                     <div key={paragraph}>
-                      <p className="text-base leading-9 text-on-surface-variant">{paragraph}</p>
+                      <ServiceArticleParagraph
+                        text={paragraph}
+                        className="text-base leading-9 text-on-surface-variant"
+                      />
                       {service.contentImage &&
                       service.contentImageDisplay === "full" &&
                       index === (service.contentImageSectionIndex ?? 1) &&

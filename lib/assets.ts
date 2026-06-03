@@ -38,4 +38,6 @@ export const images = {
   cleaningCompanyRiyadhTeam: "/images/cleaning-company-riyadh/team.webp",
   houseCleaningRiyadhHero: "/images/house-cleaning-riyadh/hero.webp",
   houseCleaningRiyadhLivingRoom: "/images/house-cleaning-riyadh/living-room.webp",
+  villaCleaningRiyadhHero: "/images/villa-cleaning-riyadh/hero.webp",
+  villaCleaningRiyadhInterior: "/images/villa-cleaning-riyadh/villa-interior.webp",
 } as const;

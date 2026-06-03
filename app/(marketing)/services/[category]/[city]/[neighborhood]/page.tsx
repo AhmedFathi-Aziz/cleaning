@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
+import { ServiceArticleParagraph } from "@/components/ServiceArticleParagraph";
 import { ServiceLocationJsonLd } from "@/components/SeoJsonLd";
 import { brandNameAr } from "@/lib/brand";
 import { buildServiceHeroImageAlt } from "@/lib/image-seo";
@@ -196,9 +197,11 @@ export default async function ServiceLocationPage({ params }: PageProps) {
                 <h2 className="font-headline text-2xl font-extrabold text-primary md:text-3xl">{section.heading}</h2>
                 <div className="mt-4 space-y-4">
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph.slice(0, 56)} className="text-base leading-9 text-on-surface-variant">
-                      {paragraph}
-                    </p>
+                    <ServiceArticleParagraph
+                      key={paragraph.slice(0, 56)}
+                      text={paragraph}
+                      className="text-base leading-9 text-on-surface-variant"
+                    />
                   ))}
                 </div>
                 {section.bullets?.length ? (

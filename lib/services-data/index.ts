@@ -10,11 +10,13 @@ import { pestControlArticle } from "./pest-control";
 import { serviceRiyadhExtraFaqs } from "./riyadh-extra-faqs";
 import { serviceRiyadhExtraSections } from "./riyadh-extra-sections";
 import { sofaCleaningArticle } from "./sofa-cleaning";
+import { villaCleaningRiyadhArticle } from "./villa-cleaning-riyadh";
 import { waterTankCleaningArticle } from "./water-tank-cleaning";
 
 const baseServiceArticles: ServiceArticle[] = [
   cleaningCompanyRiyadhArticle,
   houseCleaningArticle,
+  villaCleaningRiyadhArticle,
   deepHomeCleaningArticle,
   carpetCleaningArticle,
   facadeCleaningArticle,
