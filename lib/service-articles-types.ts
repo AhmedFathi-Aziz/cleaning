@@ -1,7 +1,15 @@
+export type ServiceSectionCta = {
+  label: string;
+  href: string;
+  /** بعد أي فقرة يظهر الزر (افتراضي: آخر فقرة) */
+  afterParagraphIndex?: number;
+};
+
 export type ServiceSection = {
   heading: string;
   paragraphs: string[];
   bullets?: string[];
+  cta?: ServiceSectionCta;
 };
 
 export type ServiceArticle = {
@@ -16,6 +24,14 @@ export type ServiceArticle = {
   /** صورة محتوى اختيارية — تُعرض داخل المقال بعد المقدمة */
   contentImage?: string;
   contentImageAlt?: string;
+  /** عرض الصورة كاملة بدون قصّ (افتراضي: inline داخل أول قسم) */
+  contentImageDisplay?: "full" | "inline";
+  contentImageWidth?: number;
+  contentImageHeight?: number;
+  /** داخل أي قسم تُدرج الصورة (افتراضي: 1) */
+  contentImageSectionIndex?: number;
+  /** بعد أي فقرة في ذلك القسم (افتراضي: 0 = بعد الأولى) */
+  contentImageAfterParagraph?: number;
   icon: string;
   keywords: string[];
   /** نقاط سريعة تظهر تحت المقدمة لتسهيل المسح البصري */

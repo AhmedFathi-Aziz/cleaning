@@ -24,6 +24,22 @@ const baseServiceArticles: ServiceArticle[] = [
   gardenCleaningArticle,
 ];
 
+function mergeFaqsByQuestion(
+  base: ServiceArticle["faqs"],
+  extra: ServiceArticle["faqs"],
+): ServiceArticle["faqs"] {
+  const seen = new Set<string>();
+  const merged: ServiceArticle["faqs"] = [];
+
+  for (const faq of [...base, ...extra]) {
+    if (seen.has(faq.question)) continue;
+    seen.add(faq.question);
+    merged.push(faq);
+  }
+
+  return merged;
+}
+
 function enrichServiceForRiyadh(article: ServiceArticle): ServiceArticle {
   const extraSections = serviceRiyadhExtraSections[article.slug] ?? [];
   const extraFaqs = serviceRiyadhExtraFaqs[article.slug] ?? [];
@@ -36,7 +52,7 @@ function enrichServiceForRiyadh(article: ServiceArticle): ServiceArticle {
     ...article,
     keywords: [...new Set([...article.keywords, ...riyadhKeywords])],
     sections: [...article.sections, ...extraSections],
-    faqs: [...article.faqs, ...extraFaqs],
+    faqs: mergeFaqsByQuestion(article.faqs, extraFaqs),
   };
 }
 

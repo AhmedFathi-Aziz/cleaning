@@ -10,10 +10,10 @@ const root = process.cwd();
 const pagesDir = path.join(root, "public", "pages");
 const outBase = path.join(root, "public", "images");
 
-/** @type {{ folderMatch: RegExp; jobs: { inputPattern: RegExp; outputs: { file: string; width: number; quality: number; maxKb?: number }[] }[] }[]} */
+/** @type {{ folderName: string; jobs: { inputPattern: RegExp; outputs: { file: string; width: number; quality: number; maxKb?: number }[] }[] }[]} */
 const pageConfigs = [
   {
-    folderMatch: /تنظيف.*رياض|cleaning.*riyadh/i,
+    folderName: "شركة تنظيف بالرياض",
     jobs: [
       {
         inputPattern: /^hero/i,
@@ -25,11 +25,33 @@ const pageConfigs = [
         ],
       },
       {
-        inputPattern: /شركة|company|content/i,
+        inputPattern: /شركة|company/i,
         outputs: [
           { file: "cleaning-company-riyadh/team-960.webp", width: 960, quality: 72, maxKb: 150 },
           { file: "cleaning-company-riyadh/team-640.webp", width: 640, quality: 70, maxKb: 100 },
           { file: "cleaning-company-riyadh/team.webp", width: 960, quality: 72, maxKb: 140 },
+        ],
+      },
+    ],
+  },
+  {
+    folderName: "تنظيف منازل بالرياض",
+    jobs: [
+      {
+        inputPattern: /^hero/i,
+        outputs: [
+          { file: "house-cleaning-riyadh/hero-1920.webp", width: 1920, quality: 78, maxKb: 300 },
+          { file: "house-cleaning-riyadh/hero-1200.webp", width: 1200, quality: 76, maxKb: 220 },
+          { file: "house-cleaning-riyadh/hero-768.webp", width: 768, quality: 74, maxKb: 120 },
+          { file: "house-cleaning-riyadh/hero.webp", width: 1400, quality: 76, maxKb: 280 },
+        ],
+      },
+      {
+        inputPattern: /تنظيف منازل/i,
+        outputs: [
+          { file: "house-cleaning-riyadh/living-room-960.webp", width: 960, quality: 72, maxKb: 150 },
+          { file: "house-cleaning-riyadh/living-room-640.webp", width: 640, quality: 70, maxKb: 100 },
+          { file: "house-cleaning-riyadh/living-room.webp", width: 960, quality: 72, maxKb: 140 },
         ],
       },
     ],
@@ -63,7 +85,7 @@ async function main() {
   const folders = fs.readdirSync(pagesDir, { withFileTypes: true }).filter((d) => d.isDirectory());
 
   for (const folder of folders) {
-    const config = pageConfigs.find((c) => c.folderMatch.test(folder.name));
+    const config = pageConfigs.find((c) => c.folderName === folder.name);
     if (!config) {
       console.log(`⊘ تخطي ${folder.name} — لا إعداد`);
       continue;

@@ -46,7 +46,11 @@ export default function CleaningProgrammaticHubPage() {
           const isPrimary = seed.citySlug === riyadhSlug;
 
           return (
-            <section key={seed.citySlug} className={isPrimary ? "mt-10" : "mt-14 border-t border-slate-200 pt-10"}>
+            <section
+              key={seed.citySlug}
+              id={isPrimary ? "riyadh" : undefined}
+              className={isPrimary ? "mt-10 scroll-mt-28" : "mt-14 scroll-mt-28 border-t border-slate-200 pt-10"}
+            >
               <h2 className="font-headline text-xl font-extrabold text-primary md:text-2xl">
                 {city.name}
                 {isPrimary ? " (التغطية الرئيسية)" : ""}

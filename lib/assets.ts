@@ -36,4 +36,6 @@ export const images = {
   leakDetectionReportSample: "/images/leak-detection-report-sample.svg",
   cleaningCompanyRiyadhHero: "/images/cleaning-company-riyadh/hero.webp",
   cleaningCompanyRiyadhTeam: "/images/cleaning-company-riyadh/team.webp",
+  houseCleaningRiyadhHero: "/images/house-cleaning-riyadh/hero.webp",
+  houseCleaningRiyadhLivingRoom: "/images/house-cleaning-riyadh/living-room.webp",
 } as const;

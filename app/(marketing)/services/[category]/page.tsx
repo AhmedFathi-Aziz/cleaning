@@ -191,7 +191,7 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                   {index + 1}
                 </div>
                 <h2 className="font-headline text-2xl font-extrabold text-primary md:text-3xl">{section.heading}</h2>
-                {index === 0 && service.contentImage ? (
+                {index === 0 && service.contentImage && service.contentImageDisplay !== "full" ? (
                   <figure className="relative mt-6 aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-100">
                     <Image
                       src={service.contentImage}
@@ -204,10 +204,39 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                   </figure>
                 ) : null}
                 <div className="mt-4 space-y-4">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph} className="text-base leading-9 text-on-surface-variant">
-                      {paragraph}
-                    </p>
+                  {section.paragraphs.map((paragraph, paragraphIndex) => (
+                    <div key={paragraph}>
+                      <p className="text-base leading-9 text-on-surface-variant">{paragraph}</p>
+                      {service.contentImage &&
+                      service.contentImageDisplay === "full" &&
+                      index === (service.contentImageSectionIndex ?? 1) &&
+                      paragraphIndex === (service.contentImageAfterParagraph ?? 0) ? (
+                        <figure className="my-7 flex justify-center">
+                          <Image
+                            src={service.contentImage}
+                            alt={service.contentImageAlt ?? service.title}
+                            width={service.contentImageWidth ?? 960}
+                            height={service.contentImageHeight ?? 640}
+                            loading="lazy"
+                            sizes="(min-width: 768px) 420px, (min-width: 640px) 360px, 300px"
+                            className="h-auto w-full max-w-[19rem] rounded-2xl border border-slate-200/90 bg-white shadow-sm sm:max-w-sm md:max-w-md"
+                          />
+                        </figure>
+                      ) : null}
+                      {section.cta &&
+                      paragraphIndex ===
+                        (section.cta.afterParagraphIndex ?? section.paragraphs.length - 1) ? (
+                        <div className="mt-5">
+                          <Link
+                            href={section.cta.href}
+                            className="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-secondary/90"
+                          >
+                            {section.cta.label}
+                            <Icon name="arrow_back" className="text-lg" />
+                          </Link>
+                        </div>
+                      ) : null}
+                    </div>
                   ))}
                 </div>
                 {section.bullets && section.bullets.length > 0 ? (
@@ -231,8 +260,8 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                   أسئلة شائعة عن الخدمة
                 </h2>
                 <div className="mt-5 space-y-4">
-                  {service.faqs.map((faq) => (
-                    <div key={faq.question} className="rounded-2xl bg-surface-container-low p-5">
+                  {service.faqs.map((faq, faqIndex) => (
+                    <div key={`faq-${faqIndex}`} className="rounded-2xl bg-surface-container-low p-5">
                       <h3 className="font-bold text-primary">{faq.question}</h3>
                       <p className="mt-2 leading-7 text-on-surface-variant">{faq.answer}</p>
                     </div>

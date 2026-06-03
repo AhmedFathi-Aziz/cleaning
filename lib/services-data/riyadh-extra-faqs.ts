@@ -6,11 +6,6 @@ export const serviceRiyadhExtraFaqs: Record<string, Array<{ question: string; an
       answer:
         "شقة غرفتين–ثلاث غالباً 3–5 ساعات حسب الاتساخ والمطبخ. الفيلا أطول — يُحدد التقدير عند الحجز.",
     },
-    {
-      question: "هل تغطون حيّي في الرياض؟",
-      answer:
-        "نعمل في أحياء الرياض المدرجة في صفحة تنظيف حسب الحي. ابحث عن حيك أو تواصل معنا للتأكيد.",
-    },
   ],
   "deep-home-cleaning": [
     {
