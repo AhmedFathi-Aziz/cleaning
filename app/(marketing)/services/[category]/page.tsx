@@ -173,21 +173,21 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                 استجابة سريعة، ضمان على الخدمة، وعمالة مدربة — خدمة موثوقة في {primaryCityNameAr}
               </h2>
               <p className="mt-4 text-base font-medium leading-9 text-on-surface-variant">
-                نؤمن أن ثقة العميل السعودي تُبنى على <strong className="text-primary">سرعة الرد</strong> عند
-                الاتصال أو واتساب، وعلى <strong className="text-primary">ضمان عملي</strong> يُشرح لك قبل
+                نؤمن أن ثقة العميل السعودي تُبنى على <strong className="font-semibold">سرعة الرد</strong> عند
+                الاتصال أو واتساب، وعلى <strong className="font-semibold">ضمان عملي</strong> يُشرح لك قبل
                 الموعد وليس شعاراً مطاطاً. فريقنا مدرب على بروتوكولات السلامة والتنظيف، ونعتمد تشكيلات{" "}
-                <strong className="text-primary">عمالة منزلية</strong> شائعة في السوق السعودي مثل{" "}
-                <strong className="text-primary">العمالة الفلبينية والإندونيسية</strong> وغيرها حسب التوفر
+                <strong className="font-semibold">عمالة منزلية</strong> شائعة في السوق السعودي مثل{" "}
+                <strong className="font-semibold">العمالة الفلبينية والإندونيسية</strong> وغيرها حسب التوفر
                 والخطة المتفق عليها، مع أدوات ومعدات معروفة بجودتها{" "}
-                <strong className="text-primary">ومنها ماركات ألمانية مرجعية في قطاع خدمات التنظيف</strong> عند
+                <strong className="font-semibold">ومنها ماركات ألمانية مرجعية في قطاع خدمات التنظيف</strong> عند
                 الحاجة للتفاصيل الدقيقة.
               </p>
               <p className="mt-4 text-base font-medium leading-9 text-on-surface-variant">
-                سواء احتجت <strong className="text-primary">تنظيف منازل</strong>،{" "}
-                <strong className="text-primary">جلي رخام</strong> ضمن الباقة المتفق عليها،{" "}
-                <strong className="text-primary">غسيل سجاد بالبخار</strong>،{" "}
-                <strong className="text-primary">تعقيم خزانات</strong>، أو{" "}
-                <strong className="text-primary">تنظيف واجهات زجاجية</strong>، نربط الوعد بالواقع: خطة واضحة،
+                سواء احتجت <strong className="font-semibold">تنظيف منازل</strong>،{" "}
+                <strong className="font-semibold">جلي رخام</strong> ضمن الباقة المتفق عليها،{" "}
+                <strong className="font-semibold">غسيل سجاد بالبخار</strong>،{" "}
+                <strong className="font-semibold">تعقيم خزانات</strong>، أو{" "}
+                <strong className="font-semibold">تنظيف واجهات زجاجية</strong>، نربط الوعد بالواقع: خطة واضحة،
                 مواد مناسبة، ومتابعة بعد الزيارة عند الاتفاق.
               </p>
             </section>
@@ -278,7 +278,10 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                   {service.faqs.map((faq, faqIndex) => (
                     <div key={`faq-${faqIndex}`} className="rounded-2xl bg-surface-container-low p-5">
                       <h3 className="font-bold text-primary">{faq.question}</h3>
-                      <p className="mt-2 leading-7 text-on-surface-variant">{faq.answer}</p>
+                      <ServiceArticleParagraph
+                        text={faq.answer}
+                        className="mt-2 leading-7 text-on-surface-variant"
+                      />
                     </div>
                   ))}
                 </div>
@@ -304,11 +307,11 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
               </h2>
               <div className="mt-5 space-y-4 text-base leading-9 text-on-surface-variant">
                 <p>
-                  نقدّم خدمات {service.shortTitle} بفريق <strong className="text-primary">مدرّب</strong> ومواد
+                  نقدّم خدمات {service.shortTitle} بفريق <strong className="font-semibold">مدرّب</strong> ومواد
                   تنظيف ومكافحة آمنة قدر الإمكان، مع تنسيق يراعي طبيعة المنزل السعودي: استقبال، غبار، مطابخ
                   نشطة، وأحياناً حدائق وفلل متعددة المداخل. نركّز على{" "}
-                  <strong className="text-primary">الاستجابة السريعة</strong> لتأكيد الموعد، وعلى شرح{" "}
-                  <strong className="text-primary">الضمان أو المتابعة</strong> المتاحة لحالتك قبل الدفع حتى
+                  <strong className="font-semibold">الاستجابة السريعة</strong> لتأكيد الموعد، وعلى شرح{" "}
+                  <strong className="font-semibold">الضمان أو المتابعة</strong> المتاحة لحالتك قبل الدفع حتى
                   تكون التجربة واضحة من البداية.
                 </p>
                 <p>

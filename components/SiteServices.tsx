@@ -12,7 +12,12 @@ import type { ServiceArticle } from "@/lib/service-articles-types";
 import { serviceArticles } from "@/lib/service-articles";
 
 /** صفحات هبوط رئيسية تظهر كبطاقات مميزة في /services */
-const LANDING_SERVICE_SLUGS = ["cleaning-company-riyadh", "house-cleaning", "villa-cleaning-riyadh"] as const;
+const LANDING_SERVICE_SLUGS = [
+  "cleaning-company-riyadh",
+  "house-cleaning",
+  "apartment-cleaning-riyadh",
+  "villa-cleaning-riyadh",
+] as const;
 
 const isLandingSlug = (slug: string): slug is (typeof LANDING_SERVICE_SLUGS)[number] =>
   (LANDING_SERVICE_SLUGS as readonly string[]).includes(slug);

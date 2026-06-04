@@ -7,7 +7,11 @@ import { normalizeArticleHref, normalizeMarkdownLinks } from "@/lib/normalize-ma
 /** روابط Markdown: [النص](url) — url قد يكون `/path` أو `services/...` أو https */
 const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
-function renderBoldSegments(text: string, keyPrefix: string): ReactNode[] {
+type InlineMarkdownOptions = {
+  boldClassName?: string;
+};
+
+function renderBoldSegments(text: string, keyPrefix: string, boldClassName: string): ReactNode[] {
   const parts = text.split(/\*\*([^*]+)\*\*/g);
   const out: ReactNode[] = [];
   for (let i = 0; i < parts.length; i++) {
@@ -17,7 +21,7 @@ function renderBoldSegments(text: string, keyPrefix: string): ReactNode[] {
       out.push(<span key={`${keyPrefix}-t-${i}`}>{part}</span>);
     } else {
       out.push(
-        <strong key={`${keyPrefix}-b-${i}`} className="font-extrabold text-primary">
+        <strong key={`${keyPrefix}-b-${i}`} className={boldClassName}>
           {part}
         </strong>,
       );
@@ -30,7 +34,8 @@ function renderBoldSegments(text: string, keyPrefix: string): ReactNode[] {
  * يحوّل نصاً يحتوي روابط Markdown و**غامق** إلى عناصر React.
  * يدعم الروابط الداخلية بدون `/` في البداية (مثل services/foo) بعد التطبيع.
  */
-export function renderInlineMarkdownLinks(text: string): ReactNode[] {
+export function renderInlineMarkdownLinks(text: string, options?: InlineMarkdownOptions): ReactNode[] {
+  const boldClassName = options?.boldClassName ?? "font-extrabold text-primary";
   const linked = autolinkArticlePlainText(normalizeMarkdownLinks(text));
   const nodes: ReactNode[] = [];
   let lastIndex = 0;
@@ -41,21 +46,21 @@ export function renderInlineMarkdownLinks(text: string): ReactNode[] {
   while ((match = re.exec(linked)) !== null) {
     if (match.index > lastIndex) {
       const chunk = linked.slice(lastIndex, match.index);
-      nodes.push(...renderBoldSegments(chunk, `pre-${match.index}`));
+      nodes.push(...renderBoldSegments(chunk, `pre-${match.index}`, boldClassName));
     }
     const href = normalizeArticleHref(match[2].trim());
     const isExternal = /^(https?:|mailto:|tel:)/i.test(href);
     nodes.push(
       <ArticleInlineLink key={`link-${match.index}-${linkIndex++}`} href={href} external={isExternal}>
-        {renderBoldSegments(match[1], `in-${match.index}`)}
+        {renderBoldSegments(match[1], `in-${match.index}`, boldClassName)}
       </ArticleInlineLink>,
     );
     lastIndex = match.index + match[0].length;
   }
 
   if (lastIndex < linked.length) {
-    nodes.push(...renderBoldSegments(linked.slice(lastIndex), `tail-${lastIndex}`));
+    nodes.push(...renderBoldSegments(linked.slice(lastIndex), `tail-${lastIndex}`, boldClassName));
   }
 
-  return nodes.length > 0 ? nodes : renderBoldSegments(linked, "all");
+  return nodes.length > 0 ? nodes : renderBoldSegments(linked, "all", boldClassName);
 }

@@ -40,4 +40,5 @@ export const images = {
   houseCleaningRiyadhLivingRoom: "/images/house-cleaning-riyadh/living-room.webp",
   villaCleaningRiyadhHero: "/images/villa-cleaning-riyadh/hero.webp",
   villaCleaningRiyadhInterior: "/images/villa-cleaning-riyadh/villa-interior.webp",
+  apartmentCleaningRiyadhHero: "/images/apartment-cleaning-riyadh/hero.webp",
 } as const;

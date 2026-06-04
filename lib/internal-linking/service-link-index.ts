@@ -9,14 +9,40 @@ const MIN_PHRASE_LENGTH = 5;
 
 /** عبارات إضافية شائعة في المقالات → slug الخدمة */
 const EXTRA_PHRASES_BY_SLUG: Record<string, string[]> = {
+  "cleaning-company-riyadh": [
+    "شركة تنظيف بالرياض",
+    "شركة تنظيف في الرياض",
+    "شركات تنظيف بالرياض",
+    "شركة تنظيف منازل بالرياض",
+    "أفضل شركة تنظيف",
+    "شركة تنظيف معتمدة",
+  ],
   "house-cleaning": [
     "تنظيف منزل",
-    "تنظيف الشقق",
-    "تنظيف الفلل",
+    "تنظيف منازل",
     "شركة تنظيف منازل",
     "خدمة تنظيف منازل",
     "تنظيف دوري",
     "تنظيف دوري شهري",
+  ],
+  "apartment-cleaning-riyadh": [
+    "تنظيف الشقق",
+    "تنظيف شقة",
+    "تنظيف شقق سكنية",
+    "شركة تنظيف شقق",
+    "تنظيف أبراج سكنية",
+    "تنظيف مجمع سكني",
+    "تنظيف شقة مفروشة",
+    "تنظيف شقة قبل الاستقبال",
+  ],
+  "villa-cleaning-riyadh": [
+    "تنظيف الفلل",
+    "تنظيف فلل",
+    "تنظيف فيلات",
+    "شركة تنظيف فلل",
+    "تنظيف فلل سكنية",
+    "تنظيف فلة",
+    "تنظيف فلل بالرياض",
   ],
   "deep-home-cleaning": [
     "تنظيف عميق",
@@ -71,12 +97,18 @@ const GUIDE_PHRASES: ServiceLinkRule[] = [
   { phrase: "أدلة مكافحة الحشرات", href: "/guides/pest" },
 ];
 
+const SITE_HUB_PHRASES: ServiceLinkRule[] = [
+  { phrase: "تنظيف منازل في أحياء الرياض", href: "/cleaning/riyadh" },
+  { phrase: "أحياء الرياض للتنظيف", href: "/cleaning" },
+  { phrase: "صفحات أحياء الرياض", href: "/cleaning/riyadh" },
+];
+
 let cachedRules: ServiceLinkRule[] | null = null;
 
 export function buildServiceLinkRules(): ServiceLinkRule[] {
   if (cachedRules) return cachedRules;
 
-  const rules: ServiceLinkRule[] = [...GUIDE_PHRASES];
+  const rules: ServiceLinkRule[] = [...GUIDE_PHRASES, ...SITE_HUB_PHRASES];
   const seen = new Set<string>();
 
   for (const article of serviceArticles) {

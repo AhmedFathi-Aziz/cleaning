@@ -1,5 +1,110 @@
 import type { InternalPromoLink } from "@/lib/related-service-links";
 
+/** روابط داخلية مخصّصة لصفحات الخدمات (تُدمج مع قسم «خدمات ذات صلة») */
+export function getServiceArticleContextLinks(slug: string): InternalPromoLink[] {
+  const cleaningHub: InternalPromoLink = {
+    href: "/cleaning/riyadh",
+    title: "تنظيف منازل حسب أحياء الرياض",
+    description: "صفحات أحياء مع سياق محلي — مفيدة بعد اختيار نوع الخدمة وقبل تحديد الموعد.",
+  };
+
+  switch (slug) {
+    case "apartment-cleaning-riyadh":
+      return [
+        {
+          href: "/services/house-cleaning",
+          title: "تنظيف منازل في الرياض",
+          description: "مناسب للدور الأرضي أو الفلل الصغيرة — مقارنة مع خطة الشقق في الأبراج.",
+        },
+        {
+          href: "/services/villa-cleaning-riyadh",
+          title: "تنظيف فلل بالرياض",
+          description: "مساحات أوسع، مداخل متعددة، وحدائق — عند الانتقال من شقة إلى فلة.",
+        },
+        {
+          href: "/services/deep-home-cleaning",
+          title: "تنظيف عميق للمنزل",
+          description: "مطبخ وحمامات بمعايير أثقل — قبل استقبال أو بعد تشطيب الشقة.",
+        },
+        {
+          href: "/services/cleaning-company-riyadh",
+          title: "شركة تنظيف بالرياض",
+          description: "نظرة شاملة على خدمات التنظيف والتنسيق في العاصمة.",
+        },
+        cleaningHub,
+      ];
+    case "villa-cleaning-riyadh":
+      return [
+        {
+          href: "/services/apartment-cleaning-riyadh",
+          title: "تنظيف شقق بالرياض",
+          description: "أبراج ومجمعات — تنسيق مع الحارس وخطط دورية للوحدات السكنية.",
+        },
+        {
+          href: "/services/house-cleaning",
+          title: "تنظيف منازل دوري",
+          description: "صيانة أسبوعية أو شهرية للمنازل المستقلة والدور الأرضي.",
+        },
+        {
+          href: "/services/facade-cleaning",
+          title: "غسيل واجهات وكلادينج",
+          description: "يكمل تنظيف الفلل بعد مواسم الغبار في الرياض.",
+        },
+        {
+          href: "/services/deep-home-cleaning",
+          title: "تنظيف عميق شامل",
+          description: "مطبخ، حمامات، وغرف قبل المناسبات أو بعد الإجازات الطويلة.",
+        },
+        cleaningHub,
+      ];
+    case "house-cleaning":
+      return [
+        {
+          href: "/services/apartment-cleaning-riyadh",
+          title: "تنظيف شقق وأبراج سكنية",
+          description: "خطط للمجمعات السكنية مع تنسيق دخول العمارة والمصعد.",
+        },
+        {
+          href: "/services/villa-cleaning-riyadh",
+          title: "تنظيف فلل سكنية",
+          description: "فريق ومعدات لمساحات أكبر ومداخل متعددة.",
+        },
+        {
+          href: "/services/cleaning-company-riyadh",
+          title: "شركة تنظيف بالرياض",
+          description: "كل خدمات التنظيف والتنسيق في صفحة واحدة.",
+        },
+        cleaningHub,
+      ];
+    case "cleaning-company-riyadh":
+      return [
+        {
+          href: "/services/apartment-cleaning-riyadh",
+          title: "تنظيف شقق بالرياض",
+          description: "تفاصيل زيارات الأبراج والمجمعات والتسعير حسب الغرف.",
+        },
+        {
+          href: "/services/villa-cleaning-riyadh",
+          title: "تنظيف فلل بالرياض",
+          description: "فلل واستراحات — واجهات وحدائق عند الطلب.",
+        },
+        {
+          href: "/services/house-cleaning",
+          title: "تنظيف منازل",
+          description: "زيارات دورية أو شاملة للمنازل المستقلة.",
+        },
+        {
+          href: "/services/pest-control",
+          title: "مكافحة حشرات مرخّصة",
+          description: "برامج وقائية وعلاجية تُنسَّق مع جدول التنظيف.",
+        },
+        cleaningHub,
+      ];
+    default:
+      return [];
+  }
+}
+
 /** روابط داخلية مخصّصة لسياق المقال (تُدمج مع روابط التسويق العامة) */
 export function getBlogArticleContextLinks(slug: string): InternalPromoLink[] {
   switch (slug) {

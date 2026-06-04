@@ -19,7 +19,15 @@ const heroOutputs = (prefix) => [
   { file: `${prefix}/hero.webp`, width: 1400, quality: 76, maxKb: 280 },
 ];
 
-/** @type {{ folderName: string; logoHeroPrefix?: string; jobs: { inputPattern: RegExp; outputs: { file: string; width: number; quality: number; maxKb?: number }[] }[] }[] }[]} */
+function escapeXml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** @type {{ folderName: string; logoHero?: { prefix: string; title: string; subtitle?: string }; logoHeroPrefix?: string; jobs: { inputPattern: RegExp; outputs: { file: string; width: number; quality: number; maxKb?: number }[] }[] }[] }[]} */
 const pageConfigs = [
   {
     folderName: "شركة تنظيف بالرياض",
@@ -66,6 +74,20 @@ const pageConfigs = [
     ],
   },
   {
+    folderName: "تنظيف شقق بالرياض",
+    logoHeroPrefix: "apartment-cleaning-riyadh",
+    jobs: [
+      {
+        inputPattern: /تنظيف شقق|شقق/i,
+        outputs: [
+          { file: "apartment-cleaning-riyadh/apartment-960.webp", width: 960, quality: 72, maxKb: 150 },
+          { file: "apartment-cleaning-riyadh/apartment-640.webp", width: 640, quality: 70, maxKb: 100 },
+          { file: "apartment-cleaning-riyadh/apartment.webp", width: 960, quality: 72, maxKb: 140 },
+        ],
+      },
+    ],
+  },
+  {
     folderName: "تنظيف فلل بالرياض",
     logoHeroPrefix: "villa-cleaning-riyadh",
     jobs: [
@@ -81,6 +103,21 @@ const pageConfigs = [
   },
 ];
 
+async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {
+  let q = quality;
+  let buf;
+  for (let attempt = 0; attempt < 6; attempt++) {
+    buf = await pipeline.webp({ quality: q, effort: 4 }).toBuffer();
+    if (!maxKb || buf.length <= maxKb * 1024) break;
+    q -= 6;
+    if (q < 48) break;
+  }
+  await fs.promises.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.promises.writeFile(outputPath, buf);
+  return buf.length;
+}
+
+/** كفر: شعار فقط على خلفية بيضاء */
 async function generateLogoHeroWebp(outputPath, width, quality, maxKb) {
   const logoPath = path.join(root, "public", "brand-logo.png");
   if (!fs.existsSync(logoPath)) {
@@ -98,22 +135,46 @@ async function generateLogoHeroWebp(outputPath, width, quality, maxKb) {
     </svg>`,
   );
 
-  let q = quality;
-  let buf;
-  for (let attempt = 0; attempt < 6; attempt++) {
-    buf = await sharp(whiteCanvasSvg)
-      .resize(width, height)
-      .composite([{ input: logoBuf, gravity: "center" }])
-      .webp({ quality: q, effort: 4 })
-      .toBuffer();
-    if (!maxKb || buf.length <= maxKb * 1024) break;
-    q -= 6;
-    if (q < 48) break;
+  const pipeline = sharp(whiteCanvasSvg)
+    .resize(width, height)
+    .composite([{ input: logoBuf, gravity: "center" }]);
+
+  return writeHeroWebp(outputPath, pipeline, quality, maxKb);
+}
+
+/** كفر: عنوان الصفحة + شعار + اسم الشركة */
+async function generateBrandedTitleHeroWebp(outputPath, width, quality, maxKb, { title, subtitle }) {
+  const logoPath = path.join(root, "public", "brand-logo.png");
+  if (!fs.existsSync(logoPath)) {
+    console.warn("⚠ brand-logo.png غير موجود — شغّل npm run brand:logo");
+    return 0;
   }
 
-  await fs.promises.mkdir(path.dirname(outputPath), { recursive: true });
-  await fs.promises.writeFile(outputPath, buf);
-  return buf.length;
+  const height = Math.round((width * 9) / 16);
+  const titleSize = Math.max(28, Math.round(width * 0.05));
+  const subSize = Math.max(14, Math.round(width * 0.027));
+  const logoSize = Math.round(Math.min(width, height) * 0.4);
+  const logoTop = Math.round(height * 0.34);
+  const logoLeft = Math.round((width - logoSize) / 2);
+
+  const canvasSvg = Buffer.from(
+    `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg" direction="rtl">
+      <rect width="100%" height="100%" fill="#ffffff"/>
+      <text x="50%" y="${Math.round(height * 0.15)}" text-anchor="middle" dominant-baseline="middle"
+        font-size="${titleSize}" font-weight="700" fill="#00236f"
+        font-family="Tahoma, 'Segoe UI', Arial, sans-serif">${escapeXml(title)}</text>
+      <text x="50%" y="${Math.round(height * 0.86)}" text-anchor="middle" dominant-baseline="middle"
+        font-size="${subSize}" font-weight="600" fill="#1a5aa8"
+        font-family="Tahoma, Arial, sans-serif">${escapeXml(subtitle)}</text>
+    </svg>`,
+  );
+
+  const logoBuf = await renderBrandIcon(sharp, logoPath, logoSize);
+  const pipeline = sharp(canvasSvg).resize(width, height).composite([
+    { input: logoBuf, top: logoTop, left: logoLeft },
+  ]);
+
+  return writeHeroWebp(outputPath, pipeline, quality, maxKb);
 }
 
 async function optimizeToWebp(inputPath, outputPath, width, quality, maxKb) {
@@ -140,6 +201,27 @@ async function main() {
     return;
   }
 
+  for (const config of pageConfigs) {
+    if (config.logoHero) {
+      for (const out of heroOutputs(config.logoHero.prefix)) {
+        const dest = path.join(outBase, out.file);
+        process.stdout.write(`→ ${out.file} (عنوان+شعار) … `);
+        const bytes = await generateBrandedTitleHeroWebp(dest, out.width, out.quality, out.maxKb, {
+          title: config.logoHero.title,
+          subtitle: config.logoHero.subtitle ?? "السعودية للتنظيف",
+        });
+        console.log(`${(bytes / 1024).toFixed(0)} KiB`);
+      }
+    } else if (config.logoHeroPrefix) {
+      for (const out of heroOutputs(config.logoHeroPrefix)) {
+        const dest = path.join(outBase, out.file);
+        process.stdout.write(`→ ${out.file} (شعار) … `);
+        const bytes = await generateLogoHeroWebp(dest, out.width, out.quality, out.maxKb);
+        console.log(`${(bytes / 1024).toFixed(0)} KiB`);
+      }
+    }
+  }
+
   const folders = fs.readdirSync(pagesDir, { withFileTypes: true }).filter((d) => d.isDirectory());
 
   for (const folder of folders) {
@@ -151,15 +233,6 @@ async function main() {
 
     const folderPath = path.join(pagesDir, folder.name);
     const files = fs.readdirSync(folderPath).filter((f) => /\.(png|jpe?g)$/i.test(f));
-
-    if (config.logoHeroPrefix) {
-      for (const out of heroOutputs(config.logoHeroPrefix)) {
-        const dest = path.join(outBase, out.file);
-        process.stdout.write(`→ ${out.file} (شعار) … `);
-        const bytes = await generateLogoHeroWebp(dest, out.width, out.quality, out.maxKb);
-        console.log(`${(bytes / 1024).toFixed(0)} KiB`);
-      }
-    }
 
     for (const job of config.jobs) {
       const source = files.find((f) => job.inputPattern.test(f));

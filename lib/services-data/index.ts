@@ -1,5 +1,6 @@
 import type { ServiceArticle } from "@/lib/service-articles-types";
 
+import { apartmentCleaningRiyadhArticle } from "./apartment-cleaning-riyadh";
 import { carpetCleaningArticle } from "./carpet-cleaning";
 import { cleaningCompanyRiyadhArticle } from "./cleaning-company-riyadh";
 import { deepHomeCleaningArticle } from "./deep-home-cleaning";
@@ -16,6 +17,7 @@ import { waterTankCleaningArticle } from "./water-tank-cleaning";
 const baseServiceArticles: ServiceArticle[] = [
   cleaningCompanyRiyadhArticle,
   houseCleaningArticle,
+  apartmentCleaningRiyadhArticle,
   villaCleaningRiyadhArticle,
   deepHomeCleaningArticle,
   carpetCleaningArticle,

@@ -8,11 +8,12 @@ type Props = {
   external?: boolean;
 };
 
-const internalClassName =
-  "article-inline-link group inline-flex items-center gap-1 rounded-md bg-secondary/12 px-1.5 py-0.5 font-bold text-secondary decoration-0 ring-1 ring-secondary/15 transition hover:bg-secondary hover:text-white hover:ring-secondary";
+const inlineTextLinkClassName =
+  "article-inline-link font-semibold text-secondary underline decoration-secondary/40 underline-offset-2 transition hover:text-primary hover:decoration-primary/50";
 
-const externalClassName =
-  "article-inline-link font-bold text-secondary underline decoration-secondary/40 underline-offset-4 transition hover:text-primary";
+const internalClassName = inlineTextLinkClassName;
+
+const externalClassName = inlineTextLinkClassName;
 
 export function ArticleInlineLink({ href, children, external }: Props) {
   const normalized = normalizeArticleHref(href);

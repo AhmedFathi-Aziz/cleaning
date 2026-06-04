@@ -1,3 +1,4 @@
+import { getServiceArticleContextLinks } from "@/lib/article-context-links";
 import { truncateForMetaDescription } from "@/lib/seo";
 import { getServiceArticle, serviceArticles } from "@/lib/service-articles";
 import { locations } from "@/src/data/locations";
@@ -29,7 +30,10 @@ const PEST_SLUG = "pest-control";
 
 /** Cleaning & related slugs (non–pest-control) in crawl-friendly priority order */
 const CLEANING_RELATED_ORDER = [
+  "cleaning-company-riyadh",
   "house-cleaning",
+  "apartment-cleaning-riyadh",
+  "villa-cleaning-riyadh",
   "deep-home-cleaning",
   "carpet-cleaning",
   "facade-cleaning",
@@ -114,10 +118,25 @@ export function getMarketingRelatedLinks(pathname: string): InternalPromoLink[] 
       if (slugs.length >= 6) break;
     }
   } else if (citySlug) {
-    slugs.push(PEST_SLUG, "house-cleaning", "deep-home-cleaning", "carpet-cleaning", "water-tank-cleaning");
+    slugs.push(
+      PEST_SLUG,
+      "cleaning-company-riyadh",
+      "house-cleaning",
+      "apartment-cleaning-riyadh",
+      "deep-home-cleaning",
+      "carpet-cleaning",
+    );
   } else {
     // Home, blog, static pages, /services index, etc.
-    slugs.push("house-cleaning", PEST_SLUG, "deep-home-cleaning", "carpet-cleaning", "facade-cleaning", "water-tank-cleaning");
+    slugs.push(
+      "cleaning-company-riyadh",
+      "house-cleaning",
+      "apartment-cleaning-riyadh",
+      "villa-cleaning-riyadh",
+      PEST_SLUG,
+      "deep-home-cleaning",
+      "carpet-cleaning",
+    );
   }
 
   const unique = [...new Set(slugs)];
@@ -129,6 +148,17 @@ export function getMarketingRelatedLinks(pathname: string): InternalPromoLink[] 
   }
 
   const out: InternalPromoLink[] = [...serviceLinks, areasLink(citySlug)];
+
+  if (serviceSlug) {
+    const contextLinks = getServiceArticleContextLinks(serviceSlug);
+    const seenHref = new Set(out.map((l) => l.href));
+    const currentHref = `/services/${serviceSlug}`;
+    for (const link of contextLinks) {
+      if (link.href === currentHref || seenHref.has(link.href)) continue;
+      out.unshift(link);
+      seenHref.add(link.href);
+    }
+  }
 
   if (serviceSlug === PEST_SLUG || pathname.startsWith("/guides/pest")) {
     out.unshift(pestEncyclopediaLink);
