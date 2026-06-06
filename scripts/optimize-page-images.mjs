@@ -88,6 +88,20 @@ const pageConfigs = [
     ],
   },
   {
+    folderName: "تنظيف مجالس بالرياض",
+    logoHeroPrefix: "majlis-cleaning-riyadh",
+    jobs: [
+      {
+        inputPattern: /مجالس|مجلس/i,
+        outputs: [
+          { file: "majlis-cleaning-riyadh/majlis-960.webp", width: 960, quality: 72, maxKb: 150 },
+          { file: "majlis-cleaning-riyadh/majlis-640.webp", width: 640, quality: 70, maxKb: 100 },
+          { file: "majlis-cleaning-riyadh/majlis.webp", width: 960, quality: 72, maxKb: 140 },
+        ],
+      },
+    ],
+  },
+  {
     folderName: "تنظيف فلل بالرياض",
     logoHeroPrefix: "villa-cleaning-riyadh",
     jobs: [

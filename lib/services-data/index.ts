@@ -7,6 +7,7 @@ import { deepHomeCleaningArticle } from "./deep-home-cleaning";
 import { facadeCleaningArticle } from "./facade-cleaning";
 import { gardenCleaningArticle } from "./garden-cleaning";
 import { houseCleaningArticle } from "./house-cleaning";
+import { majlisCleaningRiyadhArticle } from "./majlis-cleaning-riyadh";
 import { pestControlArticle } from "./pest-control";
 import { serviceRiyadhExtraFaqs } from "./riyadh-extra-faqs";
 import { serviceRiyadhExtraSections } from "./riyadh-extra-sections";
@@ -19,6 +20,7 @@ const baseServiceArticles: ServiceArticle[] = [
   houseCleaningArticle,
   apartmentCleaningRiyadhArticle,
   villaCleaningRiyadhArticle,
+  majlisCleaningRiyadhArticle,
   deepHomeCleaningArticle,
   carpetCleaningArticle,
   facadeCleaningArticle,

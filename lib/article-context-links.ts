@@ -76,6 +76,30 @@ export function getServiceArticleContextLinks(slug: string): InternalPromoLink[]
         },
         cleaningHub,
       ];
+    case "majlis-cleaning-riyadh":
+      return [
+        {
+          href: "/services/sofa-cleaning",
+          title: "تنظيف كنب ومفروشات",
+          description: "كنب الصالة والشازلونج — يُدمج مع المجلس في زيارة واحدة عند السعة.",
+        },
+        {
+          href: "/services/carpet-cleaning",
+          title: "غسيل سجاد وموكيت",
+          description: "السجاد المركزي في المجلس — شفط وتنظيف أعمق من المسح المنزلي.",
+        },
+        {
+          href: "/services/villa-cleaning-riyadh",
+          title: "تنظيف فلل بالرياض",
+          description: "مجالس واسعة ومداخل مزدوجة — فريق ووقت مناسبان للمساحة.",
+        },
+        {
+          href: "/services/house-cleaning",
+          title: "تنظيف منازل دوري",
+          description: "صيانة الصالة والمطبخ بين جلسات غسيل المجلس.",
+        },
+        cleaningHub,
+      ];
     case "cleaning-company-riyadh":
       return [
         {
