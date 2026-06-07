@@ -18,6 +18,7 @@ const LANDING_SERVICE_SLUGS = [
   "apartment-cleaning-riyadh",
   "villa-cleaning-riyadh",
   "majlis-cleaning-riyadh",
+  "sofa-cleaning-riyadh",
 ] as const;
 
 const isLandingSlug = (slug: string): slug is (typeof LANDING_SERVICE_SLUGS)[number] =>

@@ -88,6 +88,20 @@ const pageConfigs = [
     ],
   },
   {
+    folderName: "تنظيف كنب بالرياض",
+    logoHeroPrefix: "sofa-cleaning-riyadh",
+    jobs: [
+      {
+        inputPattern: /كنب|كنبة|sofa/i,
+        outputs: [
+          { file: "sofa-cleaning-riyadh/sofa-960.webp", width: 960, quality: 72, maxKb: 150 },
+          { file: "sofa-cleaning-riyadh/sofa-640.webp", width: 640, quality: 70, maxKb: 100 },
+          { file: "sofa-cleaning-riyadh/sofa.webp", width: 960, quality: 72, maxKb: 140 },
+        ],
+      },
+    ],
+  },
+  {
     folderName: "تنظيف مجالس بالرياض",
     logoHeroPrefix: "majlis-cleaning-riyadh",
     jobs: [
