@@ -102,13 +102,13 @@ export function SiteHome() {
               id="hero-heading"
               className="font-headline text-[clamp(1.35rem,3vw+0.4rem,2.35rem)] font-extrabold leading-[1.18] tracking-tight text-white sm:text-3xl md:text-4xl md:leading-[1.15] md:text-balance [text-shadow:0_2px_12px_rgba(0,0,0,0.55),0_1px_3px_rgba(0,0,0,0.85)]"
             >
-              تنظيف ومكافحة حشرات
+              شركة تنظيف ومكافحة حشرات بالرياض
               <br />
-              <span className="text-[#dce8f2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5),0_1px_2px_rgba(0,0,0,0.75)]">في الرياض — موسوعة خدمات منزلية</span>
+              <span className="text-[#dce8f2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5),0_1px_2px_rgba(0,0,0,0.75)]">تنظيف منازل، سجاد، واجهات — فريق مدرب</span>
             </h1>
             <p className="max-w-lg text-sm font-semibold leading-[1.7] text-white sm:text-base md:max-w-xl md:text-lg md:leading-[1.65] [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.9)]">
-              ننفّذ تنظيفاً عميقاً للمنازل والمكاتب في الرياض، وغسيل سجاد وموكيت، وتنظيف واجهات، ومكافحة حشرات وفق خطة
-              واضحة — مع أدلة عملية لكل حي ونوع آفة على الموقع.
+              شركة تنظيف بالرياض تنفّذ تنظيفاً عميقاً للمنازل والمكاتب، وغسيل سجاد وموكيت، وتنظيف واجهات،
+              ومكافحة حشرات وفق خطة واضحة — مع تغطية لأحياء العاصمة ومعاينة مجانية قبل الحجز.
             </p>
             <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6 sm:pt-4" id="book">
               <Link

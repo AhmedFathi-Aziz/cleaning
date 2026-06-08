@@ -95,12 +95,17 @@ export function SiteServices() {
           <span className="mb-4 block text-sm font-bold uppercase tracking-widest text-secondary">
             خدماتنا المتميزة
           </span>
-          <h1 className="mb-8 font-headline text-5xl font-extrabold leading-[1.1] tracking-tight text-primary md:text-7xl">
-            فن النظافة <span className="text-on-tertiary-container">بأعلى المعايير</span> العالمية
+          <h1 className="mb-8 font-headline text-4xl font-extrabold leading-[1.1] tracking-tight text-primary md:text-6xl">
+            خدمات تنظيف <span className="text-on-tertiary-container">بالرياض</span>
           </h1>
           <p className="text-lg font-medium leading-relaxed text-on-surface-variant">
-            في السعودية للتنظيف نجمع بين تنظيف المنازل والمكاتب، العناية بالسجاد والمجالس، تنظيف الواجهات،
-            ومكافحة الحشرات عند الحاجة — مع تخطيط مسبق يقلّل الإزعاج ويحترم طبيعة كل مساحة.
+            خدمات تنظيف بالرياض تشمل تنظيف المنازل والفلل، التنظيف العميق، غسيل السجاد والكنب، تنظيف
+            الواجهات، تعقيم الخزانات، ومكافحة الحشرات — مع تخطيط مسبق يقلّل الإزعاج ويحترم طبيعة كل
+            مساحة. اختر خدمتك أدناه أو{" "}
+            <Link href="/contact" className="font-bold text-secondary underline-offset-2 hover:underline">
+              احجز عبر واتساب
+            </Link>
+            .
           </p>
         </div>
       </section>

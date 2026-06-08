@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { HubFaqSection } from "@/components/HubFaqSection";
 import { brandNameAr } from "@/lib/brand";
+import { cleaningHubFaqs } from "@/lib/content/hub-faqs";
 import {
   getCleaningProgrammaticStaticParams,
   getCleaningSeeds,
@@ -9,17 +11,20 @@ import {
 } from "@/lib/programmatic-cleaning-seo";
 import { primaryCityNameAr } from "@/lib/region";
 import { buildArabicPageMetadata } from "@/lib/seo";
+import { siteUrl } from "@/lib/site";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: `تنظيف منازل حسب الحي في ${primaryCityNameAr}`,
-  description: `صفحات تنظيف منازل وشقق لكل حي في ${primaryCityNameAr} — دليل محلي لتسهيل العثور على خدمة قريبة من عنوانك. ${brandNameAr}.`,
+  title: `تنظيف منازل بالرياض حسب الحي | ${brandNameAr}`,
+  description:
+    "تنظيف منازل وشقق في كل أحياء الرياض — صفحة مخصّصة لكل حي مع سياق محلي. شركة تنظيف بالرياض. احجز معاينة مجانية عبر واتساب الآن.",
   canonical: "/cleaning",
   keywords: [
     `تنظيف منازل ${primaryCityNameAr}`,
     "تنظيف منازل حي العليا",
     "تنظيف شقق الرياض",
     "شركة تنظيف حسب الحي",
+    "أرخص شركة تنظيف منازل بالرياض",
   ],
 });
 
@@ -32,12 +37,56 @@ export default function CleaningProgrammaticHubPage() {
       <div className="mx-auto max-w-5xl text-right">
         <p className="text-sm font-extrabold text-secondary">موسوعة التنظيف — أحياء {primaryCityNameAr}</p>
         <h1 className="mt-3 font-headline text-3xl font-extrabold text-primary md:text-4xl">
-          تنظيف منازل حسب الحي — {primaryCityNameAr}
+          تنظيف منازل بالرياض حسب الحي
         </h1>
         <p className="mt-5 text-base font-medium leading-relaxed text-on-surface-variant">
-          اختر حيك للانتقال إلى صفحة مخصّصة لـ <strong className="text-primary">تنظيف المنازل والشقق</strong> في ذلك
-          الموقع؛ كل صفحة تحمل سياقاً محلياً فريداً عن الحي والخدمات الشائعة فيه.
+          تنظيف منازل بالرياض يبدأ باختيار حيك — كل صفحة أدناه تجمع سياقاً محلياً عن{" "}
+          <strong className="text-primary">تنظيف الشقق والفلل</strong> في ذلك الموقع: نوع العقارات
+          الشائعة، تأثير الغبار والحر، ونصائح قبل الحجز.
         </p>
+
+        <section className="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="cleaning-guide-heading">
+          <h2 id="cleaning-guide-heading" className="font-headline text-xl font-extrabold text-primary md:text-2xl">
+            لماذا صفحة تنظيف منازل لكل حي؟
+          </h2>
+          <div className="mt-4 space-y-4 text-sm font-medium leading-[1.9] text-on-surface-variant md:text-base">
+            <p>
+              الرياض مدينة متنوعة — شقة علوية في العليا تختلف عن فيلا في النرجس عن مجمع في المروج. صفحة
+              الحي تشرح ما يشيع من طلبات تنظيف في جوارك: تسليم شقة مؤجرة، تنظيف بعد التشطيب، أو زيارة
+              دورية أسبوعية.
+            </p>
+            <p>
+              مناخ الرياض الجاف مع موجات الرياح يعني أن الغبار يعود بسرعة — جدولة تنظيف دوري للمداخل
+              والنوافذ يقلّل ما تراه على الأثاث. للخدمات الأخرى راجع{" "}
+              <Link href="/services" className="font-bold text-secondary underline-offset-2 hover:underline">
+                صفحات الخدمات
+              </Link>{" "}
+              (غسيل سجاد، واجهات،{" "}
+              <Link href="/services/pest-control" className="font-bold text-secondary underline-offset-2 hover:underline">
+                مكافحة حشرات
+              </Link>
+              ).
+            </p>
+            <p>
+              للحجز:{" "}
+              <Link href="/contact" className="font-bold text-secondary underline-offset-2 hover:underline">
+                اتصل بنا
+              </Link>{" "}
+              أو{" "}
+              <Link href="/estimate" className="font-bold text-secondary underline-offset-2 hover:underline">
+                حاسبة التقدير
+              </Link>
+              . نفّذنا أكثر من 500 مشروع تنظيف في أحياء العاصمة.
+            </p>
+          </div>
+        </section>
+
+        <HubFaqSection
+          faqs={cleaningHubFaqs}
+          heading="أسئلة شائعة عن تنظيف المنازل حسب الحي"
+          schemaId="faq"
+          schemaUrl={`${siteUrl}/cleaning`}
+        />
 
         {seeds.map((seed) => {
           const city = getCityBySlug(seed.citySlug);

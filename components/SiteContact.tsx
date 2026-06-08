@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContactQuickForm } from "@/components/ContactQuickForm";
 import { Icon } from "@/components/Icon";
 import { brandPhone, brandPhoneDisplay, brandWhatsapp, brandWorkingHoursAr } from "@/lib/brand";
+import { contactPageFaqs } from "@/lib/content/contact-faqs";
 
 function WhatsappGlyph({ className }: { className?: string }) {
   return (
@@ -30,11 +31,12 @@ export function SiteContact() {
               id="contact-page-title"
               className="font-headline text-3xl font-extrabold tracking-tight text-[#1D2D3D] md:text-4xl lg:text-[2.35rem]"
             >
-              ابدأ طلبك الآن
+              اتصل بشركة تنظيف بالرياض
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 md:mt-5 md:text-lg">
-              املأ النموذج أدناه أو تواصل مباشرة عبر واتساب أو الاتصال. نرد بسرعة على استفسارات تنظيف المنازل
-              والمكاتب والسجاد والواجهات ومكافحة الحشرات في أحياء الرياض.
+              املأ النموذج أدناه أو تواصل مباشرة عبر واتساب أو الاتصال. نرد بسرعة على استفسارات تنظيف
+              المنازل والمكاتب والسجاد والواجهات ومكافحة الحشرات في أحياء الرياض — معاينة مجانية
+              للمساحات الكبيرة.
             </p>
           </header>
 
@@ -98,50 +100,20 @@ export function SiteContact() {
             أسئلة شائعة حول التواصل والحجز
           </h2>
           <div className="space-y-4">
-            <details className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition hover:border-primary/15 hover:shadow-md open:border-primary/20 open:shadow-[0_10px_40px_rgba(0,35,111,0.08)] md:p-6">
-              <summary className="cursor-pointer list-none text-right font-bold text-primary marker:content-none [&::-webkit-details-marker]:hidden">
-                <span className="inline-flex w-full items-center justify-between gap-3">
-                  هل يمكنني طلب عرض سعر قبل إتمام الحجز؟
-                  <span className="text-secondary transition group-open:rotate-180">▼</span>
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-on-surface-variant md:text-base">
-                نعم؛ اذكروا نوع المساحة والخدمة المطلوبة عبر الهاتف أو واتساب أو البريد، وسنساعدكم بملخص مناسب
-                لحالتكم.
-              </p>
-            </details>
-            <details className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition hover:border-primary/15 hover:shadow-md open:border-primary/20 md:p-6">
-              <summary className="cursor-pointer list-none text-right font-bold text-primary marker:content-none [&::-webkit-details-marker]:hidden">
-                <span className="inline-flex w-full items-center justify-between gap-3">
-                  هل التغطية تشمل كل أحياء الرياض؟
-                  <span className="text-secondary transition group-open:rotate-180">▼</span>
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-on-surface-variant md:text-base">
-                نعمل في أحياء الرياض المدرجة في{" "}
-                <Link href="/cleaning" className="font-semibold text-secondary hover:underline">
-                  صفحة تنظيف حسب الحي
-                </Link>
-                . للمدن الأخرى راجعوا{" "}
-                <Link href="/areas" className="font-semibold text-secondary hover:underline">
-                  مناطق التغطية
-                </Link>{" "}
-                أو اسألوا الفريق عند الاتصال.
-              </p>
-            </details>
-            <details className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition hover:border-primary/15 hover:shadow-md open:border-primary/20 md:p-6">
-              <summary className="cursor-pointer list-none text-right font-bold text-primary marker:content-none [&::-webkit-details-marker]:hidden">
-                <span className="inline-flex w-full items-center justify-between gap-3">
-                  ما أفضل وقت للاتصال إذا كان الطلب عاجلاً؟
-                  <span className="text-secondary transition group-open:rotate-180">▼</span>
-                </span>
-              </summary>
-              <p className="mt-4 text-sm leading-relaxed text-on-surface-variant md:text-base">
-                يُفضَّل التواصل خلال{" "}
-                <strong className="text-primary">{brandWorkingHoursAr}</strong> لضمان أسرع استجابة من فريق
-                التنسيق.
-              </p>
-            </details>
+            {contactPageFaqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm transition hover:border-primary/15 hover:shadow-md open:border-primary/20 open:shadow-[0_10px_40px_rgba(0,35,111,0.08)] md:p-6"
+              >
+                <summary className="cursor-pointer list-none text-right font-bold text-primary marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span className="inline-flex w-full items-center justify-between gap-3">
+                    {faq.question}
+                    <span className="text-secondary transition group-open:rotate-180">▼</span>
+                  </span>
+                </summary>
+                <p className="mt-4 text-sm leading-relaxed text-on-surface-variant md:text-base">{faq.answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

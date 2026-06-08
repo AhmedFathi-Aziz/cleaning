@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 
 import { ContactPageJsonLd } from "@/components/ContactPageJsonLd";
 import { SiteContact } from "@/components/SiteContact";
-import { brandEmail, brandNameAr, brandPhoneDisplay } from "@/lib/brand";
+import { brandNameAr } from "@/lib/brand";
 import { heroImageUrl } from "@/lib/site";
 
-const pageTitle = `تواصل مع ${brandNameAr} | هاتف وواتساب وحجز تنظيف في الرياض`;
-const pageDescription = `اتصلوا بـ ${brandNameAr} للحجز والاستفسار: ${brandPhoneDisplay}، وبريد ${brandEmail}. تنظيف منازل ومكاتب، غسيل سجاد، تنظيف واجهات، ومكافحة حشرات في أحياء الرياض خلال أوقات العمل المعلنة.`;
+const pageTitle = "اتصل بنا | شركة تنظيف بالرياض";
+const pageDescription =
+  "اتصل بشركة تنظيف بالرياض — هاتف وواتساب وحجز تنظيف منازل ومكافحة حشرات في كل الأحياء. معاينة مجانية. رد سريع خلال ساعات العمل.";
 
 export const metadata: Metadata = {
   title: pageTitle,

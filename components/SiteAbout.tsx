@@ -16,11 +16,11 @@ export function SiteAbout() {
           <div className="order-2 text-right md:order-1">
             <p className="mb-4 text-sm font-medium text-on-surface-variant">تعرّف على السعودية للتنظيف</p>
             <h1 className="mb-6 font-headline text-4xl font-extrabold leading-[1.15] tracking-tight text-primary md:text-5xl lg:text-6xl">
-              نعيد تعريف النقاء في مساحتكم الخاصة
+              شركة تنظيف بالرياض — خبرة وثقة منذ سنوات
             </h1>
             <p className="mb-10 max-w-xl text-base leading-relaxed text-on-surface-variant md:text-lg">
-              نحن لا نقدّم تنظيفاً سطحياً فقط، بل نساعدكم على بيئة أكثر صحة وراحة داخل المنزل أو المكتب: خطوات
-              واضحة، مواد مناسبة للسطح، واحترام لخصوصية المكان والوقت.
+              السعودية للتنظيف ليست تنظيفاً سطحياً فقط — نساعدكم على بيئة أكثر صحة وراحة داخل المنزل أو
+              المكتب: خطوات واضحة، مواد معتمدة، فريق مدرب، وأكثر من 500 مشروع في أحياء العاصمة.
             </p>
             <Link
               href="/services"

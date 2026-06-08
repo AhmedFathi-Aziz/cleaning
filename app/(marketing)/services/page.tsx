@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 
+import { HubFaqSection } from "@/components/HubFaqSection";
 import { SiteServices } from "@/components/SiteServices";
+import { servicesHubFaqs } from "@/lib/content/hub-faqs";
+import { siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "خدمات التنظيف ومكافحة الحشرات في الرياض",
+  title: "خدمات تنظيف بالرياض | منازل وسجاد ومكافحة حشرات",
   description:
-    "تنظيف منازل عميق، غسيل سجاد وموكيت، تنظيف واجهات زجاجية، تنظيف فلل ومجالس، ومكافحة حشرات بخطط وقائية وعلاجية في أحياء الرياض.",
+    "خدمات تنظيف بالرياض — تنظيف منازل وفلل، غسيل سجاد، تنظيف واجهات، ومكافحة حشرات. 14 خدمة تفصيلية. احجز معاينة مجانية عبر واتساب الآن.",
   keywords: [
     "خدمات تنظيف الرياض",
     "تنظيف منازل",
@@ -27,5 +30,18 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  return <SiteServices />;
+  return (
+    <>
+      <SiteServices />
+      <div className="mx-auto max-w-7xl px-8 pb-24">
+        <HubFaqSection
+          faqs={servicesHubFaqs}
+          heading="أسئلة شائعة عن خدمات التنظيف"
+          description="إجابات قبل اختيار الخدمة المناسبة لمنزلك أو منشأتك."
+          schemaId="faq"
+          schemaUrl={`${siteUrl}/services`}
+        />
+      </div>
+    </>
+  );
 }

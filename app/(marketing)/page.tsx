@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { HomeFaqSection } from "@/components/HomeFaqSection";
 import { HomeLatestPublishing } from "@/components/HomeLatestPublishing";
 import { HomeNationalNewsSection } from "@/components/HomeNationalNewsSection";
+import { HomeSeoPillar } from "@/components/home/HomeSeoPillar";
 import { HomeServiceAreasTeaser } from "@/components/HomeServiceAreasTeaser";
 import { HomeUsefulGuide } from "@/components/HomeUsefulGuide";
 import { SiteHome } from "@/components/SiteHome";
@@ -12,9 +13,9 @@ import { loadPosts } from "@/lib/post-store";
 import { heroImageUrl, ogImageHeight, ogImageWidth, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "شركة تنظيف منازل ومكافحة حشرات في الرياض",
+  title: "شركة تنظيف بالرياض | السعودية للتنظيف",
   description:
-    "تنظيف منازل ومكاتب في الرياض: تنظيف عميق، غسيل سجاد وموكيت، تنظيف واجهات، ومكافحة حشرات. موسوعة أحياء ودليل حشرات وأسئلة شائعة — للحجز والاستفسار.",
+    "شركة تنظيف ومكافحة حشرات بالرياض — تنظيف منازل وفلل، غسيل سجاد، ورش مبيدات في كل الأحياء. فريق مدرب +500 مشروع. احجز معاينة مجانية عبر واتساب الآن.",
   keywords: [
     "شركة تنظيف الرياض",
     "مكافحة حشرات الرياض",
@@ -58,6 +59,7 @@ export default function Home() {
   return (
     <>
       <SiteHome />
+      <HomeSeoPillar />
       <HomeUsefulGuide />
       <HomeNationalNewsSection articles={newsArticles} />
       <HomeLatestPublishing newsArticles={[]} blogPosts={blogPosts} />
