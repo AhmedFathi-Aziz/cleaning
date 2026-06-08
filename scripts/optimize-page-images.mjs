@@ -88,6 +88,20 @@ const pageConfigs = [
     ],
   },
   {
+    folderName: "تنظيف سجاد بالرياض",
+    logoHeroPrefix: "carpet-cleaning-riyadh",
+    jobs: [
+      {
+        inputPattern: /سجاد|موكيت|carpet/i,
+        outputs: [
+          { file: "carpet-cleaning-riyadh/carpet-960.webp", width: 960, quality: 72, maxKb: 150 },
+          { file: "carpet-cleaning-riyadh/carpet-640.webp", width: 640, quality: 70, maxKb: 100 },
+          { file: "carpet-cleaning-riyadh/carpet.webp", width: 960, quality: 72, maxKb: 140 },
+        ],
+      },
+    ],
+  },
+  {
     folderName: "تنظيف كنب بالرياض",
     logoHeroPrefix: "sofa-cleaning-riyadh",
     jobs: [

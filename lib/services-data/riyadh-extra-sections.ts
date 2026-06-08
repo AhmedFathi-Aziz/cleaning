@@ -148,6 +148,20 @@ export const serviceRiyadhExtraSections: Record<string, ServiceSection[]> = {
       ],
     },
   ],
+  "carpet-cleaning-riyadh": [
+    {
+      heading: `غسيل سجاد في أحياء ${city}`,
+      paragraphs: [
+        `في شمال ${city} (النرجس، العليا) سجاد الصالات المفتوحة يجمع غبار الشوارع — شفط مكثّف قبل الغسيل. في وسط ${city} (الملز) شقق مؤجرة تحتاج دورة سريعة بين الضيوف.`,
+      ],
+    },
+    {
+      heading: "الموكيت المثبت في الممرات",
+      paragraphs: [
+        "موكيت الممر يتحمل أحذية خارجية أكثر — غسيل دوري يمنع تراكم غبار الرياض الناعم في الزوايا.",
+      ],
+    },
+  ],
   "sofa-cleaning-riyadh": [
     {
       heading: `تنظيف كنب في أحياء ${city}: قبل الاستقبال`,

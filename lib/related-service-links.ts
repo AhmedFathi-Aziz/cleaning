@@ -36,6 +36,7 @@ const CLEANING_RELATED_ORDER = [
   "villa-cleaning-riyadh",
   "majlis-cleaning-riyadh",
   "sofa-cleaning-riyadh",
+  "carpet-cleaning-riyadh",
   "deep-home-cleaning",
   "carpet-cleaning",
   "facade-cleaning",

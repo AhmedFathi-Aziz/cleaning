@@ -76,6 +76,30 @@ export function getServiceArticleContextLinks(slug: string): InternalPromoLink[]
         },
         cleaningHub,
       ];
+    case "carpet-cleaning-riyadh":
+      return [
+        {
+          href: "/services/sofa-cleaning-riyadh",
+          title: "تنظيف كنب بالرياض",
+          description: "كنب الصالة — يُدمج مع السجاد في زيارة واحدة عند التهوية.",
+        },
+        {
+          href: "/services/majlis-cleaning-riyadh",
+          title: "تنظيف مجالس بالرياض",
+          description: "بساط المجلس تحت الوسائد — غسيل منفصل أو ضمن الباقة.",
+        },
+        {
+          href: "/services/house-cleaning",
+          title: "تنظيف منازل دوري",
+          description: "صيانة الغرف بين جلسات غسيل السجاد.",
+        },
+        {
+          href: "/services/deep-home-cleaning",
+          title: "تنظيف عميق للمنزل",
+          description: "مطبخ وحمامات بمعايير أثقل — يكمّل غسيل السجاد.",
+        },
+        cleaningHub,
+      ];
     case "sofa-cleaning-riyadh":
       return [
         {
