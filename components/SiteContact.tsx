@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { ContactQuickForm } from "@/components/ContactQuickForm";
 import { Icon } from "@/components/Icon";
-import { brandPhone, brandPhoneDisplay, brandWhatsapp, brandWorkingHoursAr } from "@/lib/brand";
+import { brandPhone, brandPhoneDisplay, brandWhatsapp } from "@/lib/brand";
 import { contactPageFaqs } from "@/lib/content/contact-faqs";
 
 function WhatsappGlyph({ className }: { className?: string }) {

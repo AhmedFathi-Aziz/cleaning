@@ -12,7 +12,7 @@ export const images = {
   sofaCleaning:
     "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=900",
   waterTankCleaning:
-    "https://images.pexels.com/photos/221027/pexels-photo-221027.jpeg?auto=compress&cs=tinysrgb&w=900",
+    "/images/water-tank-cleaning-riyadh/hero.webp",
   facade: "/images/facade.webp",
   gardenCleaning:
     "https://images.pexels.com/photos/413227/pexels-photo-413227.jpeg?auto=compress&cs=tinysrgb&w=900",
@@ -44,4 +44,6 @@ export const images = {
   majlisCleaningRiyadhHero: "/images/majlis-cleaning-riyadh/hero.webp",
   sofaCleaningRiyadhHero: "/images/sofa-cleaning-riyadh/hero.webp",
   carpetCleaningRiyadhHero: "/images/carpet-cleaning-riyadh/hero.webp",
+  waterTankCleaningRiyadhHero: "/images/water-tank-cleaning-riyadh/hero.webp",
+  waterTankCleaningRiyadhProcess: "/images/water-tank-cleaning-riyadh/tank-process.webp",
 } as const;

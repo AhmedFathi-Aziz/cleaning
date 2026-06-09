@@ -20,6 +20,7 @@ const LANDING_SERVICE_SLUGS = [
   "majlis-cleaning-riyadh",
   "sofa-cleaning-riyadh",
   "carpet-cleaning-riyadh",
+  "water-tank-cleaning",
 ] as const;
 
 const isLandingSlug = (slug: string): slug is (typeof LANDING_SERVICE_SLUGS)[number] =>
@@ -180,32 +181,39 @@ export function SiteServices() {
             </div>
           </div>
 
-          <div className="group flex flex-col justify-center rounded-full bg-tertiary-container p-12 text-right text-on-tertiary transition-all duration-500 hover:scale-[1.02] md:col-span-6">
+          <Link
+            href="/services/water-tank-cleaning"
+            className="group flex flex-col justify-center rounded-full bg-tertiary-container p-12 text-right text-on-tertiary transition-all duration-500 hover:scale-[1.02] md:col-span-6"
+          >
             <div className="flex items-start justify-between">
               <div className="max-w-md">
                 <Icon name="water_drop" className="mb-6 text-5xl text-tertiary-fixed" />
-                <h2 className="mb-4 text-3xl font-bold">تنظيف وتعقيم الخزانات</h2>
+                <h2 className="mb-4 text-3xl font-bold">تنظيف خزانات بالرياض</h2>
                 <p className="mb-8 font-medium leading-relaxed text-on-tertiary-container">
-                  مياهك هي سر صحة عائلتك. نقوم بتعقيم الخزانات وإزالة الرواسب والشوائب وفق أدق المعايير
-                  الصحية المحلية والعالمية.
+                  غسيل وتعقيم خزانات علوية وأرضية — إزالة ترسبات وطحالب وفق معايير السلامة، مع معاينة مجانية
+                  قبل الحجز.
                 </p>
-                <ul className="space-y-3">
+                <ul className="mb-6 space-y-3">
                   <li className="flex items-center justify-end gap-3">
-                    <span className="text-sm">إزالة الترسبات الكلسية</span>
+                    <span className="text-sm">إزالة الترسبات والطحالب</span>
                     <Icon name="check_circle" className="text-tertiary-fixed" />
                   </li>
                   <li className="flex items-center justify-end gap-3">
-                    <span className="text-sm">تعقيم كيميائي آمن</span>
+                    <span className="text-sm">تعقيم آمن بمواد معتمدة</span>
                     <Icon name="check_circle" className="text-tertiary-fixed" />
                   </li>
                   <li className="flex items-center justify-end gap-3">
-                    <span className="text-sm">اختبار جودة المياه</span>
+                    <span className="text-sm">خزانات فلل وشقق وعمارات</span>
                     <Icon name="check_circle" className="text-tertiary-fixed" />
                   </li>
                 </ul>
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-on-tertiary">
+                  تفاصيل تنظيف خزانات بالرياض
+                  <Icon name="arrow_back" className="text-base transition-transform group-hover:-translate-x-2" />
+                </span>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
@@ -220,7 +228,7 @@ export function SiteServices() {
               صفحات خدماتنا الأكثر طلباً
             </h2>
             <p className="mt-4 text-sm font-medium leading-7 text-on-surface-variant md:text-base">
-              شركة تنظيف، تنظيف منازل، وتنظيف فلل — دلائل تفصيلية للحجز والمقارنة في الرياض.
+              شركة تنظيف، تنظيف منازل، تنظيف فلل، وتنظيف خزانات — دلائل تفصيلية للحجز والمقارنة في الرياض.
             </p>
           </div>
           <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

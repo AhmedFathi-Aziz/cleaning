@@ -143,6 +143,11 @@ const pageConfigs = [
       },
     ],
   },
+  {
+    folderName: "تنظيف خزانات بالرياض",
+    logoHeroPrefix: "water-tank-cleaning-riyadh",
+    jobs: [],
+  },
 ];
 
 async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {

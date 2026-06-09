@@ -94,6 +94,18 @@ const jobs = [
     quality: 82,
   },
   {
+    file: "water-tank-cleaning-riyadh/tank-process.webp",
+    url: "https://images.pexels.com/photos/260754/pexels-photo-260754.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    width: 960,
+    quality: 72,
+  },
+  {
+    file: "water-tank-cleaning-riyadh/tank-process-640.webp",
+    url: "https://images.pexels.com/photos/260754/pexels-photo-260754.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    width: 640,
+    quality: 70,
+  },
+  {
     file: "garden-cleaning.webp",
     url: "https://images.pexels.com/photos/1083881/pexels-photo-1083881.jpeg?auto=compress&cs=tinysrgb&w=1600",
     width: 960,
