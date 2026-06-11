@@ -13,7 +13,8 @@ export const images = {
     "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=900",
   waterTankCleaning:
     "/images/water-tank-cleaning-riyadh/hero.webp",
-  facade: "/images/facade.webp",
+  facade: "/images/facade-cleaning-riyadh/hero.webp",
+  facadeCleaningRiyadhHero: "/images/facade-cleaning-riyadh/hero.webp",
   gardenCleaning:
     "https://images.pexels.com/photos/413227/pexels-photo-413227.jpeg?auto=compress&cs=tinysrgb&w=900",
   servicesVilla:

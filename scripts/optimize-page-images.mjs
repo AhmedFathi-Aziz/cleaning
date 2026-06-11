@@ -148,6 +148,11 @@ const pageConfigs = [
     logoHeroPrefix: "water-tank-cleaning-riyadh",
     jobs: [],
   },
+  {
+    folderName: "تنظيف واجهات بالرياض",
+    logoHeroPrefix: "facade-cleaning-riyadh",
+    jobs: [],
+  },
 ];
 
 async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {
