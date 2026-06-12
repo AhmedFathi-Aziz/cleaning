@@ -153,6 +153,75 @@ const pageConfigs = [
     logoHeroPrefix: "facade-cleaning-riyadh",
     jobs: [],
   },
+  {
+    folderName: "تنظيف بعد التشطيب بالرياض",
+    logoHeroPrefix: "post-construction-cleaning-riyadh",
+    jobs: [
+      {
+        inputPattern: /equipment-steam|بخار/i,
+        outputs: [
+          {
+            file: "post-construction-cleaning-riyadh/equipment-steam-960.webp",
+            width: 960,
+            quality: 72,
+            maxKb: 150,
+          },
+          {
+            file: "post-construction-cleaning-riyadh/equipment-steam.webp",
+            width: 960,
+            quality: 72,
+            maxKb: 140,
+          },
+        ],
+      },
+      {
+        inputPattern: /equipment-vacuum|مكنسة/i,
+        outputs: [
+          {
+            file: "post-construction-cleaning-riyadh/equipment-vacuum-640.webp",
+            width: 640,
+            quality: 70,
+            maxKb: 100,
+          },
+          {
+            file: "post-construction-cleaning-riyadh/equipment-vacuum.webp",
+            width: 800,
+            quality: 72,
+            maxKb: 140,
+          },
+        ],
+      },
+      {
+        inputPattern: /equipment-glass-hd|equipment-glass|زجاج|واجهات/i,
+        outputs: [
+          {
+            file: "post-construction-cleaning-riyadh/equipment-glass-1920.webp",
+            width: 1920,
+            quality: 88,
+            maxKb: 300,
+          },
+          {
+            file: "post-construction-cleaning-riyadh/equipment-glass-1200.webp",
+            width: 1200,
+            quality: 86,
+            maxKb: 220,
+          },
+          {
+            file: "post-construction-cleaning-riyadh/equipment-glass-960.webp",
+            width: 960,
+            quality: 84,
+            maxKb: 150,
+          },
+          {
+            file: "post-construction-cleaning-riyadh/equipment-glass.webp",
+            width: 1400,
+            quality: 86,
+            maxKb: 280,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {
@@ -284,7 +353,7 @@ async function main() {
     }
 
     const folderPath = path.join(pagesDir, folder.name);
-    const files = fs.readdirSync(folderPath).filter((f) => /\.(png|jpe?g)$/i.test(f));
+    const files = fs.readdirSync(folderPath).filter((f) => /\.(png|jpe?g|webp)$/i.test(f));
 
     for (const job of config.jobs) {
       const source = files.find((f) => job.inputPattern.test(f));

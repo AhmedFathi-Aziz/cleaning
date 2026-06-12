@@ -238,6 +238,37 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
                           />
                         </figure>
                       ) : null}
+                      {section.figures
+                        ?.filter((fig) => (fig.afterParagraphIndex ?? 0) === paragraphIndex)
+                        .map((fig) =>
+                          fig.variant === "wide" ? (
+                            <figure key={`${fig.src}-${fig.alt}`} className="my-7">
+                              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm">
+                                <Image
+                                  src={fig.src}
+                                  alt={fig.alt}
+                                  fill
+                                  loading="lazy"
+                                  sizes="(min-width: 1280px) 900px, (min-width: 768px) 90vw, 100vw"
+                                  quality={90}
+                                  className="object-cover object-center"
+                                />
+                              </div>
+                            </figure>
+                          ) : (
+                            <figure key={`${fig.src}-${fig.alt}`} className="my-7 flex justify-center">
+                              <Image
+                                src={fig.src}
+                                alt={fig.alt}
+                                width={fig.width ?? 960}
+                                height={fig.height ?? 640}
+                                loading="lazy"
+                                sizes="(min-width: 768px) 420px, (min-width: 640px) 360px, 300px"
+                                className="h-auto w-full max-w-[19rem] rounded-2xl border border-slate-200/90 bg-white shadow-sm sm:max-w-sm md:max-w-md"
+                              />
+                            </figure>
+                          ),
+                        )}
                       {section.cta &&
                       paragraphIndex ===
                         (section.cta.afterParagraphIndex ?? section.paragraphs.length - 1) ? (

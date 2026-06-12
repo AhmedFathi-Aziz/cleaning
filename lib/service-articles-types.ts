@@ -5,11 +5,24 @@ export type ServiceSectionCta = {
   afterParagraphIndex?: number;
 };
 
+export type ServiceSectionFigure = {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  /** بعد أي فقرة (افتراضي: 0) */
+  afterParagraphIndex?: number;
+  /** compact = بطاقة ضيقة؛ wide = عرض كامل داخل القسم */
+  variant?: "compact" | "wide";
+};
+
 export type ServiceSection = {
   heading: string;
   paragraphs: string[];
   bullets?: string[];
   cta?: ServiceSectionCta;
+  /** صور مرتبطة بالقسم (معدات، خطوات، إلخ) */
+  figures?: ServiceSectionFigure[];
 };
 
 export type ServiceArticle = {

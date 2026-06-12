@@ -148,8 +148,37 @@ export function getServiceArticleContextLinks(slug: string): InternalPromoLink[]
         },
         cleaningHub,
       ];
+    case "post-construction-cleaning-riyadh":
+      return [
+        {
+          href: "/services/deep-home-cleaning",
+          title: "تنظيف عميق للمنزل",
+          description: "للتراكمات بعد السكن — يكمّل تنظيف ما بعد التشطيب الأولي.",
+        },
+        {
+          href: "/services/apartment-cleaning-riyadh",
+          title: "تنظيف شقق بالرياض",
+          description: "صيانة دورية بعد الانتقال لشقة جديدة في برج أو مجمع.",
+        },
+        {
+          href: "/services/villa-cleaning-riyadh",
+          title: "تنظيف فلل بالرياض",
+          description: "فلل متعددة الطوابق — جدولة بعد التسليم من المقاول.",
+        },
+        {
+          href: "/services/facade-cleaning",
+          title: "غسيل واجهات زجاج",
+          description: "واجهات خارجية علوية بعد أعمال البناء والتشطيب.",
+        },
+        cleaningHub,
+      ];
     case "cleaning-company-riyadh":
       return [
+        {
+          href: "/services/post-construction-cleaning-riyadh",
+          title: "تنظيف بعد التشطيب بالرياض",
+          description: "إزالة غبار الجص والدهان قبل السكن أو الافتتاح.",
+        },
         {
           href: "/services/apartment-cleaning-riyadh",
           title: "تنظيف شقق بالرياض",

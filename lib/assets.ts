@@ -47,4 +47,12 @@ export const images = {
   carpetCleaningRiyadhHero: "/images/carpet-cleaning-riyadh/hero.webp",
   waterTankCleaningRiyadhHero: "/images/water-tank-cleaning-riyadh/hero.webp",
   waterTankCleaningRiyadhProcess: "/images/water-tank-cleaning-riyadh/tank-process.webp",
+  postConstructionCleaningRiyadhHero:
+    "/images/post-construction-cleaning-riyadh/hero.webp",
+  postConstructionEquipmentVacuum:
+    "/images/post-construction-cleaning-riyadh/equipment-vacuum.webp",
+  postConstructionEquipmentGlass:
+    "/images/post-construction-cleaning-riyadh/equipment-glass-1920.webp",
+  postConstructionEquipmentSteam:
+    "/images/post-construction-cleaning-riyadh/equipment-steam.webp",
 } as const;
