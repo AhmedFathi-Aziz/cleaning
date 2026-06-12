@@ -3,7 +3,7 @@ import type { InternalPromoLink } from "@/lib/related-service-links";
 /** روابط داخلية مخصّصة لصفحات الخدمات (تُدمج مع قسم «خدمات ذات صلة») */
 export function getServiceArticleContextLinks(slug: string): InternalPromoLink[] {
   const cleaningHub: InternalPromoLink = {
-    href: "/cleaning/riyadh",
+    href: "/cleaning#riyadh",
     title: "تنظيف منازل حسب أحياء الرياض",
     description: "صفحات أحياء مع سياق محلي — مفيدة بعد اختيار نوع الخدمة وقبل تحديد الموعد.",
   };
@@ -222,7 +222,7 @@ export function getBlogArticleContextLinks(slug: string): InternalPromoLink[] {
           description: "صيانة أسبوعية أو شهرية بعد الانتقال للحفاظ على النظافة دون تراكم أتربة.",
         },
         {
-          href: "/cleaning/riyadh",
+          href: "/cleaning#riyadh",
           title: "تنظيف منازل في أحياء الرياض",
           description: "صفحات أحياء الرياض مع تغطية تنظيف ومكافحة حشرات حسب الحي.",
         },

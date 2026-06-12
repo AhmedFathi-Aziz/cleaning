@@ -131,9 +131,9 @@ const GUIDE_PHRASES: ServiceLinkRule[] = [
 ];
 
 const SITE_HUB_PHRASES: ServiceLinkRule[] = [
-  { phrase: "تنظيف منازل في أحياء الرياض", href: "/cleaning/riyadh" },
+  { phrase: "تنظيف منازل في أحياء الرياض", href: "/cleaning#riyadh" },
   { phrase: "أحياء الرياض للتنظيف", href: "/cleaning" },
-  { phrase: "صفحات أحياء الرياض", href: "/cleaning/riyadh" },
+  { phrase: "صفحات أحياء الرياض", href: "/cleaning#riyadh" },
 ];
 
 let cachedRules: ServiceLinkRule[] | null = null;

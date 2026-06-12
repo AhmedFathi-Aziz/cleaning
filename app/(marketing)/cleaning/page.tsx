@@ -97,7 +97,7 @@ export default function CleaningProgrammaticHubPage() {
           return (
             <section
               key={seed.citySlug}
-              id={isPrimary ? "riyadh" : undefined}
+              id={isPrimary ? "riyadh" : seed.citySlug === "jeddah" ? "jeddah" : undefined}
               className={isPrimary ? "mt-10 scroll-mt-28" : "mt-14 scroll-mt-28 border-t border-slate-200 pt-10"}
             >
               <h2 className="font-headline text-xl font-extrabold text-primary md:text-2xl">

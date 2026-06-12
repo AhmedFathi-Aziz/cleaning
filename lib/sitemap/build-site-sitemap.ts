@@ -6,6 +6,7 @@ import { loadPosts } from "@/lib/post-store";
 import { getCleaningProgrammaticStaticParams } from "@/lib/programmatic-cleaning-seo";
 import { pestGuides } from "@/lib/pest-guides";
 import { isPrimaryCitySlug } from "@/lib/region";
+import { getServiceLocationStaticParams } from "@/lib/service-location-pages";
 import { serviceArticles } from "@/lib/service-articles";
 import { siteUrl } from "@/lib/site";
 import { locations } from "@/src/data/locations";
@@ -124,16 +125,12 @@ export function buildSiteSitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  const serviceLocationEntries = serviceArticles.flatMap((service) =>
-    locations.flatMap((city) =>
-      city.neighborhoods.map((neighborhood) =>
-        sitemapEntry(`/services/${service.slug}/${city.slug}/${neighborhood.slug}`, {
-          lastModified: now,
-          priority: isPrimaryCitySlug(city.slug) ? 0.8 : 0.65,
-          changeFrequency: "monthly",
-        }),
-      ),
-    ),
+  const serviceLocationEntries = getServiceLocationStaticParams().map(({ category, city, neighborhood }) =>
+    sitemapEntry(`/services/${category}/${city}/${neighborhood}`, {
+      lastModified: now,
+      priority: isPrimaryCitySlug(city) ? 0.8 : 0.65,
+      changeFrequency: "monthly",
+    }),
   );
 
   return dedupeByUrl([

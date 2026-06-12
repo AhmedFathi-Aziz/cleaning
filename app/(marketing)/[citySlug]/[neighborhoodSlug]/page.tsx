@@ -7,6 +7,7 @@ import { NeighborhoodPageJsonLd } from "@/components/SeoJsonLd";
 import { NeighborhoodLocalContextBlock } from "@/components/NeighborhoodLocalContextBlock";
 import { NeighborhoodServicesHighlight } from "@/components/NeighborhoodServicesHighlight";
 import { brandNameAr } from "@/lib/brand";
+import { isServiceLocationPairAllowed } from "@/lib/service-location-pages";
 import { buildArabicPageMetadata, truncateForMetaDescription } from "@/lib/seo";
 import { serviceArticles } from "@/lib/service-articles";
 import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
@@ -121,7 +122,9 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
         <NeighborhoodServicesHighlight city={city} neighborhood={neighborhood} />
 
         <section className="mt-8 grid gap-5 md:grid-cols-3">
-          {serviceArticles.map((service) => (
+          {serviceArticles
+            .filter((service) => isServiceLocationPairAllowed(service.slug, city.slug, neighborhood.slug))
+            .map((service) => (
             <Link
               key={service.slug}
               href={`/services/${service.slug}/${city.slug}/${neighborhood.slug}`}

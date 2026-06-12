@@ -1,0 +1,5 @@
+# Cloudflare Pages — مسارات نسبية فقط (بدون https://)
+# صفحات قديمة أو روابط خاطئة → وجهة صحيحة
+
+/cleaning/riyadh    /cleaning#riyadh    301
+/cleaning/jeddah    /cleaning#jeddah    301

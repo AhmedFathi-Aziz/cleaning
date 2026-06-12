@@ -1,6 +1,7 @@
 import type { ServiceSection } from "@/lib/service-articles-types";
 import { cityClimateNote, cityDustNote, pickVariant } from "@/lib/content-seed-utils";
 import { getNeighborhoodServiceHighlights } from "@/lib/neighborhood-services-deep-content";
+import { getServiceArticle } from "@/lib/service-articles";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
 
 export type ServiceLocationFaq = { question: string; answer: string };
@@ -683,12 +684,75 @@ const builders: Record<string, (ctx: BuildCtx) => ServiceLocationPageContent> = 
   "garden-cleaning": buildGardenCleaning,
 };
 
+function buildGeneric(ctx: BuildCtx, serviceLabel: string): ServiceLocationPageContent {
+  const { hood, cityName, seed } = ctx;
+  return {
+    localIntro: [
+      `${serviceLabel} في حي ${hood}، ${cityName} — خطة واضحة حسب مساحة المكان وطبيعة الاستخدام. ${ctx.landmarks}`,
+      cityDustNote(ctx.citySlug, cityName),
+    ],
+    sections: [
+      localContextSection(ctx, serviceLabel),
+      schedulingSection(ctx, serviceLabel),
+      {
+        heading: `تفاصيل ${serviceLabel} في ${hood}`,
+        paragraphs: pickVariant(seed, "generic-detail", [
+          [
+            `نحدّد نطاق العمل قبل الوصول: المساحات المطلوبة، مستوى الاتساخ، وهل تحتاج زيارة واحدة أم خطة متابعة في ${cityName}.`,
+            `الفريق يأخذ بعين الاعتبار نوع العقار في ${hood} — شقة، فيلا، أو مجمع — عند اختيار المعدات والوقت.`,
+          ],
+          [
+            `في ${hood} نراجع معك أولويات الغرف أو المناطق إن كان الوقت محدوداً؛ الشفافية في النطاق تقلل سوء الفهم.`,
+            `المواد والمسار يُختاران حسب حساسية الأسرة والحيوانات الأليفة إن وُجدت.`,
+          ],
+          [
+            `بعد ${serviceLabel} في ${cityName} نلخّص ما تم إنجازه ونقترح موعد متابعة إن لزم — خاصة قبل المناسبات.`,
+            `الوصول التقريبي لحي ${hood} يُخطَّط بـ ${ctx.driveMin} دقيقة من انطلاق الفريق.`,
+          ],
+        ]),
+      },
+      crossServiceSection(ctx, [
+        [
+          "كثير من العملاء في نفس الحي يجمعون تنظيفاً عاماً مع غسيل سجاد أو كنب.",
+          "مكافحة حشرات أو تنظيف خزان يُنسّق في نفس الأسبوع أحياناً لتقليل تعطيل البيت.",
+        ],
+        [
+          "تنظيف واجهات أو فناء يكمّل العمل الداخلي بعد العواصف.",
+          "تنظيف عميق قبل تشطيب أو تسليم عقار شائع في نفس المنطقة.",
+        ],
+      ]),
+    ],
+    faqs: pickVariant(seed, "generic-faq", [
+      [
+        {
+          question: `كم تستغرق ${serviceLabel} في حي ${hood}؟`,
+          answer: `تعتمد على المساحة والاتساخ؛ نعطيك تقديراً أوضح عند الحجز مع ذكر ${cityName} واسم الحي.`,
+        },
+        {
+          question: `هل تغطون حي ${hood} فعلاً؟`,
+          answer: `نعم — نؤكد الموعد والوصول عبر واتساب مع عنوان دقيق في ${cityName}.`,
+        },
+        {
+          question: `ماذا أجهّز قبل الزيارة في ${hood}؟`,
+          answer: "تفريغ المنطقة المستهدفة قدر الإمكان، تحديد غرف لا تُفتح، وإبلاغنا بأي حساسية أو حيوانات أليفة.",
+        },
+      ],
+    ]),
+    preparationBullets: pickVariant(seed, "generic-prep", [
+      [`تحديد المساحة التقريبية في ${hood}.`, "إرسال موقع واتساب للعمارة.", "ذكر الطابق وموقف السيارات."],
+      [`تفريغ أسطح العمل قبل الوصول.`, `تنسيق دخول العمارة في ${cityName}.`, "تحديد وقت يناسب دوامك."],
+    ]),
+  };
+}
+
 export function getServiceLocationPageContent(
   serviceSlug: string,
   city: CityLocation,
   neighborhood: Neighborhood,
-): ServiceLocationPageContent | null {
+): ServiceLocationPageContent {
+  const ctx = buildCtx(city, neighborhood, serviceSlug);
   const builder = builders[serviceSlug];
-  if (!builder) return null;
-  return builder(buildCtx(city, neighborhood, serviceSlug));
+  if (builder) return builder(ctx);
+  const service = getServiceArticle(serviceSlug);
+  return buildGeneric(ctx, service?.shortTitle ?? "الخدمة");
 }

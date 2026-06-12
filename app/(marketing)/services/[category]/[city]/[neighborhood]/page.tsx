@@ -7,10 +7,12 @@ import { ServiceArticleParagraph } from "@/components/ServiceArticleParagraph";
 import { ServiceLocationJsonLd } from "@/components/SeoJsonLd";
 import { brandNameAr } from "@/lib/brand";
 import { buildServiceHeroImageAlt } from "@/lib/image-seo";
+import { getCleaningDistrictPath } from "@/lib/programmatic-cleaning-seo";
 import { buildArabicPageMetadata } from "@/lib/seo";
 import { getServiceLocationPageContent } from "@/lib/service-location-deep-content";
-import { getServiceArticle, serviceArticles } from "@/lib/service-articles";
-import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
+import { getServiceLocationStaticParams, isServiceLocationPairAllowed } from "@/lib/service-location-pages";
+import { getServiceArticle } from "@/lib/service-articles";
+import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 type PageProps = {
   params: Promise<{
@@ -23,15 +25,7 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return serviceArticles.flatMap((service) =>
-    locations.flatMap((city) =>
-      city.neighborhoods.map((neighborhood) => ({
-        category: service.slug,
-        city: city.slug,
-        neighborhood: neighborhood.slug,
-      })),
-    ),
-  );
+  return getServiceLocationStaticParams();
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -41,6 +35,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const neighborhood = getNeighborhoodBySlug(citySlug, neighborhoodSlug);
 
   if (!service || !city || !neighborhood) return { title: "غير موجود", robots: { index: false, follow: false } };
+  if (!isServiceLocationPairAllowed(category, citySlug, neighborhoodSlug)) {
+    return { title: "غير موجود", robots: { index: false, follow: false } };
+  }
 
   const title = `أفضل شركة ${service.shortTitle} في حي ${neighborhood.name} ${city.name} | اطلب الآن`;
   const description = `خدمة ${service.shortTitle} في حي ${neighborhood.name} بمدينة ${city.name} من ${brandNameAr}. ${neighborhood.nearbyLandmarksAr.slice(0, 140)}…`;
@@ -73,11 +70,13 @@ export default async function ServiceLocationPage({ params }: PageProps) {
   const neighborhood = getNeighborhoodBySlug(citySlug, neighborhoodSlug);
 
   if (!service || !city || !neighborhood) notFound();
+  if (!isServiceLocationPairAllowed(category, citySlug, neighborhoodSlug)) notFound();
 
   const deepContent = getServiceLocationPageContent(service.slug, city, neighborhood);
   const pageTitle = `أفضل شركة ${service.shortTitle} في حي ${neighborhood.name} ${city.name}`;
   const hubPath = `/${city.slug}/${neighborhood.slug}`;
   const serviceHubPath = `/services/${service.slug}`;
+  const cleaningDistrictPath = getCleaningDistrictPath(city.slug, neighborhood.slug);
 
   return (
     <main className="bg-slate-50 px-6 pb-24 pt-28 md:px-8">
@@ -248,12 +247,14 @@ export default async function ServiceLocationPage({ params }: PageProps) {
             <Link href={hubPath} className="rounded-full bg-surface-container-low px-6 py-2.5 text-sm font-bold text-primary">
               كل الخدمات في حي {neighborhood.name}
             </Link>
-            <Link
-              href={`/cleaning/${city.slug}/${neighborhood.slug}`}
-              className="rounded-full border border-primary/20 bg-white px-6 py-2.5 text-sm font-bold text-primary"
-            >
-              تنظيف منازل — {neighborhood.name}
-            </Link>
+            {cleaningDistrictPath ? (
+              <Link
+                href={cleaningDistrictPath}
+                className="rounded-full border border-primary/20 bg-white px-6 py-2.5 text-sm font-bold text-primary"
+              >
+                تنظيف منازل — {neighborhood.name}
+              </Link>
+            ) : null}
           </div>
         </section>
       </article>

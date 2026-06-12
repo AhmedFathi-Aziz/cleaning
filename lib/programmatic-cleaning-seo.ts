@@ -1,7 +1,7 @@
 import jeddahCleaningDistricts from "@/src/data/jeddah-cleaning-districts.json";
 import riyadhCleaningDistricts from "@/src/data/riyadh-cleaning-districts.json";
 import { primaryCitySlug } from "@/lib/region";
-import { getNeighborhoodBySlug } from "@/src/data/locations";
+import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
 
 type CleaningDistrictSeed = {
   citySlug: string;
@@ -11,30 +11,31 @@ type CleaningDistrictSeed = {
 const cleaningSeeds: CleaningDistrictSeed[] = [riyadhCleaningDistricts, jeddahCleaningDistricts];
 
 /**
- * أزواج المسار `/cleaning/[citySlug]/[districtSlug]` — الرياض أولاً ثم جدة.
+ * أزواج المسار `/cleaning/[citySlug]/[districtSlug]` — كل مدينة وحي في locations.
  */
 export function getCleaningProgrammaticStaticParams(): { citySlug: string; districtSlug: string }[] {
-  return cleaningSeeds.flatMap((seed) =>
-    seed.districts
-      .map((d) => {
-        const n = getNeighborhoodBySlug(seed.citySlug, d.slug);
-        if (!n) return null;
-        return { citySlug: seed.citySlug, districtSlug: d.slug };
-      })
-      .filter((x): x is { citySlug: string; districtSlug: string } => x !== null),
+  return locations.flatMap((city) =>
+    city.neighborhoods.map((neighborhood) => ({
+      citySlug: city.slug,
+      districtSlug: neighborhood.slug,
+    })),
   );
 }
 
 export function isAllowedCleaningProgrammaticPair(citySlug: string, districtSlug: string): boolean {
-  const seed = cleaningSeeds.find((s) => s.citySlug === citySlug);
-  if (!seed) return false;
-  return seed.districts.some((d) => d.slug === districtSlug);
+  return getNeighborhoodBySlug(citySlug, districtSlug) != null;
+}
+
+/** مسار صفحة التنظيف البرمجية إن وُجدت؛ وإلا null (لا تُنشَأ روابط لـ 404). */
+export function getCleaningDistrictPath(citySlug: string, districtSlug: string): string | null {
+  if (!isAllowedCleaningProgrammaticPair(citySlug, districtSlug)) return null;
+  return `/cleaning/${citySlug}/${districtSlug}`;
 }
 
 export function getCleaningDistrictPeersExcluding(citySlug: string, currentSlug: string) {
-  const seed = cleaningSeeds.find((s) => s.citySlug === citySlug);
-  if (!seed) return [];
-  return seed.districts.filter((d) => d.slug !== currentSlug);
+  const city = getCityBySlug(citySlug);
+  if (!city) return [];
+  return city.neighborhoods.filter((n) => n.slug !== currentSlug);
 }
 
 export function getPrimaryCleaningCitySlug(): string {
