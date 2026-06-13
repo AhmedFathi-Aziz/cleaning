@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
 import { brandNameAr } from "@/lib/brand";
 import { loadPosts } from "@/lib/post-store";
@@ -68,6 +69,7 @@ export default function BlogPage() {
                   <time className="text-sm text-on-surface-variant" dateTime={post.publishedAt}>
                     {new Date(post.publishedAt).toLocaleDateString("ar-SA")}
                   </time>
+                  <ArticleAuthorCard authorId={post.authorId} variant="inline" className="mt-1 text-sm font-medium text-on-surface-variant" />
                   <h2 className="font-headline mt-2 text-2xl font-bold text-primary">
                     <Link href={`/blog/${encodeURIComponent(post.slug)}`} className="hover:text-secondary">
                       {post.title}

@@ -2,10 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { ArticleReadingShell } from "@/components/ArticleReadingShell";
 import { Icon } from "@/components/Icon";
 import { RelatedServicesSection } from "@/components/RelatedServicesSection";
 import { getNationalNewsContextLinks } from "@/lib/article-context-links";
+import { resolveArticleAuthorName, buildArticleAuthorSchema } from "@/lib/article-author";
 import { brandNameAr } from "@/lib/brand";
 import { getNationalNewsBySlug } from "@/lib/national-news-store";
 import type { NationalNewsArticle } from "@/lib/national-news-types";
@@ -32,8 +34,9 @@ export async function generateMetadata({
   const canonical = `/news/${encodeURIComponent(article.slug)}`;
   const title = article.seoTitle ?? article.title;
   const description = article.seoDescription ?? article.excerpt;
+  const authorName = resolveArticleAuthorName({ authorId: article.authorId, author: article.author });
 
-  return buildArabicPageMetadata({
+  const metadata = buildArabicPageMetadata({
     title,
     description,
     canonical,
@@ -42,6 +45,18 @@ export async function generateMetadata({
     imageAlt: article.title,
     type: "article",
   });
+
+  return {
+    ...metadata,
+    authors: [{ name: authorName }],
+    openGraph: {
+      ...metadata.openGraph,
+      type: "article",
+      publishedTime: article.publishedAt,
+      modifiedTime: article.updatedAt ?? article.publishedAt,
+      authors: [authorName],
+    },
+  };
 }
 
 export default async function NationalNewsArticlePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -67,6 +82,7 @@ export default async function NationalNewsArticlePage({ params }: { params: Prom
             <time className="text-sm font-semibold text-secondary" dateTime={article.publishedAt}>
               {new Date(article.publishedAt).toLocaleDateString("ar-SA", { dateStyle: "long" })}
             </time>
+            <ArticleAuthorCard authorId={article.authorId} author={article.author} />
             <p className="mt-2 text-xs font-extrabold uppercase tracking-wide text-secondary">أخبار وطنية — توعية</p>
             <h1 className="font-headline mt-3 text-3xl font-extrabold leading-tight text-primary sm:text-4xl md:text-5xl">
               {article.title}
@@ -108,6 +124,7 @@ export default async function NationalNewsArticlePage({ params }: { params: Prom
 }
 
 function buildNewsJsonLd(article: NationalNewsArticle, canonicalUrl: string) {
+  const authorName = resolveArticleAuthorName({ authorId: article.authorId, author: article.author });
   return {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -116,10 +133,7 @@ function buildNewsJsonLd(article: NationalNewsArticle, canonicalUrl: string) {
     image: [heroImageUrl],
     datePublished: article.publishedAt,
     dateModified: article.updatedAt ?? article.publishedAt,
-    author: {
-      "@type": "Organization",
-      name: brandNameAr,
-    },
+    author: buildArticleAuthorSchema({ authorId: article.authorId, author: article.author }),
     publisher: {
       "@type": "Organization",
       name: brandNameAr,

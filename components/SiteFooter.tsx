@@ -87,6 +87,14 @@ export function SiteFooter() {
             <li>
               <Link
                 className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
+                href="/team"
+              >
+                فريق العمل
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="block min-h-10 py-2 text-slate-600 transition-colors duration-200 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300"
                 href="/about"
               >
                 من نحن

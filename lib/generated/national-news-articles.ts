@@ -20,7 +20,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-28T09:00:00.000Z",
     "updatedAt": "2026-05-28T09:00:00.000Z",
-    "slug": "swa-water-tank-hygiene-home"
+    "slug": "swa-water-tank-hygiene-home",
+    "authorId": "abdullah-qhtani"
   },
   {
     "title": "الهيئة السعودية للمواصفات: معايير منتجات التنظيف المنزلية والسلامة",
@@ -40,7 +41,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-25T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "saso-household-cleaning-products"
+    "slug": "saso-household-cleaning-products",
+    "authorId": "mohammed-ahmad"
   },
   {
     "title": "وزارة البيئة: تعزيز الوعي البيئي للحد من انتشار الآفات في البيئات السكنية",
@@ -62,7 +64,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-24T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "environmental-awareness-pest-control-saudi-arabia"
+    "slug": "environmental-awareness-pest-control-saudi-arabia",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "الدفاع المدني: تقليل الفوضى والمخلفات داخل المنزل لتعزيز السلامة",
@@ -82,7 +85,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-20T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "civil-defense-home-clutter-safety"
+    "slug": "civil-defense-home-clutter-safety",
+    "authorId": "mohammed-ahmad"
   },
   {
     "title": "وزارة البلديات: فرز النفايات والحد من بيئات تكاثر الحشرات في الأحياء",
@@ -102,7 +106,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-15T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "momrah-waste-segregation-pest-prevention"
+    "slug": "momrah-waste-segregation-pest-prevention",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "المبادرة السعودية الخضراء: حدائق منزلية مستدامة وأقل اعتماداً على المبيدات",
@@ -122,7 +127,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-12T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "saudi-green-garden-pest-prevention"
+    "slug": "saudi-green-garden-pest-prevention",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "وزارة الصحة: تعزيز الوقاية من الأمراض المنقولة بالنواقل في المنازل والمجمعات",
@@ -143,7 +149,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-10T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "moh-vector-disease-prevention"
+    "slug": "moh-vector-disease-prevention",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "وزارة الصحة: تقليل مسببات الحساسية داخل المنزل (غبار وعث الغبار)",
@@ -163,7 +170,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-08T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "moh-indoor-allergens-carpet-sofa"
+    "slug": "moh-indoor-allergens-carpet-sofa",
+    "authorId": "mohammed-ahmad"
   },
   {
     "title": "أمانة محافظة جدة: الرطوبة الساحلية والنظافة العميقة للمطابخ والحمامات",
@@ -183,7 +191,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-05T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "jeddah-coastal-humidity-deep-cleaning"
+    "slug": "jeddah-coastal-humidity-deep-cleaning",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "وزارة السياحة: معايير النظافة في الوحدات الضيافية والشقق المفروشة",
@@ -203,7 +212,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-05-02T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "tourism-hospitality-cleaning-standards"
+    "slug": "tourism-hospitality-cleaning-standards",
+    "authorId": "mohammed-ahmad"
   },
   {
     "title": "المركز الوطني للأرصاد: موجات الغبار وتأثيرها على الواجهات والسجاد",
@@ -223,7 +233,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-04-28T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "ncm-dust-storms-facade-carpet-care"
+    "slug": "ncm-dust-storms-facade-carpet-care",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "وزارة الصحة: الوقاية من بق الفراش بعد السفر والإقامة المؤقتة",
@@ -243,7 +254,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-04-22T08:00:00.000Z",
     "updatedAt": "2026-05-28T08:00:00.000Z",
-    "slug": "moh-bed-bugs-travel-home-prep"
+    "slug": "moh-bed-bugs-travel-home-prep",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "أمانة منطقة الرياض: معايير النظافة في المنشآت الغذائية والمطابخ التجارية",
@@ -264,7 +276,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-04-22T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "riyadh-municipality-food-hygiene"
+    "slug": "riyadh-municipality-food-hygiene",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "الهيئة العامة للغذاء والدواء: مكافحة الآفات في سلسلة إمداد الغذاء",
@@ -285,7 +298,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-03-15T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "sfda-pest-control-food-supply"
+    "slug": "sfda-pest-control-food-supply",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "جودة الحياة في الأحياء السكنية: نظافة المساحات المشتركة والواجهات",
@@ -306,7 +320,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-02-08T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "quality-of-life-housing-cleanliness"
+    "slug": "quality-of-life-housing-cleanliness",
+    "authorId": "abdullah-qhtani"
   },
   {
     "title": "وزارة البيئة والمياه والزراعة: الاستخدام الآمن للمبيدات داخل المدن",
@@ -327,7 +342,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2026-01-18T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "mewa-safe-pesticide-use"
+    "slug": "mewa-safe-pesticide-use",
+    "authorId": "fahed-shamri"
   },
   {
     "title": "التوعية الصحية في المدارس: نظافة الفصول والمقاصف وتقليل انتشار الحشرات",
@@ -347,7 +363,8 @@ export const staticNationalNewsArticles: NationalNewsArticle[] = [
     ],
     "publishedAt": "2025-12-05T08:00:00.000Z",
     "updatedAt": "2026-05-27T08:00:00.000Z",
-    "slug": "school-health-hygiene-awareness"
+    "slug": "school-health-hygiene-awareness",
+    "authorId": "fahed-shamri"
   }
 ] as NationalNewsArticle[];
 

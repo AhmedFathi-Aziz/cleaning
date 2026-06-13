@@ -1,30 +1,24 @@
 import type { Metadata } from "next";
 
 import { SiteAbout } from "@/components/SiteAbout";
+import { brandNameAr } from "@/lib/brand";
+import { aboutCities, aboutFoundedLabelAr, aboutProjectsCount } from "@/lib/content/about-company";
+import { buildArabicPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "من نحن | شركة تنظيف بالرياض",
-  description:
-    "شركة تنظيف بالرياض — أكثر من 500 مشروع، فريق مدرب، ضمان 10 سنوات على المعالجات. تعرّف على السعودية للتنظيف واحجز معاينة مجانية.",
+export const metadata: Metadata = buildArabicPageMetadata({
+  title: `من نحن | ${brandNameAr} — شركة تنظيف ومكافحة حشرات`,
+  description: `${brandNameAr}: ${aboutFoundedLabelAr} في الرياض، أكثر من ${aboutProjectsCount} مشروع تنظيف ومكافحة، تغطية ${aboutCities.length} مدينة، فريق مدرب ومعدات بخار وشفط وغسيل سجاد. تعرّف على خدماتنا ومعداتنا.`,
+  canonical: "/about",
   keywords: [
-    "السعودية للتنظيف",
+    "من نحن",
+    brandNameAr,
     "شركة تنظيف الرياض",
-    "شركة رش حشرات",
-    "فريق تنظيف محترف",
-    "خدمات تنظيف احترافية",
-    "فنيون مدرّبون",
-    "تقرير كشف تسربات",
-    "ثقة العملاء",
+    "مكافحة حشرات الرياض",
+    "فريق تنظيف مدرب",
+    "معدات تنظيف احترافية",
+    "شركة تنظيف في السعودية",
   ],
-  alternates: { canonical: "/about" },
-  openGraph: {
-    title: "من نحن | السعودية للتنظيف",
-    description: "شركة تنظيف ومكافحة حشرات للمنازل والمنشآت في الرياض مع تغطية مدن أخرى عند الطلب.",
-    url: "/about",
-    type: "website",
-    locale: "ar_SA",
-  },
-};
+});
 
 export default function AboutPage() {
   return <SiteAbout />;

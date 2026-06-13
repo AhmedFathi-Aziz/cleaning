@@ -10,6 +10,32 @@ const blogDir = path.join(root, "content", "blog");
 const outDir = path.join(root, "lib", "generated");
 const outFile = path.join(outDir, "blog-articles.ts");
 
+const TEAM = {
+  ahmedFathy: "ahmed-fathy",
+  mohammedAhmad: "mohammed-ahmad",
+  khalidOtaibi: "khalid-otaibi",
+  nouraSaud: "noura-saud",
+  fahedShamri: "fahed-shamri",
+  abdullahQhtani: "abdullah-qhtani",
+};
+
+const pestPattern = /حشر|pest|صراص|بق|نمل|رش|آفات|مبيد/i;
+const fabricPattern = /سجاد|كنب|مجلس|carpet|sofa|majlis|موكيت|ستائر|مفروش/i;
+const tanksFacadesPattern = /خزان|واجه|tank|facade|pool|مياه|مكيف|مسابح/i;
+const homeCleaningPattern = /فيلا|شقة|منزل|house|villa|apartment|تنظيف|cleaning|نقل|أثاث|مطبخ|مواد/i;
+
+function inferBlogAuthorId(slug, meta) {
+  if (meta.authorId) return String(meta.authorId);
+  const haystack = [slug, meta.title, meta.excerpt, ...(Array.isArray(meta.keywords) ? meta.keywords : [])]
+    .filter(Boolean)
+    .join(" ");
+  if (pestPattern.test(haystack)) return TEAM.fahedShamri;
+  if (fabricPattern.test(haystack)) return TEAM.nouraSaud;
+  if (tanksFacadesPattern.test(haystack)) return TEAM.abdullahQhtani;
+  if (homeCleaningPattern.test(haystack)) return TEAM.khalidOtaibi;
+  return TEAM.mohammedAhmad;
+}
+
 function parseFrontmatter(block) {
   const data = {};
   for (const line of block.split(/\r?\n/)) {
@@ -57,6 +83,8 @@ function parseMarkdownFile(fileName) {
     return null;
   }
 
+  const authorId = inferBlogAuthorId(slug, meta);
+
   return {
     slug,
     title: String(meta.title),
@@ -65,7 +93,7 @@ function parseMarkdownFile(fileName) {
     seoTitle: meta.seoTitle ? String(meta.seoTitle) : undefined,
     seoDescription: meta.seoDescription ? String(meta.seoDescription) : undefined,
     keywords: Array.isArray(meta.keywords) ? meta.keywords.map(String) : undefined,
-    author: meta.author ? String(meta.author) : undefined,
+    authorId,
     coverImage: meta.coverImage ? String(meta.coverImage) : undefined,
     coverKey: meta.coverKey === null || meta.coverKey === undefined ? null : String(meta.coverKey),
     publishedAt: String(meta.publishedAt),

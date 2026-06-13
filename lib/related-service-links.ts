@@ -9,6 +9,7 @@ const RESERVED_FIRST_SEGMENTS = new Set([
   "news",
   "features",
   "about",
+  "team",
   "contact",
   "areas",
   "careers",

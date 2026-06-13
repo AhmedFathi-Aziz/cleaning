@@ -3,10 +3,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { ArticleReadingShell } from "@/components/ArticleReadingShell";
 import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
 import { RelatedServicesSection } from "@/components/RelatedServicesSection";
 import { getBlogArticleContextLinks } from "@/lib/article-context-links";
+import { resolveArticleAuthorName, buildArticleAuthorSchema } from "@/lib/article-author";
 import { brandNameAr } from "@/lib/brand";
 import { getPostBySlug } from "@/lib/post-store";
 import { staticBlogPosts } from "@/lib/static-blog";
@@ -54,6 +56,7 @@ export async function generateMetadata({
   const title = post.seoTitle ?? post.title;
   const description = post.seoDescription ?? post.excerpt;
   const image = getPostMetadataImage(post);
+  const authorName = resolveArticleAuthorName({ authorId: post.authorId, author: post.author });
   const metadata = buildArabicPageMetadata({
     title,
     description,
@@ -66,13 +69,13 @@ export async function generateMetadata({
 
   return {
     ...metadata,
-    authors: [{ name: post.author ?? brandNameAr }],
+    authors: [{ name: authorName }],
     openGraph: {
       ...metadata.openGraph,
       type: "article",
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt ?? post.publishedAt,
-      authors: [post.author ?? brandNameAr],
+      authors: [authorName],
     },
   };
 }
@@ -88,6 +91,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const heroForSchema =
     post.coverImage ??
     (post.coverKey ? absoluteUrl(`/api/media/${encodeURIComponent(post.coverKey)}`) : null);
+  const authorName = resolveArticleAuthorName({ authorId: post.authorId, author: post.author });
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -96,10 +100,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     image: heroForSchema ? [heroForSchema] : [heroImageUrl],
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
-    author: {
-      "@type": "Organization",
-      name: post.author ?? brandNameAr,
-    },
+    author: buildArticleAuthorSchema({ authorId: post.authorId, author: post.author }),
     publisher: {
       "@type": "Organization",
       name: brandNameAr,
@@ -129,9 +130,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <time className="text-sm font-semibold text-secondary" dateTime={post.publishedAt}>
               {new Date(post.publishedAt).toLocaleDateString("ar-SA", { dateStyle: "long" })}
             </time>
-            {post.author ? (
-              <p className="mt-2 text-sm font-medium text-on-surface-variant">بقلم {post.author}</p>
-            ) : null}
+            <ArticleAuthorCard authorId={post.authorId} author={post.author} />
             <h1 className="font-headline mt-4 text-3xl font-extrabold leading-tight text-primary sm:text-4xl md:text-5xl">
               {post.title}
             </h1>

@@ -10,6 +10,9 @@ export type NationalNewsArticle = {
   seoTitle?: string;
   seoDescription?: string;
   keywords?: string[];
+  /** معرّف عضو الفريق من /team */
+  authorId?: string;
+  author?: string;
   publishedAt: string;
   updatedAt?: string;
 };

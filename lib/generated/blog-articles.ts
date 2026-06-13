@@ -12,7 +12,7 @@ export const staticBlogPosts: BlogPost[] = [
     "keywords": [
       "تنظيف المطابخ بالرياض"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "khalid-otaibi",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779825748/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%85%D8%B7%D8%A7%D8%A8%D8%AE_uinbdq.png",
     "coverKey": null,
     "publishedAt": "2026-05-26T19:59:00.000Z",
@@ -37,7 +37,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف مجالس بالرياض",
       "النمل الأبيض الرياض"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779746607/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D8%AE%D8%B2%D8%A7%D9%86%D8%A7%D8%AA_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_lvw3cj.png",
     "coverKey": null,
     "publishedAt": "2026-05-25T22:03:00.000Z",
@@ -58,7 +58,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف الوحدة الخارجية",
       "غسيل فلتر المكيف"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "abdullah-qhtani",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779650159/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%85%D9%83%D9%8A%D9%81%D8%A7%D8%AA_lg3iks.png",
     "coverKey": null,
     "publishedAt": "2026-05-24T19:02:00.000Z",
@@ -81,7 +81,7 @@ export const staticBlogPosts: BlogPost[] = [
       "غسيل ستائر ثقيلة",
       "تنظيف ستائر احترافي"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779637147/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D8%B3%D8%AA%D8%A7%D8%A6%D8%B1_yp2wei.png",
     "coverKey": null,
     "publishedAt": "2026-05-24T15:39:00.000Z",
@@ -106,7 +106,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف موكيت احترافي",
       "تلميع موكيت"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779571890/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%85%D9%88%D9%83%D9%8A%D8%AA_%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_ityvql.png",
     "coverKey": null,
     "publishedAt": "2026-05-23T21:28:00.000Z",
@@ -131,7 +131,7 @@ export const staticBlogPosts: BlogPost[] = [
       "إزالة بقع السجاد",
       "تنظيف موكيت بالبخار"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779461751/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D8%B3%D8%AC%D8%A7%D8%AF_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_felbww.png",
     "coverKey": null,
     "publishedAt": "2026-05-22T14:56:00.000Z",
@@ -156,7 +156,7 @@ export const staticBlogPosts: BlogPost[] = [
       "غسيل أرائك",
       "تنظيف كنب احترافي"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779137127/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%83%D9%86%D8%A8_zgrvxi.png",
     "coverKey": null,
     "publishedAt": "2026-05-18T20:38:00.000Z",
@@ -181,7 +181,7 @@ export const staticBlogPosts: BlogPost[] = [
       "إزالة بقع المجالس",
       "تنظيف مجالس احترافي"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1779053324/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%85%D8%AC%D8%A7%D9%84%D8%B3_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_xxv3op.png",
     "coverKey": null,
     "publishedAt": "2026-05-17T21:18:00.000Z",
@@ -205,7 +205,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف فلل بعد التشطيب",
       "شركة نظافة فلل الرياض"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "khalid-otaibi",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778972031/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%81%D9%84%D9%84_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_b6n3tb.png",
     "coverKey": null,
     "publishedAt": "2026-05-16T22:48:00.000Z",
@@ -228,7 +228,7 @@ export const staticBlogPosts: BlogPost[] = [
       "شركة تنظيف بالرياض",
       "تنظيف عميق للشقق"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "noura-saud",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778856661/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_ixljum.png",
     "coverKey": null,
     "publishedAt": "2026-05-15T14:46:00.000Z",
@@ -251,7 +251,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تعقيم منازل الرياض",
       "خدمات نظافة بالرياض"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "noura-saud",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778455316/%D8%B4%D8%B1%D9%83%D8%A9_%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%88%D8%B1%D8%B4_%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_qnp77l.png",
     "coverKey": null,
     "publishedAt": "2026-05-12T14:22:00.000Z",
@@ -277,7 +277,7 @@ export const staticBlogPosts: BlogPost[] = [
       "أفضل شركة كشف تسربات جدة",
       "ارتفاع فاتورة المياه"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778545241/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA_%D8%A7%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%81%D9%8A_%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_bxv5ir.png",
     "coverKey": null,
     "publishedAt": "2026-05-12T00:13:00.000Z",
@@ -302,7 +302,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف مجالس الرياض",
       "شركة تنظيف شقق الرياض"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778453859/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA_%D8%A7%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_p44bst.png",
     "coverKey": null,
     "publishedAt": "2026-05-10T22:55:00.000Z",
@@ -327,7 +327,7 @@ export const staticBlogPosts: BlogPost[] = [
       "خدمات النظافة الشاملة",
       "تنظيف وتعقيم بالرياض"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "abdullah-qhtani",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778339248/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA_%D8%A7%D9%84%D9%86%D8%B8%D8%A7%D9%81%D9%87_%D9%81%D9%8A_%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_c5s0p5.png",
     "coverKey": null,
     "publishedAt": "2026-05-09T15:06:00.000Z",
@@ -354,7 +354,7 @@ export const staticBlogPosts: BlogPost[] = [
       "pest control Riyadh",
       "cleaning company Riyadh"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778455059/%D8%B1%D8%B4_%D8%A7%D9%85%D9%86_%D9%88%D8%B6%D9%85%D8%A7%D9%86_%D8%B4%D8%A7%D9%85%D9%84_xskeer.png",
     "coverKey": null,
     "publishedAt": "2026-05-08T21:57:00.000Z",
@@ -399,7 +399,7 @@ export const staticBlogPosts: BlogPost[] = [
       "شركة تنظيف مسابح",
       "تعقيم منازل من الفيروسات"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778455192/%D8%A7%D9%81%D8%B6%D9%84_%D8%B4%D8%B1%D9%83%D8%A9_%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%88%D8%B1%D8%B4_%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_qkox3u.png",
     "coverKey": null,
     "publishedAt": "2026-05-08T14:39:00.000Z",
@@ -421,7 +421,7 @@ export const staticBlogPosts: BlogPost[] = [
       "رش صراصير",
       "تنظيف فلل الرياض."
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778455316/%D8%B4%D8%B1%D9%83%D8%A9_%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%88%D8%B1%D8%B4_%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D8%A8%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6_qnp77l.png",
     "coverKey": null,
     "publishedAt": "2026-05-08T13:50:00.000Z",
@@ -442,7 +442,7 @@ export const staticBlogPosts: BlogPost[] = [
       "شركة السعودية للتنظيف",
       "مبيدات صراصير آمنة"
     ],
-    "author": "السعودية للتنظيف ورش الحشرات",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778074591/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%88%D8%B1%D8%B4_%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B2%D9%84_%D9%85%D9%86_%D8%A7%D9%84%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D9%81%D9%8A_%D8%AC%D8%AF%D8%A9_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_x86hq1.png",
     "coverKey": null,
     "publishedAt": "2026-05-07T10:09:00.000Z",
@@ -465,7 +465,7 @@ export const staticBlogPosts: BlogPost[] = [
       "نقل اثاث بين المدن",
       "السعودية للتنظيف"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "khalid-otaibi",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778144256/%D8%AE%D8%AF%D9%85%D8%A7%D8%AA_%D9%86%D9%82%D9%84_%D8%A7%D9%84%D8%A3%D8%AB%D8%A7%D8%AB_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_ox77yl.jpg",
     "coverKey": null,
     "publishedAt": "2026-05-07T08:55:00.000Z",
@@ -487,7 +487,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف بالبخار بجدة",
       "غسيل خزانات بجدة"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1778074591/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%88%D8%B1%D8%B4_%D8%A7%D9%84%D9%85%D9%86%D8%A7%D8%B2%D9%84_%D9%85%D9%86_%D8%A7%D9%84%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D9%81%D9%8A_%D8%AC%D8%AF%D8%A9_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_x86hq1.png",
     "coverKey": null,
     "publishedAt": "2026-05-06T13:27:00.000Z",
@@ -510,7 +510,7 @@ export const staticBlogPosts: BlogPost[] = [
       "السعودية للتنظيف",
       "تنظيف المفروشات"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1777977452/%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%83%D9%86%D8%A8_%D9%88%D8%A7%D9%84%D9%85%D9%81%D8%B1%D9%88%D8%B4%D8%A7%D8%AA_-_%D8%B7%D8%B1%D9%82_%D8%A7%D8%B2%D8%A7%D9%84%D8%A9_%D8%A7%D9%84%D8%A8%D9%82%D8%B9_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_-_%D8%A7%D9%81%D8%B6%D9%84_%D8%B4%D8%B1%D9%83%D8%A9_%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D9%81%D9%8A_%D8%A7%D9%84%D9%85%D9%85%D9%84%D9%83%D8%A9_%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_chcb1l.png",
     "coverKey": null,
     "publishedAt": "2026-05-05T10:31:00.000Z",
@@ -533,7 +533,7 @@ export const staticBlogPosts: BlogPost[] = [
       "مواد تنظيف طبيعية",
       "منظف الأرضيات"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "khalid-otaibi",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1777977760/%D9%85%D9%88%D8%A7%D8%AF_%D8%A7%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_%D8%A7%D9%84%D9%85%D9%86%D8%B2%D9%84%D9%8A%D8%A9_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_xqev4q.png",
     "coverKey": null,
     "publishedAt": "2026-05-03T13:14:00.000Z",
@@ -556,7 +556,7 @@ export const staticBlogPosts: BlogPost[] = [
       "مكافحة الآفات",
       "حشرات المنزل"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1777977845/%D8%B1%D8%B4_%D8%A7%D9%84%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D9%81%D9%8A_%D8%A7%D9%84%D9%85%D9%86%D8%B2%D9%84_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_phaczq.png",
     "coverKey": null,
     "publishedAt": "2026-05-02T17:38:00.000Z",
@@ -577,7 +577,7 @@ export const staticBlogPosts: BlogPost[] = [
       "رش مبيدات",
       "حشرات منزلية"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://res.cloudinary.com/dq5fx6ndl/image/upload/v1777978065/%D8%A7%D9%84%D8%AF%D9%84%D9%8A%D9%84_%D8%A7%D9%84%D9%83%D8%A7%D9%85%D9%84_%D9%84%D9%84%D8%AA%D8%AE%D9%84%D8%B5_%D9%85%D9%86_%D8%A7%D9%84%D8%AD%D8%B4%D8%B1%D8%A7%D8%AA_%D9%81%D9%8A_%D8%A7%D9%84%D9%85%D9%86%D8%B2%D9%84_-_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9_%D9%84%D9%84%D8%AA%D9%86%D8%B8%D9%8A%D9%81_s2pugd.png",
     "coverKey": null,
     "publishedAt": "2026-05-01T19:57:00.000Z",
@@ -598,7 +598,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف صوفا",
       "شركة تنظيف كنب"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "/images/blog/50cfbeec-47c6-46d6-bc70-3ea0da165855.jpg",
     "coverKey": null,
     "publishedAt": "2026-04-30T14:25:00.000Z",
@@ -621,7 +621,7 @@ export const staticBlogPosts: BlogPost[] = [
       "صيانة المسابح",
       "أفضل شركة تنظيف خزانات"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "abdullah-qhtani",
     "coverImage": "/images/blog/587cdd78-63c9-4c89-982d-fc8ecfba06d9.png",
     "coverKey": null,
     "publishedAt": "2026-04-30T13:55:00.000Z",
@@ -645,7 +645,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تعقيم المنازل",
       "السعودية للتنظيف"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "/images/blog/b83d3055-4535-4a60-b189-3936eb1dd2e4.png",
     "coverKey": null,
     "publishedAt": "2026-04-28T12:29:00.000Z",
@@ -666,7 +666,7 @@ export const staticBlogPosts: BlogPost[] = [
       "مبيدات حشرية آمنة",
       "شركة تنظيف."
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "/images/blog/506ba124-0fca-4375-a085-b996370f5136.jpg",
     "coverKey": null,
     "publishedAt": "2026-04-28T12:11:00.000Z",
@@ -689,7 +689,7 @@ export const staticBlogPosts: BlogPost[] = [
       "تنظيف الرياض",
       "تنظيف بعد التشطيب"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "khalid-otaibi",
     "coverImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuDZzarQBnJkjYma7N-VjCwXGKcbcsRO7mcJX3NNXo1zVPLjDLE8RsVVAvGOYnL0-HWqlgh0KTcFeP6bNs8Rl9kWYrJRey-xccudtDBAOrI_3mMuJSDAB04LnH_b5rC-k9ziDwYfxPDwOGxfQ77LFrCiMh4G18H-ECbTo1-a3xkROq1Skrd6W8ZC7s30rCKt9yPBGbmMwCERMliFbSzG4DG2aXZFmr2UrD8rYuA1MFkzdJiCeYzcqFX85WRaXubQC8BfLaajwsNFlKoX",
     "coverKey": null,
     "publishedAt": "2026-04-28T09:00:00.000Z",
@@ -712,7 +712,7 @@ export const staticBlogPosts: BlogPost[] = [
       "شركة غسيل سجاد",
       "تنظيف سجاد منزلي"
     ],
-    "author": "السعودية للتنظيف",
+    "authorId": "fahed-shamri",
     "coverImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuCmVlQDGzt4kNR6_hExlctPBMY_QvBTHVJYnRtQmHBdLy1uJTFkQ6SvX0cFa6gL4KL7bFEGTGdaedeemcUPteiL1CxinEbEFklNzuTPQQ0zL7wvEGBa3H0EC4QidOiVVTp6TEj3ReHOF3TMTmR_vgPhWgvLH6zxaSZnIrLHoQDsTWj2W9VYjRFzJFglOsL0PWNsKDZiItM6Fy0XsLfkTPU7kaB3ZXX-CtFo3VYl-iHjhhwesr0LMkf1lyfqOx1OHMvjFQm7Zx5ZXEGL",
     "coverKey": null,
     "publishedAt": "2026-04-20T09:00:00.000Z",

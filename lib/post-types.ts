@@ -6,6 +6,9 @@ export type BlogPost = {
   seoTitle?: string;
   seoDescription?: string;
   keywords?: string[];
+  /** معرّف عضو الفريق من /team — مثل ahmed-fathy */
+  authorId?: string;
+  /** اسم قديم للتوافق — يُفضّل authorId */
   author?: string;
   coverImage?: string;
   /** مفتاح الملف العام (يُخزَّن في R2 أو KV حسب الإعداد) */

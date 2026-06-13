@@ -11,6 +11,29 @@ const articlesDir = path.join(root, "content", "national-news", "articles");
 const outDir = path.join(root, "lib", "generated");
 const outFile = path.join(outDir, "national-news-articles.ts");
 
+const TEAM = {
+  ahmedFathy: "ahmed-fathy",
+  mohammedAhmad: "mohammed-ahmad",
+  saraHarbi: "sara-harbi",
+  fahedShamri: "fahed-shamri",
+  abdullahQhtani: "abdullah-qhtani",
+};
+
+const pestPattern = /حشر|pest|صراص|بق|نمل|رش|آفات|مبيد/i;
+const tanksFacadesPattern = /خزان|واجه|tank|facade|pool|مياه|مكيف|مسابح|swa/i;
+
+function inferNewsAuthorId(slug, data) {
+  if (data.authorId) return String(data.authorId);
+  const haystack = [slug, data.title, data.excerpt, ...(Array.isArray(data.keywords) ? data.keywords : [])]
+    .filter(Boolean)
+    .join(" ");
+  if (pestPattern.test(haystack)) return TEAM.fahedShamri;
+  if (tanksFacadesPattern.test(haystack)) return TEAM.abdullahQhtani;
+  if (/نظافة|تنظيف|صحة|hygiene|clean|food|غذاء/i.test(haystack)) return TEAM.mohammedAhmad;
+  if (/سياحة|ضيافة|مدرسة|tourism|school|hospitality/i.test(haystack)) return TEAM.saraHarbi;
+  return TEAM.ahmedFathy;
+}
+
 function parseArticle(fileName) {
   const slug = fileName.replace(/\.json$/i, "");
   if (!slug || slug.startsWith("_")) return null;
@@ -24,6 +47,7 @@ function parseArticle(fileName) {
     ...data,
     slug,
     sourceUrl: String(data.sourceUrl).trim(),
+    authorId: inferNewsAuthorId(slug, data),
   };
 }
 

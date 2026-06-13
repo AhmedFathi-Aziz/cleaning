@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { Icon } from "@/components/Icon";
 import { brandNameAr } from "@/lib/brand";
 import type { NationalNewsArticle } from "@/lib/national-news-types";
@@ -67,6 +68,7 @@ export function SiteNationalNews({ articles }: SiteNationalNewsProps) {
                         day: "numeric",
                       })}
                     </time>
+                    <ArticleAuthorCard authorId={item.authorId} author={item.author} variant="inline" className="mt-1 text-sm font-medium text-on-surface-variant" />
                     <h3 className="mt-3 font-headline text-xl font-bold text-primary sm:text-2xl">
                       <Link href={`/news/${encodeURIComponent(item.slug)}`} className="hover:text-secondary">
                         {item.title}

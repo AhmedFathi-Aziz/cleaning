@@ -140,6 +140,92 @@ const iconPaths: Record<string, ReactNode> = {
     </>
   ),
   water_drop: <path d="M12 2s7 7.2 7 12a7 7 0 0 1-14 0c0-4.8 7-12 7-12Z" />,
+  home_work: (
+    <>
+      <path d="M3 11 12 4l9 7" />
+      <path d="M5 10v11h14V10" />
+      <path d="M9 21v-6h6v6" />
+      <path d="M10 14h4" />
+    </>
+  ),
+  location_city: (
+    <>
+      <path d="M3 21h18" />
+      <path d="M6 21V7l6-4 6 4v14" />
+      <path d="M9 9h2M13 9h2M9 13h2M13 13h2M9 17h2M13 17h2" />
+    </>
+  ),
+  air: (
+    <>
+      <path d="M4 10h10a3 3 0 1 0 0-6H4" />
+      <path d="M4 16h14a4 4 0 0 0 0-8" />
+      <path d="M4 22h8a2 2 0 1 0 0-4H4" />
+    </>
+  ),
+  water_vapor: (
+    <>
+      <path d="M8 16c0 2 1.5 3 4 3s4-1 4-3" />
+      <path d="M6 12c0 2 2 3 6 3s6-1 6-3" />
+      <path d="M4 8c0 2 2.5 3 8 3s8-1 8-3" />
+    </>
+  ),
+  local_laundry_service: (
+    <>
+      <rect x="4" y="4" width="16" height="16" rx="2" />
+      <circle cx="12" cy="13" r="4" />
+      <path d="M8 7h8" />
+    </>
+  ),
+  height: (
+    <>
+      <path d="M12 3v18" />
+      <path d="M8 7h8M8 17h8" />
+      <path d="m9 5 3-2 3 2M9 19l3 2 3-2" />
+    </>
+  ),
+  water_pump: (
+    <>
+      <path d="M12 3v4" />
+      <rect x="6" y="7" width="12" height="10" rx="2" />
+      <path d="M9 12h6M12 9v6" />
+      <path d="M8 21h8" />
+    </>
+  ),
+  science: (
+    <>
+      <path d="M9 3h6" />
+      <path d="M10 3v5l-4 7a2 2 0 0 0 1.7 3h8.6a2 2 0 0 0 1.7-3l-4-7V3" />
+      <path d="M9 14h6" />
+    </>
+  ),
+  supervisor_account: (
+    <>
+      <circle cx="12" cy="8" r="3" />
+      <path d="M6 20a6 6 0 0 1 12 0" />
+      <path d="M16 6h4v4" />
+      <path d="M20 6l-4 4" />
+    </>
+  ),
+  mop: (
+    <>
+      <path d="M12 3v10" />
+      <path d="M8 13h8l-1 8H9l-1-8Z" />
+      <path d="M6 21h12" />
+    </>
+  ),
+  nature: (
+    <>
+      <path d="M12 22V12" />
+      <path d="M12 12C12 7 7 4 4 6c0 5 4 8 8 6" />
+      <path d="M12 12c0-5 5-8 8-6-3 5-7 8-8 6" />
+    </>
+  ),
+  format_quote: (
+    <>
+      <path d="M4 10h4v8H4zM14 10h4v8h-4z" />
+      <path d="M4 10V8a4 4 0 0 1 4-4M14 10V8a4 4 0 0 1 4-4" />
+    </>
+  ),
   location_on: (
     <>
       <path d="M12 21s7-4.5 7-11a7 7 0 0 0-14 0c0 6.5 7 11 7 11Z" />

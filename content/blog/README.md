@@ -18,7 +18,7 @@ excerpt: جملتان تظهران في القائمة
 seoTitle: عنوان SEO (اختياري)
 seoDescription: وصف SEO (اختياري)
 keywords: ["كلمة1", "كلمة2"]
-author: السعودية للتنظيف
+authorId: mohammed-ahmad
 coverImage: https://example.com/image.webp
 coverKey: null
 publishedAt: 2026-05-22T10:00:00.000Z

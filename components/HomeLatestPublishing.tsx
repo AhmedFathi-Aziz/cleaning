@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
 import { Icon } from "@/components/Icon";
 import type { BlogPost } from "@/lib/post-types";
@@ -105,6 +106,7 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                               day: "numeric",
                             })}
                           </time>
+                          <ArticleAuthorCard authorId={item.authorId} author={item.author} variant="inline" className="mt-1 text-xs font-medium text-on-surface-variant" />
                           <h4 className="mt-2 font-headline text-lg font-extrabold leading-snug text-primary group-hover:text-secondary md:text-xl">
                             {item.title}
                           </h4>
@@ -158,6 +160,7 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                                 day: "numeric",
                               })}
                             </time>
+                            <ArticleAuthorCard authorId={post.authorId} author={post.author} variant="inline" className="mt-1 text-xs font-medium text-on-surface-variant" />
                             <h4 className="mt-2 font-headline text-lg font-extrabold leading-snug text-primary group-hover:text-secondary md:text-xl">
                               {post.title}
                             </h4>
