@@ -7,9 +7,9 @@ import { buildArabicPageMetadata } from "@/lib/seo";
 const lastUpdated = "2026-05-02";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: "شروط الاستخدام",
+  title: "شروط الاستخدام | شركة تنظيف بالرياض — السعودية للتنظيف",
   description:
-    "شروط استخدام موقع السعودية للتنظيف: نطاق الخدمة، التقديرات، سلوك المستخدم، الملكية الفكرية، حدود المسؤولية، والتواصل — المملكة العربية السعودية.",
+    "شروط استخدام موقع السعودية للتنظيف: نطاق الخدمة، التقديرات الإلكترونية، سلوك المستخدم، الملكية الفكرية، حدود المسؤولية، والتواصل الرسمي في المملكة العربية السعودية.",
   canonical: "/terms",
   keywords: [
     "شروط الاستخدام",
@@ -23,7 +23,7 @@ export const metadata: Metadata = buildArabicPageMetadata({
 export default function TermsPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 pb-24 pt-28 md:px-8">
-      <h1 className="font-headline text-3xl font-extrabold text-primary">شروط الاستخدام</h1>
+      <h1 className="font-headline text-3xl font-extrabold text-primary">شروط الاستخدام — شركة تنظيف بالرياض</h1>
       <p className="mt-2 text-sm font-medium text-on-surface-variant">
         آخر تحديث: {lastUpdated} — {brandNameAr}
       </p>

@@ -59,7 +59,7 @@ export function HomeNationalNewsSection({ articles }: Props) {
                   className="group flex h-full min-h-[260px] flex-col sm:min-h-0"
                 >
                   <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden" aria-hidden>
-                    <BlogCoverPlaceholder slug={item.slug} icon="newspaper" className="absolute inset-0 size-full" />
+                    <BlogCoverPlaceholder slug={item.slug} variant="brand" className="absolute inset-0 size-full" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <time className="text-xs font-semibold text-secondary" dateTime={item.publishedAt}>

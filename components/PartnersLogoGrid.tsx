@@ -58,6 +58,7 @@ export function PartnersLogoGrid({ partners }: { partners: PartnerLogoItem[] }) 
             height={80}
             className="relative z-[1] h-full max-h-[5.5rem] w-full object-contain p-3 opacity-[0.92] transition-[transform,opacity] duration-300 ease-out group-hover:opacity-100 motion-safe:group-hover:scale-[1.03] md:max-h-[6rem]"
             sizes="(min-width: 1024px) 180px, (min-width: 768px) 20vw, 42vw"
+            loading="lazy"
           />
         </div>
       ))}

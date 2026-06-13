@@ -77,9 +77,9 @@ const jobs = [
   },
   {
     file: "feature-schedule.webp",
-    url: "https://images.pexels.com/photos/7033891/pexels-photo-7033891.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    width: 800,
-    quality: 72,
+    local: "feature-schedule-source.png",
+    width: 900,
+    quality: 80,
   },
   {
     file: "sofa-cleaning.webp",
@@ -118,9 +118,16 @@ async function main() {
   for (const job of jobs) {
     const dest = path.join(outDir, job.file);
     process.stdout.write(`→ ${job.file} … `);
-    const res = await fetch(job.url, { headers: { "User-Agent": "SaudiCleaningImageBot/1.0" } });
-    if (!res.ok) throw new Error(`HTTP ${res.status} لـ ${job.url}`);
-    const buf = Buffer.from(await res.arrayBuffer());
+    let buf;
+    if (job.local) {
+      const src = path.join(outDir, job.local);
+      if (!fs.existsSync(src)) throw new Error(`ملف محلي غير موجود: ${src}`);
+      buf = await fs.promises.readFile(src);
+    } else {
+      const res = await fetch(job.url, { headers: { "User-Agent": "SaudiCleaningImageBot/1.0" } });
+      if (!res.ok) throw new Error(`HTTP ${res.status} لـ ${job.url}`);
+      buf = Buffer.from(await res.arrayBuffer());
+    }
     await sharp(buf)
       .resize({ width: job.width, withoutEnlargement: true })
       .webp({ quality: job.quality, effort: 4 })

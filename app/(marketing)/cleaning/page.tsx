@@ -15,9 +15,9 @@ import { siteUrl } from "@/lib/site";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: `تنظيف منازل بالرياض حسب الحي | ${brandNameAr}`,
+  title: `تنظيف منازل بالرياض حسب الحي | موسوعة أحياء — ${brandNameAr}`,
   description:
-    "تنظيف منازل وشقق في كل أحياء الرياض — صفحة مخصّصة لكل حي مع سياق محلي. شركة تنظيف بالرياض. احجز معاينة مجانية عبر واتساب الآن.",
+    "تنظيف منازل وشقق في كل أحياء الرياض — صفحة مخصّصة لكل حي مع سياق محلي ونصائح قبل الحجز. شركة تنظيف بالرياض. احجز معاينة مجانية عبر واتساب الآن.",
   canonical: "/cleaning",
   keywords: [
     `تنظيف منازل ${primaryCityNameAr}`,

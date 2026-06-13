@@ -12,8 +12,7 @@ import "./globals.css";
 
 /**
  * swap: يعرض الاحتياط أولاً ثم يستبدل بـ Cairo عند جاهزية الملف — يمنع بقاء الموقع بخط النظام
- * لجلسة كاملة عند أول زيارة (مع optional كان المتصفح يتجاهل الخط إن تأخّر التحميل قليلاً).
- * subset عربي فقط يقلّل حجم woff2؛ adjustFontFallback يقلّل قفزة الحجم عند الاستبدال.
+ * لجلسة كاملة عند أول زيارة. subset عربي فقط يقلّل حجم woff2؛ adjustFontFallback يقلّل قفزة الحجم.
  */
 const cairo = Cairo({
   subsets: ["arabic"],

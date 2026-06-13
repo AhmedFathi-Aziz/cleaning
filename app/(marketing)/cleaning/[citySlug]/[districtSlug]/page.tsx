@@ -8,7 +8,7 @@ import {
   getCleaningProgrammaticStaticParams,
   isAllowedCleaningProgrammaticPair,
 } from "@/lib/programmatic-cleaning-seo";
-import { buildArabicPageMetadata, truncateForMetaDescription } from "@/lib/seo";
+import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 type PageProps = {
@@ -30,9 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const neighborhood = getNeighborhoodBySlug(citySlug, districtSlug);
   if (!city || !neighborhood) return { title: "غير موجود", robots: { index: false, follow: false } };
 
-  const title = `تنظيف منازل في حي ${neighborhood.name} ${city.name} | ${brandNameAr}`;
-  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr);
-  const description = `تنظيف منازل وشقق في حي ${neighborhood.name}، ${city.name}. ${snippet} احجز مع ${brandNameAr}.`;
+  const title = fitMetaTitle(`تنظيف منازل في حي ${neighborhood.name} ${city.name} | ${brandNameAr}`);
+  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr, 90);
+  const description = expandMetaDescription(
+    `تنظيف منازل وشقق في حي ${neighborhood.name}، ${city.name}. ${snippet} احجز مع ${brandNameAr}.`,
+  );
   const canonical = `/cleaning/${city.slug}/${neighborhood.slug}`;
 
   return buildArabicPageMetadata({

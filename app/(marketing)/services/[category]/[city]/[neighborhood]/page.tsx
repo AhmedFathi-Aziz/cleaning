@@ -8,7 +8,7 @@ import { ServiceLocationJsonLd } from "@/components/SeoJsonLd";
 import { brandNameAr } from "@/lib/brand";
 import { buildServiceHeroImageAlt } from "@/lib/image-seo";
 import { getCleaningDistrictPath } from "@/lib/programmatic-cleaning-seo";
-import { buildArabicPageMetadata } from "@/lib/seo";
+import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
 import { getServiceLocationPageContent } from "@/lib/service-location-deep-content";
 import { getServiceLocationStaticParams, isServiceLocationPairAllowed } from "@/lib/service-location-pages";
 import { getServiceArticle } from "@/lib/service-articles";
@@ -39,8 +39,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "غير موجود", robots: { index: false, follow: false } };
   }
 
-  const title = `أفضل شركة ${service.shortTitle} في حي ${neighborhood.name} ${city.name} | اطلب الآن`;
-  const description = `خدمة ${service.shortTitle} في حي ${neighborhood.name} بمدينة ${city.name} من ${brandNameAr}. ${neighborhood.nearbyLandmarksAr.slice(0, 140)}…`;
+  const title = fitMetaTitle(`أفضل شركة ${service.shortTitle} في حي ${neighborhood.name} ${city.name} | اطلب الآن`);
+  const landmarks = truncateForMetaDescription(neighborhood.nearbyLandmarksAr, 95);
+  const description = expandMetaDescription(
+    `خدمة ${service.shortTitle} في حي ${neighborhood.name} بمدينة ${city.name} من ${brandNameAr}. ${landmarks}`,
+  );
   const canonical = `/services/${service.slug}/${city.slug}/${neighborhood.slug}`;
   const imageAlt = buildServiceHeroImageAlt(service, {
     cityName: city.name,

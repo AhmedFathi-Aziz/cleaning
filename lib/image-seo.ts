@@ -45,7 +45,17 @@ export const marketingLayoutImageAlt = {
 } as const;
 
 export const homeHeroImageAlt =
-  "تنظيف منازل ومكاتب في الرياض — فيلا حديثة بنوافذ زجاجية وإضاءة طبيعية وأرضيات رخامية نظيفة";
+  "فيلا عصرية بالرياض — غرفة واسعة بأرضيات خشبية وإضاءة طبيعية وحديقة خضراء";
+
+/** صور بطاقات «لماذا تختارنا» في الصفحة الرئيسية */
+export const featureCardImageAlt: Record<string, string> = {
+  "trained-cleaning-team":
+    "فريق تنظيف مدرب بالرياض — فنيون ينظفون فيلا عصرية بملابس احترافية ومعدات مناسبة",
+  "safe-cleaning-materials":
+    "مواد تنظيف آمنة وبيئية — منظفات ومعقمات معتمدة مرتبة لخدمة منزلية في الرياض",
+  "punctual-cleaning-service":
+    "دقة في المواعيد — سيارة خدمة تصل إلى فيلا بالرياض وفني يتحقق من موعد الزيارة",
+};
 
 function clipAlt(text: string, maxLen = ALT_MAX): string {
   const t = text.replace(/\s+/g, " ").trim();

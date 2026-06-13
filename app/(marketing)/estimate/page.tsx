@@ -6,7 +6,7 @@ import { brandNameAr } from "@/lib/brand";
 import { buildArabicPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: "حاسبة سعر تنظيف بالرياض | تقدير مجاني",
+  title: "حاسبة سعر تنظيف بالرياض | تقدير مجاني — السعودية للتنظيف",
   description:
     "احسب تقدير سعر تنظيف منازل ومكافحة حشرات وتعقيم خزانات في الرياض — أداة مجانية ثم أرسل عبر واتساب. بدون التزام حتى يرد الفريق.",
   canonical: "/estimate",

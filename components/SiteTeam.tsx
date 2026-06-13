@@ -54,7 +54,7 @@ export function SiteTeam() {
             فريق {brandNameAr}
           </p>
           <h1 className="font-headline text-[clamp(1.85rem,3.5vw+0.5rem,3.25rem)] font-extrabold leading-[1.12] tracking-tight text-primary">
-            فريق العمل
+            فريق تنظيف ومكافحة حشرات بالرياض
           </h1>
           <p className="mt-2 font-headline text-lg font-bold text-secondary md:text-xl">
             عمالة مدربة في {primaryCityNameAr} — أسماء وتخصصات واضحة

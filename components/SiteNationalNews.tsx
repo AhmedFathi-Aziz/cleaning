@@ -20,11 +20,11 @@ export function SiteNationalNews({ articles }: SiteNationalNewsProps) {
         <header className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-10">
           <p className="text-sm font-extrabold text-secondary">تغطية وطنية</p>
           <h1 className="mt-2 font-headline text-3xl font-extrabold text-primary sm:text-4xl md:text-5xl">
-            الأخبار الوطنية
+            أخبار وطنية عن التنظيف والصحة في السعودية
           </h1>
           <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-on-surface-variant md:text-lg">
-            متابعة موضوعات تهم المملكة العربية السعودية وما يرتبط بمناخ الأعمال والخدمات والتنظيم — نقدّمها كمعرض
-            معلومات مرتبط باهتمامات عملائنا وشركائنا مع {brandNameAr}، دون أن نكون مصدراً رسمياً للأنباء.
+            نتابع موضوعات تهم المملكة وقطاع الخدمات — تنظيم، صحة، وبيئة. نعرضها كملخص مرتبط باهتمامات عملائنا
+            في {brandNameAr}، دون أن نكون مصدراً رسمياً للأنباء.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-slate-500">
             للاطلاع على النصوص الكاملة والتحديثات الرسمية، يُفضّل دائماً الرجوع إلى الجهات الحكومية والمصادر المعتمدة

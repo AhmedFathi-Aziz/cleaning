@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { brandNameAr } from "@/lib/brand";
 import { featureArticles, getFeatureArticle } from "@/lib/feature-articles";
+import { buildArabicPageMetadata } from "@/lib/seo";
 import { siteUrl } from "@/lib/site";
 import { RichParagraph } from "@/components/RichParagraph";
 import { Icon } from "@/components/Icon";
@@ -25,27 +26,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const canonical = `/features/${article.slug}`;
 
-  return {
+  return buildArabicPageMetadata({
     title: article.title,
     description: article.excerpt,
     keywords: article.keywords,
-    alternates: { canonical },
-    openGraph: {
-      title: article.title,
-      description: article.excerpt,
-      type: "article",
-      url: `${siteUrl}${canonical}`,
-      images: [{ url: article.image, alt: article.title }],
-      locale: "ar_SA",
-      siteName: brandNameAr,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: article.title,
-      description: article.excerpt,
-      images: [article.image],
-    },
-  };
+    canonical,
+    image: article.image,
+    imageAlt: article.title,
+    type: "article",
+  });
 }
 
 export default async function FeatureArticlePage({ params }: PageProps) {

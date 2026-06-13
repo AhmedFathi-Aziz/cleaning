@@ -1,19 +1,43 @@
 import type { ComponentProps } from "react";
+import Image from "next/image";
 
 import { Icon } from "@/components/Icon";
+import { brandLogoLargePath, brandNameAr } from "@/lib/brand";
 import { coverPlaceholderGradient } from "@/lib/blog-placeholder-gradient";
 
 type Props = {
   slug: string;
-  /** أيقونة خفيفة فوق التدرج */
+  /** أيقونة خفيفة فوق التدرج — أو شعار الشركة عند `variant="brand"` */
   icon?: ComponentProps<typeof Icon>["name"];
+  variant?: "icon" | "brand";
   className?: string;
 };
 
 /**
- * مساحة غلاف بديلة لمقال بلا صورة — تدرج رسمي مع لمعان خفيف.
+ * مساحة غلاف بديلة لمقال بلا صورة — تدرج رسمي مع لمعان خفيف، أو شعار الشركة كاملاً للأخبار.
  */
-export function BlogCoverPlaceholder({ slug, icon = "verified", className = "" }: Props) {
+export function BlogCoverPlaceholder({ slug, icon = "verified", variant = "icon", className = "" }: Props) {
+  if (variant === "brand") {
+    return (
+      <div
+        className={`relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-slate-100 ${className}`}
+        aria-hidden
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_42%,rgba(255,255,255,0.9),transparent_68%)]" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-slate-200/70" aria-hidden />
+        <div className="relative h-full w-full p-[10%] sm:p-[9%]">
+          <Image
+            src={brandLogoLargePath}
+            alt={`شعار ${brandNameAr}`}
+            fill
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 360px"
+            className="object-contain object-center"
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative flex items-center justify-center overflow-hidden ${className}`}

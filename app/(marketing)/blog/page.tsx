@@ -10,8 +10,8 @@ import type { BlogPost } from "@/lib/post-types";
 import { buildArabicPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: "مدونة التنظيف ورش الحشرات",
-  description: `مقالات من ${brandNameAr} عن خدمات التنظيف، تنظيف المنازل، غسيل السجاد، تنظيف الواجهات، رش الحشرات ومكافحة الحشرات في المملكة العربية السعودية.`,
+  title: "مدونة تنظيف بالرياض | نصائح منازل ومكافحة حشرات — السعودية",
+  description: `مقالات من ${brandNameAr} عن تنظيف المنازل، غسيل السجاد، تنظيف الواجهات، رش الحشرات ومكافحتها في الرياض والمملكة — نصائح عملية من فريق ميداني.`,
   canonical: "/blog",
   keywords: [
     "مدونة تنظيف",
@@ -35,9 +35,11 @@ export default function BlogPage() {
   return (
     <main className="px-8 pb-24 pt-32">
       <div className="mx-auto max-w-3xl text-right">
-        <h1 className="font-headline text-4xl font-extrabold text-primary md:text-5xl">المدونة</h1>
+        <h1 className="font-headline text-4xl font-extrabold text-primary md:text-5xl">
+          مدونة تنظيف ومكافحة حشرات بالرياض
+        </h1>
         <p className="mt-4 text-on-surface-variant">
-          مقالات ونصائح عن التنظيف والتعقيم وخدمات العناية بالمنازل والمنشآت.
+          نصائح عملية عن التنظيف والتعقيم وغسيل السجاد — من فريق السعودية للتنظيف في الرياض.
         </p>
       </div>
       <div className="mx-auto mt-16 grid max-w-5xl gap-10">
@@ -59,6 +61,7 @@ export default function BlogPage() {
                       fill
                       className="object-cover"
                       sizes="(min-width: 768px) 33vw, 100vw"
+                      loading="lazy"
                       unoptimized
                     />
                   ) : (

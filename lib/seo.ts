@@ -91,11 +91,99 @@ export function absoluteUrl(path: string) {
   return `${getMetadataBase().origin}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-/** Trim Arabic copy for HTML meta description length */
-export function truncateForMetaDescription(text: string, maxLen = 118): string {
+/** Google SERP title guidance — Arabic copy, ~60–65 graphemes */
+export const META_TITLE_MIN_LEN = 60;
+export const META_TITLE_MAX_LEN = 65;
+
+/** Meta description target — ~155–160 characters */
+export const META_DESCRIPTION_TARGET_LEN = 160;
+
+function trimAtNaturalBreak(text: string, maxLen: number): string {
   const t = text.trim();
   if (t.length <= maxLen) return t;
-  return `${t.slice(0, maxLen - 1).trimEnd()}…`;
+  const cut = t.slice(0, maxLen - 1).trimEnd();
+  const lastSep = Math.max(cut.lastIndexOf("|"), cut.lastIndexOf("—"), cut.lastIndexOf("–"));
+  const lastSpace = cut.lastIndexOf(" ");
+  const breakAt =
+    lastSep > maxLen * 0.45 ? lastSep : lastSpace > maxLen * 0.55 ? lastSpace : cut.length;
+  return `${cut.slice(0, breakAt > 0 ? breakAt : cut.length).trimEnd()}…`;
+}
+
+/** Prefer dropping trailing brand segments before hard truncation */
+function trimTitleAtNaturalBreak(text: string, maxLen: number): string {
+  const t = text.trim();
+  if (t.length <= maxLen) return t;
+  for (const sep of ["|", "—", "–"] as const) {
+    if (!t.includes(sep)) continue;
+    const parts = t.split(sep).map((p) => p.trim());
+    let acc = parts[0];
+    for (let i = 1; i < parts.length; i++) {
+      const next = `${acc} ${sep} ${parts[i]}`.replace(/\s+/g, " ").trim();
+      if (next.length <= maxLen) acc = next;
+      else break;
+    }
+    if (acc.length <= maxLen) return acc;
+    if (parts[0].length <= maxLen) return parts[0];
+  }
+  return trimAtNaturalBreak(t, maxLen);
+}
+
+/** Keeps titles within SERP length; pads very short titles with brand context when possible */
+export function fitMetaTitle(title: string): string {
+  const t = title.trim().replace(/\s+/g, " ");
+  if (t.length >= META_TITLE_MIN_LEN && t.length <= META_TITLE_MAX_LEN) return t;
+  if (t.length > META_TITLE_MAX_LEN) return trimTitleAtNaturalBreak(t, META_TITLE_MAX_LEN);
+
+  const candidates: string[] = [t];
+  const pads = [
+    `| ${brandNameAr}`,
+    "— شركة تنظيف بالرياض",
+    "بالرياض | السعودية للتنظيف",
+    "في الرياض",
+  ] as const;
+
+  for (const pad of pads) {
+    const alreadyHasBrand = pad.includes(brandNameAr) && t.includes(brandNameAr);
+    if (alreadyHasBrand && pad.startsWith("|")) continue;
+    if ((pad === "في الرياض" || pad.includes("بالرياض")) && /الرياض/.test(t)) continue;
+    candidates.push(`${t} ${pad}`.replace(/\s+/g, " ").trim());
+  }
+
+  const inRange = candidates.filter(
+    (c) => c.length >= META_TITLE_MIN_LEN && c.length <= META_TITLE_MAX_LEN,
+  );
+  if (inRange.length) {
+    return inRange.sort((a, b) => b.length - a.length)[0];
+  }
+
+  const underMax = candidates.filter((c) => c.length <= META_TITLE_MAX_LEN);
+  if (underMax.length) {
+    return underMax.sort((a, b) => b.length - a.length)[0];
+  }
+
+  const longest = candidates.sort((a, b) => b.length - a.length)[0];
+  return trimTitleAtNaturalBreak(longest, META_TITLE_MAX_LEN);
+}
+
+/** Trim Arabic copy for HTML meta description length */
+export function truncateForMetaDescription(text: string, maxLen = META_DESCRIPTION_TARGET_LEN): string {
+  const t = text.trim();
+  if (t.length <= maxLen) return t;
+  return trimAtNaturalBreak(t, maxLen);
+}
+
+/** Pads short descriptions with a CTA line without exceeding SERP limits */
+export function expandMetaDescription(
+  text: string,
+  cta = "احجز معاينة مجانية عبر واتساب.",
+): string {
+  let t = text.trim().replace(/\s+/g, " ");
+  if (t.length > META_DESCRIPTION_TARGET_LEN) return truncateForMetaDescription(t);
+  if (t.length >= 148) return t;
+  if (t && !/[.!?…]$/.test(t)) t = `${t}.`;
+  const padded = `${t} ${cta}`.trim();
+  if (padded.length <= META_DESCRIPTION_TARGET_LEN) return padded;
+  return truncateForMetaDescription(t);
 }
 
 export function buildArabicPageMetadata({
@@ -129,16 +217,19 @@ export function buildArabicPageMetadata({
         googleBot: { index: false as const, follow: true as const },
       };
 
+  const fittedTitle = fitMetaTitle(title);
+  const fittedDescription = expandMetaDescription(description);
+
   return {
     metadataBase: getMetadataBase(),
-    title,
-    description,
+    title: { absolute: fittedTitle },
+    description: fittedDescription,
     keywords: [...new Set([...keywords, ...arabicSeoKeywords])].slice(0, 52),
     alternates: { canonical: canonicalPath },
     robots,
     openGraph: {
-      title,
-      description,
+      title: fittedTitle,
+      description: fittedDescription,
       type,
       url,
       locale: "ar_SA",
@@ -153,8 +244,8 @@ export function buildArabicPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: fittedTitle,
+      description: fittedDescription,
       images: [image],
     },
   };

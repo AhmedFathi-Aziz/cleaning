@@ -6,7 +6,12 @@ import { PartnersMarquee } from "@/components/home/PartnersMarquee";
 import { StatsStrip } from "@/components/home/StatsStrip";
 import { images } from "@/lib/assets";
 import { brandEmail, brandLogoPath, brandNameAr, brandPhone, brandPhoneDisplay, brandWhatsapp } from "@/lib/brand";
-import { buildServiceHeroImageAlt, buildServiceHeroImageTitle, homeHeroImageAlt } from "@/lib/image-seo";
+import {
+  buildServiceHeroImageAlt,
+  buildServiceHeroImageTitle,
+  featureCardImageAlt,
+  homeHeroImageAlt,
+} from "@/lib/image-seo";
 import { featureArticles } from "@/lib/feature-articles";
 import { getServiceArticle } from "@/lib/service-articles";
 
@@ -32,16 +37,9 @@ const deepHomeCleaning = getServiceArticle("deep-home-cleaning");
 const carpetCleaning = getServiceArticle("carpet-cleaning");
 const facadeCleaning = getServiceArticle("facade-cleaning");
 
-/** تدرجات لبطاقات «لماذا تختارنا» — لوحة قريبة من بطاقات الخدمات (أزرق ليلي + تركواز عميق) */
-const featureCardGradientClass: Record<string, string> = {
-  "trained-cleaning-team": "bg-gradient-to-br from-[#021b44] to-[#03307e]",
-  "safe-cleaning-materials": "bg-[#03413d]",
-  "punctual-cleaning-service": "bg-gradient-to-br from-[#02306c] to-[#03307e]",
-};
-
 /** روابط ثانوية فوق الخلفية الداكنة — نص وأيقونات بنفس لون متباين */
 const heroGhostLinkClass =
-  "group inline-flex min-h-12 items-center justify-center gap-2 text-sm font-bold text-white transition-colors hover:text-white sm:min-h-0 sm:text-sm md:text-base [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.85)]";
+  "group inline-flex min-h-0 items-center justify-center gap-2 py-1 text-sm font-bold text-white transition-colors hover:text-white sm:py-0 sm:text-sm md:text-base [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.85)]";
 
 const heroGhostIconClass =
   "shrink-0 text-white [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.55))]";
@@ -60,41 +58,40 @@ export function SiteHome() {
   return (
     <main id="main-content">
       <section
-        className="relative flex min-h-[clamp(26rem,88svh,45rem)] items-start overflow-hidden px-4 pb-10 pt-24 sm:min-h-[clamp(28rem,85svh,45rem)] sm:items-center sm:px-6 sm:pb-12 sm:pt-28 md:min-h-[720px] md:px-8 md:pb-16 md:pt-32"
+        className="relative flex min-h-0 items-start overflow-hidden px-4 pb-6 pt-20 sm:min-h-[clamp(28rem,85svh,45rem)] sm:items-center sm:px-6 sm:pb-12 sm:pt-28 md:min-h-[720px] md:px-8 md:pb-16 md:pt-32"
         aria-labelledby="hero-heading"
       >
-        <div className="absolute inset-0 z-0 min-h-[inherit]" aria-hidden>
+        <div className="absolute inset-0 z-0 min-h-[inherit] overflow-hidden" aria-hidden>
           <Image
             src={images.hero}
             alt={homeHeroImageAlt}
             title={homeHeroImageAlt}
-            width={512}
-            height={512}
+            fill
             priority
             fetchPriority="high"
             sizes="100vw"
-            quality={68}
-            className="absolute inset-0 h-full w-full min-h-full object-cover object-center brightness-[0.96] contrast-[1.02]"
+            quality={82}
+            className="object-cover object-[18%_center] brightness-[0.98] contrast-[1.02] saturate-[0.95]"
           />
-          <div className="absolute inset-0 bg-black/34" aria-hidden />
-          <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-black/14 to-black/22" aria-hidden />
-          {/* تعتيم موجّه خلف عمود النص (النوافذ الساطعة تبتلع الأبيض بدونه) */}
+          {/* تدرجات بلون الموقع (كحلي/تركواز) لتناسق النص الأبيض والبطاقة */}
+          <div className="absolute inset-0 bg-[#00236f]/20" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-l from-[#0f172a]/55 via-[#00236f]/18 to-transparent" aria-hidden />
           <div
-            className="absolute inset-0 bg-gradient-to-b from-black/38 via-black/22 to-black/30 md:bg-[radial-gradient(ellipse_115%_95%_at_88%_38%,rgba(15,23,42,0.78),rgba(15,23,42,0.28)_48%,transparent_62%)]"
+            className="absolute inset-0 bg-gradient-to-b from-[#0f172a]/30 via-transparent to-[#1a383f]/35 md:bg-[radial-gradient(ellipse_120%_100%_at_88%_42%,rgba(15,23,42,0.72),rgba(0,35,111,0.22)_45%,transparent_68%)]"
             aria-hidden
           />
         </div>
-        <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-7xl grid-cols-1 gap-0 md:grid-cols-2 md:gap-8 lg:gap-12">
+        <div className="relative z-10 mx-auto grid w-full min-w-0 max-w-7xl grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 md:gap-8 lg:gap-12">
           <div className="relative min-w-0 md:pe-4">
             <div
-              className="pointer-events-none absolute -inset-x-2 -inset-y-3 z-0 rounded-[1.75rem] bg-gradient-to-bl from-slate-950/70 via-slate-950/48 to-slate-950/20 ring-1 ring-white/12 backdrop-blur-[2px] sm:-inset-x-3 sm:-inset-y-4 sm:rounded-[2rem] md:from-slate-950/55 md:via-slate-950/32 md:to-transparent md:ring-white/10"
+              className="pointer-events-none absolute -inset-x-2 -inset-y-1 z-0 rounded-[1.5rem] bg-gradient-to-bl from-slate-950/70 via-slate-950/48 to-slate-950/20 ring-1 ring-white/12 backdrop-blur-[2px] sm:-inset-x-3 sm:-inset-y-4 sm:rounded-[2rem] md:from-slate-950/55 md:via-slate-950/32 md:to-transparent md:ring-white/10"
               aria-hidden
             />
-            <div className="relative z-[1] space-y-4 sm:space-y-5 md:space-y-6">
-            <p className="flex w-full max-w-full flex-wrap items-center gap-2.5 rounded-xl border border-white/22 bg-gradient-to-l from-slate-900/82 via-slate-800/72 to-slate-800/58 px-4 py-2.5 text-xs font-extrabold text-white shadow-[0_14px_36px_rgba(0,0,0,0.2)] backdrop-blur-md sm:inline-flex sm:w-auto sm:max-w-none sm:gap-3 sm:px-4 sm:py-3 sm:text-xs md:text-sm">
+            <div className="relative z-[1] space-y-3 sm:space-y-5 md:space-y-6">
+            <p className="flex w-full max-w-full flex-wrap items-center gap-2 rounded-xl border border-white/22 bg-gradient-to-l from-slate-900/82 via-slate-800/72 to-slate-800/58 px-3 py-2 text-xs font-extrabold text-white shadow-[0_14px_36px_rgba(0,0,0,0.2)] backdrop-blur-md sm:inline-flex sm:w-auto sm:max-w-none sm:gap-3 sm:px-4 sm:py-3 sm:text-xs md:text-sm">
               <span className="hidden h-10 w-1 shrink-0 rounded-full bg-white/55 sm:block" aria-hidden="true" />
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/12 text-white">
-                <Icon name="verified_user" className="text-xl" />
+              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/12 text-white sm:h-9 sm:w-9">
+                <Icon name="verified_user" className="text-lg sm:text-xl" />
               </span>
               <span>تنظيف منازل ومكاتب ومكافحة حشرات — تغطية شاملة في أحياء الرياض</span>
             </p>
@@ -106,17 +103,18 @@ export function SiteHome() {
               <br />
               <span className="text-[#dce8f2] [text-shadow:0_2px_10px_rgba(0,0,0,0.5),0_1px_2px_rgba(0,0,0,0.75)]">تنظيف منازل، سجاد، واجهات — فريق مدرب</span>
             </h1>
-            <p className="max-w-lg text-sm font-semibold leading-[1.7] text-white sm:text-base md:max-w-xl md:text-lg md:leading-[1.65] [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.9)]">
+            <p className="max-w-lg text-sm font-semibold leading-[1.6] text-white sm:text-base md:max-w-xl md:text-lg md:leading-[1.65] [text-shadow:0_1px_4px_rgba(0,0,0,0.55),0_0_1px_rgba(0,0,0,0.9)]">
               شركة تنظيف بالرياض تنفّذ تنظيفاً عميقاً للمنازل والمكاتب، وغسيل سجاد وموكيت، وتنظيف واجهات،
               ومكافحة حشرات وفق خطة واضحة — مع تغطية لأحياء العاصمة ومعاينة مجانية قبل الحجز.
             </p>
-            <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6 sm:pt-4" id="book">
+            <div className="flex flex-col gap-2.5 pt-0 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6 sm:pt-4" id="book">
               <Link
                 href="/contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 bg-gradient-to-br from-[#2a4f5c] via-[#234652] to-[#1a383f] px-8 py-3 text-center text-sm font-bold text-white shadow-[0_8px_28px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] transition-transform hover:scale-[1.03] hover:from-[#325c6a] hover:via-[#2a5159] hover:to-[#1f4249] active:scale-[0.98] sm:min-h-0 sm:px-9 sm:py-3.5 sm:text-sm md:px-10 md:text-base"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/25 bg-[#147A6E] px-7 py-2.5 text-center text-sm font-bold text-white shadow-[0_8px_28px_rgba(20,122,110,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] transition-[transform,background-color] hover:scale-[1.03] hover:bg-[#106658] active:scale-[0.98] active:bg-[#0d554c] sm:min-h-0 sm:px-9 sm:py-3.5 sm:text-sm md:px-10 md:text-base"
               >
                 احجز الآن
               </Link>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:contents">
               <Link href="/services" className={heroGhostLinkClass}>
                 <span>اكتشف خدماتنا</span>
                 <Icon name="arrow_back" className={heroGhostArrowClass} />
@@ -126,10 +124,11 @@ export function SiteHome() {
                 <span>مناطق الخدمة</span>
                 <Icon name="arrow_back" className={heroGhostArrowClass} />
               </Link>
+              </div>
             </div>
             </div>
           </div>
-          <div className="mt-10 flex min-w-0 items-center justify-center md:mt-0 md:justify-end">
+          <div className="flex min-w-0 items-center justify-center md:justify-end">
             <div className="w-full max-w-sm rounded-3xl border border-white/22 bg-gradient-to-br from-slate-900/88 via-[#152f4d]/85 to-[#1c4558]/80 p-5 text-right text-white shadow-[0_20px_56px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-6">
               <div className="mb-6 flex items-center justify-between gap-4">
                 <span className="rounded-full bg-white/12 px-3.5 py-1.5 text-xs font-extrabold text-white/95 sm:px-4 sm:py-2 sm:text-sm">تواصل سريع</span>
@@ -245,12 +244,17 @@ export function SiteHome() {
               <article key={feature.slug} className="group overflow-hidden rounded-2xl bg-surface-container-lowest shadow-[0_10px_32px_rgba(30,58,138,0.06)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(30,58,138,0.11)]">
                 <Link href={`/features/${feature.slug}`} aria-label={`اقرأ مقال ${feature.cardTitle}`}>
                 <div className="relative h-52 overflow-hidden rounded-t-2xl">
-                  <div
-                    className={`absolute inset-0 ${featureCardGradientClass[feature.slug] ?? "bg-gradient-to-br from-[#021b44] to-[#03307e]"} motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105`}
-                    aria-hidden
+                  <Image
+                    src={feature.image}
+                    alt={featureCardImageAlt[feature.slug] ?? feature.cardTitle}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    quality={78}
+                    loading="lazy"
+                    className="object-cover object-center motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-105"
                   />
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/[0.07]"
+                    className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent"
                     aria-hidden
                   />
                 </div>

@@ -16,10 +16,12 @@ export function SiteCareers() {
       <div className="mx-auto max-w-4xl text-right">
         <header className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-10">
           <p className="text-sm font-extrabold text-secondary">انضم إلى الفريق</p>
-          <h1 className="mt-2 font-headline text-3xl font-extrabold text-primary sm:text-4xl md:text-5xl">الوظائف</h1>
+          <h1 className="mt-2 font-headline text-3xl font-extrabold text-primary sm:text-4xl md:text-5xl">
+            وظائف شركة تنظيف بالرياض
+          </h1>
           <p className="mt-5 max-w-3xl text-base font-medium leading-8 text-on-surface-variant md:text-lg">
-            نبحث عن أشخاص يشاركوننا الالتزام بالجودة والاحتراف في خدمات التنظيف ومكافحة الحشرات داخل المملكة. تصفّح
-            الشواغر الحالية أو أرسل سيرتك لمناقشتها لاحقاً مع فريق الموارد البشرية.
+            نبحث عن فنيين ومشرفين يلتزمون بالجودة في التنظيف ومكافحة الحشرات. تصفّح الشواغر أو أرسل سيرتك
+            لفريق الموارد البشرية.
           </p>
         </header>
 

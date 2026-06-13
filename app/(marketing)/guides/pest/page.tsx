@@ -8,8 +8,8 @@ import { primaryCityNameAr } from "@/lib/region";
 import { buildArabicPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: `موسوعة مكافحة الحشرات في ${primaryCityNameAr}`,
-  description: `أدلة عملية عن رش الصراصير، بق الفراش، النمل، الأرضة، الفئران والسلامة بعد الرش في ${primaryCityNameAr}. ${brandNameAr}.`,
+  title: `موسوعة مكافحة الحشرات في ${primaryCityNameAr} | أدلة رسمية`,
+  description: `أدلة عملية عن رش الصراصير، بق الفراش، النمل، الأرضة، الفئران والسلامة بعد الرش في ${primaryCityNameAr}. شروحات من فريق ${brandNameAr} قبل الحجز.`,
   canonical: "/guides/pest",
   keywords: [
     "مكافحة حشرات الرياض",

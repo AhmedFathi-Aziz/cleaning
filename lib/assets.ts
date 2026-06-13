@@ -6,7 +6,7 @@
  * للتحقق من المجلد: `npm run images:check-seo`. استبدل روابط الستوك التكرارية بصور حقيقية من الميدان عند الإمكان.
  */
 export const images = {
-  hero: "/images/hero.webp",
+  hero: "/images/services-villa.webp",
   deepClean: "/images/deep-clean.webp",
   carpet: "/images/carpet.webp",
   sofaCleaning:
@@ -27,12 +27,9 @@ export const images = {
     "https://lh3.googleusercontent.com/aida-public/AB6AXuD5gDaW0R9Vg1h8U7dFaaMM1vYh4BHh8yLMBNdrgzOtIqOVGxhMFfjYKtBurIX6OMipcl5ZALqDl5D8uj1PNARdiC5dB5T5ldebnvc1na5-MaZoExM2D258S9xcG_FfMXbC0eGYjzy_LWEOqd6k2RCIAGILNES9IUeyH51D50Zj_T1QbT4Kj-zYAMoClZlcuq7nNG0tPWGnv7RadHaZlbKsk7MINl6qnH_mZHo8tk1zpqP4EwHyIy77eahoqHbIDSh-ECBiSxyYif2f",
   aboutStatsBg:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCGINllRNqXkbTUBPbXbGUaM7KyY1-YAZabxFd8eFJz1ZmZVWx3v90W7ov0sIyTYuAbRldQA15Z0t_huIq5-bz_7CGxTzaWO4hBECaWzmiDstb2RZCwtuObopPa9lctvBXNMC3gb17LvYm6qcStnSeH-LEuGUogGT7L8W1XipBnJjn7VFRO1PPT7YTt3zYWhIWTvRdZom1GAuShB124O6E1IlcKL_aw5A7VD8rqAJSy9OfQ52zABX6I1BWVwPMnhfBvhXTltbwxIO3u",
-  featureTeam:
-    "https://plus.unsplash.com/premium_photo-1682126104327-ef7d5f260cf7?auto=format&fit=crop&w=900&q=85",
-  featureMaterials:
-    "https://images.pexels.com/photos/4107277/pexels-photo-4107277.jpeg?auto=compress&cs=tinysrgb&w=900",
-  featureSchedule:
-    "https://images.pexels.com/photos/7033891/pexels-photo-7033891.jpeg?auto=compress&cs=tinysrgb&w=900",
+  featureTeam: "/images/feature-team.webp",
+  featureMaterials: "/images/feature-materials.webp",
+  featureSchedule: "/images/feature-schedule.webp",
   /** نموذج بصري لشكل تقرير كشف تسربات (SVG) — صفحة التقدير ومحتوى التسربات */
   leakDetectionReportSample: "/images/leak-detection-report-sample.svg",
   cleaningCompanyRiyadhHero: "/images/cleaning-company-riyadh/hero.webp",

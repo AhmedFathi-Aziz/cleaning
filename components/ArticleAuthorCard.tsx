@@ -10,6 +10,8 @@ type ArticleAuthorProps = {
   author?: string | null;
   className?: string;
   variant?: "card" | "inline";
+  /** عند false يُعرض الاسم كنص فقط — مطلوب داخل بطاقة مربوطة بـ Link خارجي */
+  linkAuthor?: boolean;
 };
 
 export function ArticleAuthorCard({
@@ -17,16 +19,22 @@ export function ArticleAuthorCard({
   author,
   className,
   variant = "card",
+  linkAuthor = true,
 }: ArticleAuthorProps) {
   const profile = resolveArticleAuthorProfile({ authorId, author });
+  const authorNameClass = "font-bold text-primary hover:text-secondary hover:underline";
 
   if (variant === "inline") {
     return (
       <p className={className ?? "mt-2 text-sm font-medium text-on-surface-variant"}>
         بقلم{" "}
-        <Link href={profile.teamHref} className="font-bold text-primary hover:text-secondary hover:underline">
-          {profile.displayName}
-        </Link>
+        {linkAuthor ? (
+          <Link href={profile.teamHref} className={authorNameClass}>
+            {profile.displayName}
+          </Link>
+        ) : (
+          <span className="font-bold text-primary">{profile.displayName}</span>
+        )}
         <span className="text-on-surface-variant"> — {profile.specialty}</span>
       </p>
     );

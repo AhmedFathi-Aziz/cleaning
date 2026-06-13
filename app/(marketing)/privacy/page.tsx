@@ -7,9 +7,9 @@ import { buildArabicPageMetadata } from "@/lib/seo";
 const lastUpdated = "2026-05-02";
 
 export const metadata: Metadata = buildArabicPageMetadata({
-  title: "سياسة الخصوصية",
+  title: "سياسة الخصوصية | شركة تنظيف بالرياض — السعودية للتنظيف",
   description:
-    "سياسة الخصوصية لموقع السعودية للتنظيف: البيانات التي نجمعها عند التواصل والحجز، الاستخدام، الاحتفاظ، ملفات تعريف الارتباط، وحقوقك — المملكة العربية السعودية.",
+    "سياسة الخصوصية لموقع السعودية للتنظيف: البيانات التي نجمعها عند التواصل والحجز، كيف نستخدمها، الاحتفاظ، ملفات تعريف الارتباط، وحقوقك في المملكة العربية السعودية.",
   canonical: "/privacy",
   keywords: ["سياسة خصوصية", "السعودية للتنظيف", "حماية البيانات", "ثقة المستخدم", "بيانات شخصية"],
 });
@@ -17,7 +17,7 @@ export const metadata: Metadata = buildArabicPageMetadata({
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 pb-24 pt-28 md:px-8">
-      <h1 className="font-headline text-3xl font-extrabold text-primary">سياسة الخصوصية</h1>
+      <h1 className="font-headline text-3xl font-extrabold text-primary">سياسة الخصوصية — شركة تنظيف بالرياض</h1>
       <p className="mt-2 text-sm font-medium text-on-surface-variant">
         آخر تحديث: {lastUpdated} — {brandNameAr}
       </p>

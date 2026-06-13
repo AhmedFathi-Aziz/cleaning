@@ -42,7 +42,7 @@ export function SiteFooter() {
           </p>
         </div>
         <nav className="space-y-6" aria-label="روابط سريعة">
-          <h2 className="text-base font-bold text-blue-900 dark:text-blue-400">روابط سريعة</h2>
+          <p className="text-base font-bold text-blue-900 dark:text-blue-400">روابط سريعة</p>
           <ul className="space-y-4">
             <li>
               <Link
@@ -135,7 +135,7 @@ export function SiteFooter() {
           </ul>
         </nav>
         <nav className="space-y-6" aria-label="معلومات قانونية">
-          <h2 className="text-base font-bold text-blue-900 dark:text-blue-400">معلومات قانونية</h2>
+          <p className="text-base font-bold text-blue-900 dark:text-blue-400">معلومات قانونية</p>
           <ul className="space-y-4">
             <li>
               <Link
@@ -164,7 +164,7 @@ export function SiteFooter() {
           </ul>
         </nav>
         <div className="space-y-6">
-          <h2 className="text-base font-bold text-blue-900 dark:text-blue-400">تواصل معنا</h2>
+          <p className="text-base font-bold text-blue-900 dark:text-blue-400">تواصل معنا</p>
           <p className="text-sm text-slate-600 dark:text-slate-400">{brandAddressAr}</p>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             <a href={`mailto:${brandEmail}`} className="hover:underline">

@@ -94,7 +94,7 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                         <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden" aria-hidden>
                           <BlogCoverPlaceholder
                             slug={item.slug}
-                            icon="newspaper"
+                            variant="brand"
                             className="absolute inset-0 size-full"
                           />
                         </div>
@@ -106,7 +106,13 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                               day: "numeric",
                             })}
                           </time>
-                          <ArticleAuthorCard authorId={item.authorId} author={item.author} variant="inline" className="mt-1 text-xs font-medium text-on-surface-variant" />
+                          <ArticleAuthorCard
+                            authorId={item.authorId}
+                            author={item.author}
+                            variant="inline"
+                            linkAuthor={false}
+                            className="mt-1 text-xs font-medium text-on-surface-variant"
+                          />
                           <h4 className="mt-2 font-headline text-lg font-extrabold leading-snug text-primary group-hover:text-secondary md:text-xl">
                             {item.title}
                           </h4>
@@ -160,7 +166,13 @@ export function HomeLatestPublishing({ newsArticles, blogPosts }: Props) {
                                 day: "numeric",
                               })}
                             </time>
-                            <ArticleAuthorCard authorId={post.authorId} author={post.author} variant="inline" className="mt-1 text-xs font-medium text-on-surface-variant" />
+                            <ArticleAuthorCard
+                              authorId={post.authorId}
+                              author={post.author}
+                              variant="inline"
+                              linkAuthor={false}
+                              className="mt-1 text-xs font-medium text-on-surface-variant"
+                            />
                             <h4 className="mt-2 font-headline text-lg font-extrabold leading-snug text-primary group-hover:text-secondary md:text-xl">
                               {post.title}
                             </h4>

@@ -8,7 +8,7 @@ import { NeighborhoodLocalContextBlock } from "@/components/NeighborhoodLocalCon
 import { NeighborhoodServicesHighlight } from "@/components/NeighborhoodServicesHighlight";
 import { brandNameAr } from "@/lib/brand";
 import { isServiceLocationPairAllowed } from "@/lib/service-location-pages";
-import { buildArabicPageMetadata, truncateForMetaDescription } from "@/lib/seo";
+import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
 import { serviceArticles } from "@/lib/service-articles";
 import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
 
@@ -37,9 +37,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!city || !neighborhood) return { title: "غير موجود", robots: { index: false, follow: false } };
 
-  const title = `أفضل شركة تنظيف في حي ${neighborhood.name} ${city.name} | اطلب الآن`;
-  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr);
-  const description = `${snippet} احجز تنظيفاً احترافياً في حي ${neighborhood.name}، ${city.name} مع ${brandNameAr}.`;
+  const title = fitMetaTitle(`أفضل شركة تنظيف في حي ${neighborhood.name} ${city.name} | اطلب الآن`);
+  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr, 90);
+  const description = expandMetaDescription(
+    `${snippet} احجز تنظيفاً احترافياً في حي ${neighborhood.name}، ${city.name} مع ${brandNameAr}.`,
+  );
   const canonical = `/${city.slug}/${neighborhood.slug}`;
 
   return buildArabicPageMetadata({
