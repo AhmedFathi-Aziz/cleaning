@@ -22,6 +22,7 @@ function protectMarkdownSegments(source: string): { text: string; segments: stri
   const patterns = [
     /!\[[^\]]*\]\([^)]+\)/g,
     /\[[^\]]+\]\([^)]+\)/g,
+    /\*\*[^*]+?\*\*/g,
     /```[\s\S]*?```/g,
     /`[^`\n]+`/g,
     // صفوف الجداول — حتى لا يُكسَر هيكل | ... | بالربط التلقائي
@@ -117,7 +118,7 @@ export function autolinkArticleMarkdown(markdown: string): string {
 
 /** للنصوص العادية (أدلة الحشرات، مقالات المميزات) */
 export function autolinkArticlePlainText(text: string): string {
-  return autolinkContent(text, false);
+  return autolinkContent(text, true);
 }
 
 /** @deprecated استخدم autolinkArticleMarkdown */

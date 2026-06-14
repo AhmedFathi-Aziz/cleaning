@@ -36,7 +36,11 @@ function renderBoldSegments(text: string, keyPrefix: string, boldClassName: stri
  */
 export function renderInlineMarkdownLinks(text: string, options?: InlineMarkdownOptions): ReactNode[] {
   const boldClassName = options?.boldClassName ?? "font-extrabold text-primary";
-  const linked = autolinkArticlePlainText(normalizeMarkdownLinks(text));
+  const normalized = normalizeMarkdownLinks(text);
+  // إصلاح حالات قديمة: **نص** تحوّل إلى **[نص](رابط)** فتبقى النجوم ظاهرة
+  const linked = autolinkArticlePlainText(
+    normalized.replace(/\*\*(\[[^\]]+\]\([^)]+\))\*\*/g, "$1"),
+  );
   const nodes: ReactNode[] = [];
   let lastIndex = 0;
   const re = new RegExp(INLINE_LINK_RE.source, "g");
