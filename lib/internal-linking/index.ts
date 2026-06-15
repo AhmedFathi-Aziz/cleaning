@@ -3,7 +3,13 @@ export {
   autolinkArticlePlainText,
   autolinkNeighborhoodsInMarkdown,
   autolinkNeighborhoodsInPlainText,
+  type AutolinkOptions,
 } from "./autolink-markdown";
+export {
+  buildPestGuideAutolinkRules,
+  buildPestGuideCrossLinkRules,
+  getPestGuidePrimaryServiceHref,
+} from "./pest-guide-link-index";
 export {
   buildNeighborhoodLinkRules,
   detectCityContextFromText,

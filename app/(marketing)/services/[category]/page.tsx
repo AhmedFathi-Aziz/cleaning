@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
+import { ServicePageSidebar } from "@/components/ServicePageSidebar";
 import { ServicePageJsonLd } from "@/components/SeoJsonLd";
 import { ServiceArticleParagraph } from "@/components/ServiceArticleParagraph";
 import { ServicePageTableOfContents } from "@/components/ServicePageTableOfContents";
@@ -131,33 +132,11 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
         ) : null}
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[280px_1fr] lg:items-start">
-          <aside className="space-y-5 lg:sticky lg:top-28">
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-              <h2 className="font-headline text-lg font-extrabold text-primary">تشمل الخدمة</h2>
-              <ul className="mt-4 space-y-3">
-                {service.includes.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm font-semibold text-on-surface-variant">
-                    <Icon name="check_circle" className="text-lg text-secondary" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-3xl bg-primary p-6 text-white shadow-[0_18px_45px_rgba(0,35,111,0.16)]">
-              <h2 className="font-headline text-xl font-extrabold">احجز الخدمة</h2>
-              <p className="mt-3 text-sm leading-7 text-white/80">
-                استجابة سريعة على الاستفسارات، وموعد يُنسَّق وفق نوع الخدمة ومساحة المكان — مع توضيح الضمان
-                المتفق عليه قبل التنفيذ.
-              </p>
-              <Link
-                href="/#book"
-                className="mt-5 inline-flex rounded-full bg-white px-6 py-3 text-sm font-bold text-primary"
-              >
-                احجز الآن
-              </Link>
-            </div>
-          </aside>
+          <ServicePageSidebar
+            serviceTitle={service.title}
+            serviceSlug={service.slug}
+            includes={service.includes}
+          />
 
           <div className="space-y-6">
             <section

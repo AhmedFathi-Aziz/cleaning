@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ArticleInlineLink } from "@/components/ArticleInlineLink";
-import { autolinkArticlePlainText } from "@/lib/internal-linking";
+import { autolinkArticlePlainText, type AutolinkOptions } from "@/lib/internal-linking";
 import { normalizeArticleHref, normalizeMarkdownLinks } from "@/lib/normalize-markdown-links";
 
 /** روابط Markdown: [النص](url) — url قد يكون `/path` أو `services/...` أو https */
@@ -9,6 +9,7 @@ const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 type InlineMarkdownOptions = {
   boldClassName?: string;
+  autolink?: AutolinkOptions;
 };
 
 function renderBoldSegments(text: string, keyPrefix: string, boldClassName: string): ReactNode[] {
@@ -40,6 +41,7 @@ export function renderInlineMarkdownLinks(text: string, options?: InlineMarkdown
   // إصلاح حالات قديمة: **نص** تحوّل إلى **[نص](رابط)** فتبقى النجوم ظاهرة
   const linked = autolinkArticlePlainText(
     normalized.replace(/\*\*(\[[^\]]+\]\([^)]+\))\*\*/g, "$1"),
+    options?.autolink,
   );
   const nodes: ReactNode[] = [];
   let lastIndex = 0;

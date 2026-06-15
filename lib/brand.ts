@@ -5,6 +5,9 @@ export const brandEmail = "info@saudi-cleaning.com";
 export const brandPhone = "+966110000000";
 export const brandPhoneDisplay = "+966 11 000 0000";
 export const brandWhatsapp = "https://wa.me/966110000000";
+/** لون واتساب الرسمي — أزرار ونماذج التواصل */
+export const brandWhatsappColor = "#128C7E";
+export const brandWhatsappColorHover = "#0f7a6e";
 export const brandAddressAr = "الرياض، المملكة العربية السعودية";
 /** عرض موحّد في صفحة اتصل بنا وبيانات الهيكلة — يتوافق مع ساعات العمل في Schema */
 export const brandWorkingHoursAr =

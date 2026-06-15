@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
+import { ServicePageSidebar } from "@/components/ServicePageSidebar";
 import { ServiceArticleParagraph } from "@/components/ServiceArticleParagraph";
 import { ServiceLocationJsonLd } from "@/components/SeoJsonLd";
 import { brandNameAr } from "@/lib/brand";
@@ -163,32 +164,27 @@ export default async function ServiceLocationPage({ params }: PageProps) {
         </header>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[280px_1fr] lg:items-start">
-          <aside className="space-y-5 lg:sticky lg:top-24">
-            <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-              <h2 className="font-headline text-lg font-extrabold text-primary">تشمل الخدمة</h2>
-              <ul className="mt-4 space-y-3">
-                {service.includes.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm font-semibold text-on-surface-variant">
-                    <Icon name="check_circle" className="text-lg text-secondary" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {deepContent?.preparationBullets.length ? (
-              <div className="rounded-3xl border border-secondary/20 bg-secondary/5 p-6 shadow-sm">
-                <h2 className="font-headline text-lg font-extrabold text-primary">جهّز قبل الزيارة</h2>
-                <ul className="mt-4 space-y-3">
-                  {deepContent.preparationBullets.map((item) => (
-                    <li key={item} className="flex gap-2 text-sm font-semibold leading-7 text-on-surface-variant">
-                      <Icon name="task_alt" className="mt-0.5 shrink-0 text-lg text-secondary" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </aside>
+          <ServicePageSidebar
+            serviceTitle={service.title}
+            serviceSlug={service.slug}
+            includes={service.includes}
+            locationLabel={`${neighborhood.name}، ${city.name}`}
+            extraBlocks={
+              deepContent?.preparationBullets.length ? (
+                <div className="rounded-3xl border border-secondary/20 bg-secondary/5 p-6 shadow-sm">
+                  <h2 className="font-headline text-lg font-extrabold text-primary">جهّز قبل الزيارة</h2>
+                  <ul className="mt-4 space-y-3">
+                    {deepContent.preparationBullets.map((item) => (
+                      <li key={item} className="flex gap-2 text-sm font-semibold leading-7 text-on-surface-variant">
+                        <Icon name="task_alt" className="mt-0.5 shrink-0 text-lg text-secondary" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : undefined
+            }
+          />
 
           <div className="space-y-6">
             {deepContent?.sections.map((section, index) => (

@@ -93,7 +93,9 @@ const components: Components = {
 export function MarkdownBody({ markdown }: Props) {
   const tablesReady = normalizeMarkdownTables(markdown);
   const linkSafe = normalizeMarkdownLinks(tablesReady);
-  const withLinks = normalizeMarkdownLinks(autolinkArticleMarkdown(linkSafe));
+  const withLinks = normalizeMarkdownLinks(
+    autolinkArticleMarkdown(linkSafe, { maxLinksPerPhrase: 1 }),
+  );
   const normalized = sanitizeArticlePrices(withLinks);
 
   return (

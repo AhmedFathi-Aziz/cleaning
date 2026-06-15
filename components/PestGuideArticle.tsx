@@ -1,8 +1,9 @@
 import Link from "next/link";
 
-import { RichParagraph } from "@/components/RichParagraph";
+import { RichInlineText, RichParagraph } from "@/components/RichParagraph";
 import { Icon } from "@/components/Icon";
 import { slugifyHeading } from "@/lib/markdown-utils";
+import { getPestGuidePrimaryServiceHref } from "@/lib/internal-linking";
 import { brandNameAr } from "@/lib/brand";
 import type { PestGuide } from "@/lib/pest-guides";
 
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export function PestGuideArticle({ guide, canonicalUrl }: Props) {
+  const serviceHref = getPestGuidePrimaryServiceHref(guide.slug);
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -43,12 +46,20 @@ export function PestGuideArticle({ guide, canonicalUrl }: Props) {
             <Icon name="arrow_forward" className="text-lg" />
             موسوعة الحشرات
           </Link>
-          <Link
-            href="/services/pest-control"
-            className="rounded-full bg-white px-4 py-2 text-xs font-bold text-primary shadow-sm"
-          >
-            خدمة مكافحة الحشرات
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href={serviceHref}
+              className="rounded-full bg-white px-4 py-2 text-xs font-bold text-primary shadow-sm"
+            >
+              خدمة مكافحة الحشرات
+            </Link>
+            <Link
+              href="/services/pest-control"
+              className="rounded-full border border-primary/15 bg-white px-4 py-2 text-xs font-bold text-primary shadow-sm"
+            >
+              دليل الخدمة العام
+            </Link>
+          </div>
         </div>
 
         <header className="rounded-[2rem] border border-slate-100 bg-white p-7 shadow-[0_18px_55px_rgba(30,58,138,0.08)] md:p-10">
@@ -60,13 +71,13 @@ export function PestGuideArticle({ guide, canonicalUrl }: Props) {
           <p className="mt-5 text-base font-medium leading-8 text-on-surface-variant md:text-lg">{guide.excerpt}</p>
         </header>
 
-        <GuideBody guide={guide} />
+        <GuideBody guide={guide} serviceHref={serviceHref} />
       </article>
     </>
   );
 }
 
-function GuideBody({ guide }: { guide: PestGuide }) {
+function GuideBody({ guide, serviceHref }: { guide: PestGuide; serviceHref: string }) {
   return (
     <div className="mt-8 grid gap-8 lg:grid-cols-[280px_1fr] lg:items-start">
       <aside className="space-y-5 lg:sticky lg:top-24">
@@ -82,6 +93,19 @@ function GuideBody({ guide }: { guide: PestGuide }) {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="rounded-3xl border border-secondary/20 bg-gradient-to-bl from-white to-secondary/5 p-6 shadow-sm">
+          <h2 className="font-headline text-lg font-extrabold text-primary">تحتاج تنفيذاً عملياً؟</h2>
+          <p className="mt-3 text-sm leading-7 text-on-surface-variant">
+            بعد قراءة الدليل، يمكنك طلب معاينة أو خطة رش مناسبة لحالتك في الرياض — بدون التزام قبل توضيح الخطة.
+          </p>
+          <Link
+            href={serviceHref}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-secondary px-4 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-secondary/90"
+          >
+            صفحة خدمة المكافحة
+            <Icon name="arrow_back" className="text-base" />
+          </Link>
         </div>
         <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
           <h2 className="font-headline text-lg font-extrabold text-primary">كلمات مفتاحية</h2>
@@ -109,6 +133,7 @@ function GuideBody({ guide }: { guide: PestGuide }) {
               {section.paragraphs.map((paragraph) => (
                 <RichParagraph
                   key={paragraph}
+                  pestGuideSlug={guide.slug}
                   className="text-base leading-9 text-on-surface-variant"
                 >
                   {paragraph}
@@ -118,7 +143,7 @@ function GuideBody({ guide }: { guide: PestGuide }) {
                 <ul className="my-4 space-y-2 rounded-2xl border border-slate-100 bg-surface-container-low/60 p-5 pe-8 text-on-surface-variant">
                   {section.bullets.map((bullet) => (
                     <li key={bullet} className="list-inside list-disc leading-8 marker:text-secondary">
-                      {bullet}
+                      <RichInlineText pestGuideSlug={guide.slug}>{bullet}</RichInlineText>
                     </li>
                   ))}
                 </ul>
@@ -132,17 +157,22 @@ function GuideBody({ guide }: { guide: PestGuide }) {
             {guide.faqs.map((faq) => (
               <div key={faq.question} className="rounded-2xl bg-surface-container-low p-5">
                 <h3 className="font-bold text-primary">{faq.question}</h3>
-                <RichParagraph className="mt-2 leading-7 text-on-surface-variant">{faq.answer}</RichParagraph>
+                <RichParagraph pestGuideSlug={guide.slug} className="mt-2 leading-7 text-on-surface-variant">
+                  {faq.answer}
+                </RichParagraph>
               </div>
             ))}
           </div>
         </section>
-        <div className="flex flex-wrap items-center gap-4 rounded-3xl bg-white p-6 shadow-sm">
+        <div className="flex flex-wrap items-center gap-4 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
           <Link href="/contact" className="liquid-gradient rounded-full px-8 py-3 text-sm font-bold text-white shadow-lg">
             احجز مكافحة حشرات
           </Link>
-          <Link href="/services/pest-control" className="font-bold text-primary hover:text-secondary">
-            صفحة الخدمة الرئيسية
+          <Link href={serviceHref} className="font-bold text-primary hover:text-secondary">
+            صفحة الخدمة في الرياض
+          </Link>
+          <Link href="/services/pest-control" className="text-sm font-semibold text-on-surface-variant hover:text-secondary">
+            دليل مكافحة الحشرات العام
           </Link>
         </div>
       </div>

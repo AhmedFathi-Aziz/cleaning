@@ -8,6 +8,28 @@ import { brandNameAr, brandWhatsapp } from "@/lib/brand";
 const NAVY = "bg-[#1D2D3D] hover:bg-[#152530]";
 const WA_TEAL = "bg-[#128C7E] hover:bg-[#0f7a6e]";
 
+/** زر واتساب قابل لإعادة الاستخدام — الشريط السفلي والزر العائم */
+export function WhatsAppChipLink({ className = "" }: { className?: string }) {
+  return (
+    <a
+      href={brandWhatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="تواصل معنا عبر واتساب — رد سريع خلال دقائق"
+      dir="ltr"
+      className={`relative inline-flex max-w-[min(calc(100vw-2rem),20rem)] items-center gap-3 rounded-[22px] border border-white/30 ${WA_TEAL} py-2.5 pl-3 pr-3.5 text-white shadow-[0_12px_40px_rgba(15,90,80,0.45)] transition hover:scale-[1.02] hover:shadow-[0_14px_44px_rgba(15,90,80,0.5)] active:scale-[0.98] md:gap-3.5 md:py-3 md:pl-3.5 md:pr-4 ${className}`}
+    >
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#128C7E] shadow-sm md:h-12 md:w-12">
+        <WhatsAppLogo className="h-[1.35rem] w-[1.35rem] md:h-6 md:w-6" />
+      </span>
+      <span dir="rtl" className="min-w-0 flex-1 text-right leading-tight">
+        <span className="block text-sm font-extrabold md:text-base">واتساب</span>
+        <span className="mt-0.5 block text-[0.7rem] font-medium text-white/95 md:text-xs">رد سريع خلال دقائق</span>
+      </span>
+    </a>
+  );
+}
+
 export function ContactQuickForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -115,7 +137,7 @@ export function ContactQuickForm() {
 /** زر واتساب عائم — يُضاف من تخطيط التسويق ليظهر في كل صفحات الموقع العامة */
 export function WhatsAppFloatingChip() {
   return (
-    <div className="pointer-events-none fixed bottom-5 right-5 z-40 md:bottom-8 md:right-8">
+    <div className="whatsapp-floating-chip pointer-events-none fixed bottom-24 right-3 z-40 md:bottom-8 md:right-8">
       <div className="pointer-events-auto relative">
         <div
           className="absolute left-1/2 top-1/2 h-[4.5rem] w-[4.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#128C7E]/25 blur-2xl motion-reduce:opacity-40 md:h-[5.5rem] md:w-[5.5rem]"
@@ -125,22 +147,7 @@ export function WhatsAppFloatingChip() {
           className="absolute left-1/2 top-1/2 h-[min(140%,7.5rem)] w-[min(92vw,20rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#128C7E]/12 blur-3xl motion-reduce:hidden"
           aria-hidden
         />
-        <a
-          href={brandWhatsapp}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="تواصل معنا عبر واتساب — رد سريع خلال دقائق"
-          dir="ltr"
-          className={`relative flex max-w-[min(calc(100vw-2rem),20rem)] items-center gap-3 rounded-[22px] border border-white/30 ${WA_TEAL} py-2.5 pl-3 pr-3.5 text-white shadow-[0_12px_40px_rgba(15,90,80,0.45)] transition hover:scale-[1.02] hover:shadow-[0_14px_44px_rgba(15,90,80,0.5)] active:scale-[0.98] md:gap-3.5 md:py-3 md:pl-3.5 md:pr-4`}
-        >
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-[#128C7E] shadow-sm md:h-12 md:w-12">
-            <WhatsAppLogo className="h-[1.35rem] w-[1.35rem] md:h-6 md:w-6" />
-          </span>
-          <span dir="rtl" className="min-w-0 flex-1 text-right leading-tight">
-            <span className="block text-sm font-extrabold md:text-base">واتساب</span>
-            <span className="mt-0.5 block text-[0.7rem] font-medium text-white/95 md:text-xs">رد سريع خلال دقائق</span>
-          </span>
-        </a>
+        <WhatsAppChipLink />
       </div>
     </div>
   );

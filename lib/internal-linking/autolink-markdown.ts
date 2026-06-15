@@ -4,11 +4,19 @@ import {
   phraseToRegex,
   type NeighborhoodLinkRule,
 } from "./neighborhood-link-index";
+import { buildPestGuideAutolinkRules } from "./pest-guide-link-index";
 import { buildServiceLinkRules, type ServiceLinkRule } from "./service-link-index";
 
 export type InternalLinkRule = {
   phrase: string;
   href: string;
+};
+
+export type AutolinkOptions = {
+  /** عند عرض دليل في موسوعة الحشرات — يربط بأدلة أخرى وخدمات بسياق مناسب */
+  pestGuideSlug?: string;
+  /** حد أقصى لكل عبارة في النص (افتراضي 1 لتجنب حشو الروابط) */
+  maxLinksPerPhrase?: number;
 };
 
 const PLACEHOLDER_PREFIX = "\uE000LINK";
@@ -60,9 +68,11 @@ function isInsideMarkdownLink(text: string, index: number): boolean {
 function applyRules(
   text: string,
   rules: InternalLinkRule[],
-  options?: { skipFalsePositiveCheck?: boolean },
+  options?: { skipFalsePositiveCheck?: boolean; maxLinksPerPhrase?: number },
 ): string {
   let out = text;
+  const maxPerPhrase = options?.maxLinksPerPhrase ?? 1;
+  const phraseCounts = new Map<string, number>();
 
   for (const rule of rules) {
     const re = phraseToRegex(rule.phrase);
@@ -75,6 +85,9 @@ function applyRules(
       ) {
         return match;
       }
+      const used = phraseCounts.get(rule.phrase) ?? 0;
+      if (used >= maxPerPhrase) return match;
+      phraseCounts.set(rule.phrase, used + 1);
       return `[${match}](${rule.href})`;
     });
   }
@@ -89,36 +102,49 @@ function mergeRules(
   return [...neighborhoodRules, ...serviceRules].sort((a, b) => b.phrase.length - a.phrase.length);
 }
 
-function autolinkContent(content: string, protectLinks: boolean): string {
+function autolinkContent(content: string, protectLinks: boolean, options?: AutolinkOptions): string {
   if (!content.trim()) return content;
 
+  const maxLinksPerPhrase = options?.maxLinksPerPhrase ?? 1;
+  const ruleOptions = { maxLinksPerPhrase };
   const neighborhoodRules = getNeighborhoodRulesForContent(content);
   const serviceRules = buildServiceLinkRules();
+  const pestGuideRules = options?.pestGuideSlug
+    ? buildPestGuideAutolinkRules(options.pestGuideSlug)
+    : [];
   const neighborhoodOnly = mergeRules(neighborhoodRules, []);
-  const serviceOnly = mergeRules([], serviceRules);
+  const pestAndService: InternalLinkRule[] = [...pestGuideRules, ...serviceRules].sort(
+    (a, b) => b.phrase.length - a.phrase.length,
+  );
 
   if (protectLinks) {
     const { text: protectedText, segments } = protectMarkdownSegments(content);
-    let linked = applyRules(protectedText, neighborhoodOnly);
-    linked = applyRules(linked, serviceOnly, { skipFalsePositiveCheck: true });
+    let linked = applyRules(protectedText, neighborhoodOnly, ruleOptions);
+    linked = applyRules(linked, pestAndService, {
+      skipFalsePositiveCheck: true,
+      maxLinksPerPhrase,
+    });
     return restoreMarkdownSegments(linked, segments);
   }
 
-  let linked = applyRules(content, neighborhoodOnly);
-  linked = applyRules(linked, serviceOnly, { skipFalsePositiveCheck: true });
+  let linked = applyRules(content, neighborhoodOnly, ruleOptions);
+  linked = applyRules(linked, pestAndService, {
+    skipFalsePositiveCheck: true,
+    maxLinksPerPhrase,
+  });
   return linked;
 }
 
 /**
  * ربط تلقائي: أحياء → `/{مدينة}/{حي}` + خدمات → `/services/...` + موسوعة الحشرات.
  */
-export function autolinkArticleMarkdown(markdown: string): string {
-  return autolinkContent(markdown, true);
+export function autolinkArticleMarkdown(markdown: string, options?: AutolinkOptions): string {
+  return autolinkContent(markdown, true, options);
 }
 
 /** للنصوص العادية (أدلة الحشرات، مقالات المميزات) */
-export function autolinkArticlePlainText(text: string): string {
-  return autolinkContent(text, true);
+export function autolinkArticlePlainText(text: string, options?: AutolinkOptions): string {
+  return autolinkContent(text, true, options);
 }
 
 /** @deprecated استخدم autolinkArticleMarkdown */

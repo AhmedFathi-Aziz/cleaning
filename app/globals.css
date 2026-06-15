@@ -49,6 +49,13 @@
     background-color: rgb(148 163 184 / 0.95);
   }
 
+  /** إخفاء زر الواتساب العائم عند ظهور الشريط السفلي لصفحات الخدمات (موبايل) */
+  @media (max-width: 1023px) {
+    html[data-mobile-lead-dock] .whatsapp-floating-chip {
+      display: none;
+    }
+  }
+
   /** إخفاء شريط التمرير الأفقي (موبايل) مع الإبقاء على السحب */
   .scrollbar-none {
     -ms-overflow-style: none;

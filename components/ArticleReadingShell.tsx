@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { Icon } from "@/components/Icon";
+import { ServiceStickyLeadForm, ServiceStickyLeadFormMobileBar } from "@/components/ServiceStickyLeadForm";
 import type { InternalPromoLink } from "@/lib/related-service-links";
 import { estimateReadingMinutes, extractH2Headings } from "@/lib/markdown-utils";
 
@@ -9,10 +10,12 @@ type Props = {
   bodyMd: string;
   keywords?: string[];
   contextLinks?: InternalPromoLink[];
+  /** لنموذج التأهيل الثابت — اختياري */
+  leadForm?: { serviceTitle: string; serviceSlug: string };
   children?: React.ReactNode;
 };
 
-export function ArticleReadingShell({ bodyMd, keywords, contextLinks = [], children }: Props) {
+export function ArticleReadingShell({ bodyMd, keywords, contextLinks = [], leadForm, children }: Props) {
   const headings = extractH2Headings(bodyMd);
   const minutes = estimateReadingMinutes(bodyMd);
 
@@ -82,7 +85,21 @@ export function ArticleReadingShell({ bodyMd, keywords, contextLinks = [], child
             </ul>
           </div>
         ) : null}
+
+        {leadForm ? (
+          <ServiceStickyLeadForm
+            serviceTitle={leadForm.serviceTitle}
+            serviceSlug={leadForm.serviceSlug}
+          />
+        ) : null}
       </aside>
+
+      {leadForm ? (
+        <ServiceStickyLeadFormMobileBar
+          serviceTitle={leadForm.serviceTitle}
+          serviceSlug={leadForm.serviceSlug}
+        />
+      ) : null}
 
       <div className="min-w-0">
         {children}
