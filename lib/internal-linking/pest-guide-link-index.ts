@@ -14,6 +14,8 @@ export const PEST_SERVICE_SYNONYM_RULES: LinkRule[] = [
   { phrase: "شركة مكافحة حشرات بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "مكافحة النمل الأبيض بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "رش صراصير بالرياض", href: PEST_SERVICE_RIYADH },
+  { phrase: "مكافحة الصراصير بالرياض", href: "/services/cockroach-control-riyadh" },
+  { phrase: "شركة مكافحة صراصير بالرياض", href: "/services/cockroach-control-riyadh" },
   { phrase: "رش نمل بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "رش حشرات بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "مكافحة حشرات الرياض", href: PEST_SERVICE_RIYADH },
