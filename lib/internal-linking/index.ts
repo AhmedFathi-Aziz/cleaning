@@ -15,3 +15,8 @@ export {
   detectCityContextFromText,
 } from "./neighborhood-link-index";
 export { buildServiceLinkRules } from "./service-link-index";
+export {
+  findInternalLinkPlaceholders,
+  resolveInternalLinkPlaceholders,
+  type ResolvedInternalLink,
+} from "./resolve-link-placeholders";

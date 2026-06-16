@@ -8,6 +8,11 @@ import { areasPageFaqs } from "@/lib/content/hub-faqs";
 import { neighborhoodLinkAccessibleLabel } from "@/lib/neighborhood-link-label";
 import { buildArabicPageMetadata } from "@/lib/seo";
 import { siteUrl } from "@/lib/site";
+import {
+  getNeighborhoodHubPath,
+  getIndexableCitiesForLinking,
+  shouldInternallyLinkToNeighborhoodHub,
+} from "@/lib/url-indexing-policy";
 import { locations } from "@/src/data/locations";
 
 export const metadata: Metadata = buildArabicPageMetadata({
@@ -125,7 +130,7 @@ export default function AreasPage() {
         />
 
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {locations.map((city) => (
+          {getIndexableCitiesForLinking().map((city) => (
             <section id={`city-${city.slug}`} key={city.slug} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
               <div className="mb-5 flex items-center justify-between gap-4">
                 <h2 className="font-headline text-2xl font-extrabold text-primary">{city.name}</h2>
@@ -135,7 +140,7 @@ export default function AreasPage() {
                 {city.neighborhoods.map((neighborhood) => (
                   <li key={neighborhood.slug}>
                     <Link
-                      href={`/${city.slug}/${neighborhood.slug}`}
+                      href={getNeighborhoodHubPath(city.slug, neighborhood.slug)}
                       className="flex items-center justify-between rounded-2xl bg-surface-container-low px-4 py-3 text-sm font-bold text-on-surface-variant transition hover:bg-primary hover:text-white"
                     >
                       <span>{neighborhoodLinkAccessibleLabel(neighborhood.name, city.name)}</span>
@@ -147,6 +152,34 @@ export default function AreasPage() {
             </section>
           ))}
         </div>
+
+        {locations.some((city) => !shouldInternallyLinkToNeighborhoodHub(city.slug)) ? (
+          <section
+            className="mt-10 rounded-[2rem] border border-slate-100 bg-white p-6 shadow-sm md:p-10"
+            aria-labelledby="areas-other-cities-heading"
+          >
+            <h2 id="areas-other-cities-heading" className="font-headline text-xl font-extrabold text-primary md:text-2xl">
+              مدن أخرى
+            </h2>
+            <p className="mt-3 text-sm font-medium leading-8 text-on-surface-variant md:text-base">
+              التغطية التفصيلية حسب الحي متاحة حالياً في الرياض. لبقية المدن تواصل معنا لتأكيد الخدمة والموعد.
+            </p>
+            <ul className="mt-5 flex flex-wrap justify-end gap-2">
+              {locations
+                .filter((city) => !shouldInternallyLinkToNeighborhoodHub(city.slug))
+                .map((city) => (
+                  <li key={city.slug} id={`city-${city.slug}`}>
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center rounded-full border border-slate-200 bg-surface-container-low px-4 py-2 text-sm font-bold text-primary transition hover:border-primary/25 hover:bg-primary hover:text-white"
+                    >
+                      {city.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </section>
+        ) : null}
       </section>
     </main>
   );

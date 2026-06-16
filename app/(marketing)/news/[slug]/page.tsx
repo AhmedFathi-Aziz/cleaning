@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { ArticleReadingShell } from "@/components/ArticleReadingShell";
 import { Icon } from "@/components/Icon";
-import { RelatedServicesSection } from "@/components/RelatedServicesSection";
 import { getNationalNewsContextLinks } from "@/lib/article-context-links";
 import { resolveArticleAuthorName, buildArticleAuthorSchema } from "@/lib/article-author";
 import { brandNameAr } from "@/lib/brand";
@@ -118,7 +117,6 @@ export default async function NationalNewsArticlePage({ params }: { params: Prom
           </ArticleReadingShell>
         </article>
       </main>
-      <RelatedServicesSection />
     </>
   );
 }

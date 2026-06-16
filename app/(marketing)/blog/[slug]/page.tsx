@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { ArticleReadingShell } from "@/components/ArticleReadingShell";
 import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
-import { RelatedServicesSection } from "@/components/RelatedServicesSection";
 import { getBlogArticleContextLinks } from "@/lib/article-context-links";
 import { resolveArticleAuthorName, buildArticleAuthorSchema } from "@/lib/article-author";
 import { brandNameAr } from "@/lib/brand";
@@ -162,7 +161,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <ArticleReadingShell bodyMd={post.bodyMd} keywords={post.keywords} contextLinks={contextLinks} />
         </article>
       </main>
-      <RelatedServicesSection />
     </>
   );
 }

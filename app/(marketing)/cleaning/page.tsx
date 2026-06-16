@@ -7,11 +7,14 @@ import { cleaningHubFaqs } from "@/lib/content/hub-faqs";
 import {
   getCleaningProgrammaticStaticParams,
   getCleaningSeeds,
-  getPrimaryCleaningCitySlug,
 } from "@/lib/programmatic-cleaning-seo";
 import { primaryCityNameAr } from "@/lib/region";
 import { buildArabicPageMetadata } from "@/lib/seo";
 import { siteUrl } from "@/lib/site";
+import {
+  getNeighborhoodHouseCleaningSectionHref,
+  shouldInternallyLinkToNeighborhoodHub,
+} from "@/lib/url-indexing-policy";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 export const metadata: Metadata = buildArabicPageMetadata({
@@ -29,8 +32,7 @@ export const metadata: Metadata = buildArabicPageMetadata({
 });
 
 export default function CleaningProgrammaticHubPage() {
-  const riyadhSlug = getPrimaryCleaningCitySlug();
-  const seeds = getCleaningSeeds();
+  const seeds = getCleaningSeeds().filter((seed) => shouldInternallyLinkToNeighborhoodHub(seed.citySlug));
 
   return (
     <main className="bg-slate-50 px-6 pb-24 pt-28 md:px-8">
@@ -92,17 +94,15 @@ export default function CleaningProgrammaticHubPage() {
           const city = getCityBySlug(seed.citySlug);
           if (!city) return null;
           const pairs = getCleaningProgrammaticStaticParams().filter((p) => p.citySlug === seed.citySlug);
-          const isPrimary = seed.citySlug === riyadhSlug;
 
           return (
             <section
               key={seed.citySlug}
-              id={isPrimary ? "riyadh" : seed.citySlug === "jeddah" ? "jeddah" : undefined}
-              className={isPrimary ? "mt-10 scroll-mt-28" : "mt-14 scroll-mt-28 border-t border-slate-200 pt-10"}
+              id="riyadh"
+              className="mt-10 scroll-mt-28"
             >
               <h2 className="font-headline text-xl font-extrabold text-primary md:text-2xl">
-                {city.name}
-                {isPrimary ? " (التغطية الرئيسية)" : ""}
+                {city.name} (التغطية الرئيسية)
               </h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {pairs.map(({ districtSlug }) => {
@@ -111,7 +111,7 @@ export default function CleaningProgrammaticHubPage() {
                   return (
                     <li key={districtSlug}>
                       <Link
-                        href={`/cleaning/${seed.citySlug}/${districtSlug}`}
+                        href={getNeighborhoodHouseCleaningSectionHref(seed.citySlug, districtSlug)}
                         className="block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-primary/30 hover:shadow-md"
                       >
                         <span className="font-headline text-lg font-extrabold text-primary">حي {n.name}</span>

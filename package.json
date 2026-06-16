@@ -6,6 +6,7 @@
     "favicon:optimize": "node scripts/optimize-favicon.mjs",
     "brand:logo": "node scripts/process-brand-logo.mjs public/brand-logo-source.png && npm run favicon:optimize",
     "blog:sync": "node scripts/sync-blog-articles.mjs",
+    "audit:blog-seo": "node scripts/audit-blog-seo-descriptions.mjs",
     "blog:export-kv": "node scripts/export-kv-posts-to-md.mjs && node scripts/download-kv-blog-media.mjs && npm run blog:sync",
     "news:sync": "node scripts/sync-national-news-articles.mjs",
     "content:sync": "npm run blog:sync && npm run news:sync",
@@ -15,10 +16,13 @@
     "start": "npx serve@14 out",
     "lint": "next lint",
     "images:build": "node scripts/build-local-images.mjs",
+    "images:responsive": "node scripts/generate-responsive-variants.mjs",
     "images:check-seo": "node scripts/check-public-image-names.mjs",
     "indexing:publish": "node scripts/publish-indexing-api.mjs",
     "images:shrink-cards": "node scripts/shrink-webp.mjs",
-    "images:pages": "node scripts/optimize-page-images.mjs"
+    "images:pages": "node scripts/optimize-page-images.mjs",
+    "analyze:service-location": "npx tsx scripts/analyze-service-location-similarity.ts",
+    "audit:url-indexing": "npx tsx scripts/audit-url-indexing.ts"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

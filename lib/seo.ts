@@ -186,6 +186,19 @@ export function expandMetaDescription(
   return truncateForMetaDescription(t);
 }
 
+/** hreflang و canonical لكل صفحة — لا تُورّث من layout. */
+export function buildPageAlternates(canonicalPath: string): NonNullable<Metadata["alternates"]> {
+  const normalized = canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
+  const pageUrl = absoluteUrl(normalized);
+  return {
+    canonical: normalized,
+    languages: {
+      "ar-SA": pageUrl,
+      "x-default": pageUrl,
+    },
+  };
+}
+
 export function buildArabicPageMetadata({
   title,
   description,
@@ -225,7 +238,7 @@ export function buildArabicPageMetadata({
     title: { absolute: fittedTitle },
     description: fittedDescription,
     keywords: [...new Set([...keywords, ...arabicSeoKeywords])].slice(0, 52),
-    alternates: { canonical: canonicalPath },
+    alternates: buildPageAlternates(canonicalPath),
     robots,
     openGraph: {
       title: fittedTitle,

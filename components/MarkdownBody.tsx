@@ -6,10 +6,10 @@ import {
   ArticleMarkdownTable,
 } from "@/components/ArticleMarkdownTable";
 import { ArticleInlineLink } from "@/components/ArticleInlineLink";
-import { autolinkArticleMarkdown } from "@/lib/internal-linking";
+import { autolinkArticleMarkdown, resolveInternalLinkPlaceholders } from "@/lib/internal-linking";
 import { normalizeMarkdownLinks } from "@/lib/normalize-markdown-links";
 import { normalizeMarkdownTables } from "@/lib/normalize-markdown-tables";
-import { slugifyHeading } from "@/lib/markdown-utils";
+import { slugifyHeading, stripLeadingMarkdownH1 } from "@/lib/markdown-utils";
 import { sanitizeArticlePrices } from "@/lib/sanitize-article-prices";
 
 type Props = {
@@ -27,6 +27,18 @@ function headingId(children: React.ReactNode): string {
 }
 
 const components: Components = {
+  /** المقالات تعرض <h1> في رأس الصفحة — أي # في Markdown يُعرض كـ h2 */
+  h1: ({ children }) => {
+    const id = headingId(children);
+    return (
+      <h2
+        id={id}
+        className="scroll-mt-28 border-b border-slate-100 pb-3 font-headline text-2xl font-extrabold text-primary md:text-3xl [&:not(:first-child)]:mt-12"
+      >
+        {children}
+      </h2>
+    );
+  },
   h2: ({ children }) => {
     const id = headingId(children);
     return (
@@ -91,7 +103,9 @@ const components: Components = {
 };
 
 export function MarkdownBody({ markdown }: Props) {
-  const tablesReady = normalizeMarkdownTables(markdown);
+  const withoutDuplicateTitle = stripLeadingMarkdownH1(markdown);
+  const { markdown: placeholdersResolved } = resolveInternalLinkPlaceholders(withoutDuplicateTitle);
+  const tablesReady = normalizeMarkdownTables(placeholdersResolved);
   const linkSafe = normalizeMarkdownLinks(tablesReady);
   const withLinks = normalizeMarkdownLinks(
     autolinkArticleMarkdown(linkSafe, { maxLinksPerPhrase: 1 }),

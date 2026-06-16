@@ -2,4 +2,16 @@
 # صفحات قديمة أو روابط خاطئة → وجهة صحيحة
 
 /cleaning/riyadh    /cleaning#riyadh    301
-/cleaning/jeddah    /cleaning#jeddah    301
+
+# جدة والدمام — أُزيلت صفحات الأحياء؛ توجيه لدليل المناطق
+/jeddah/*    /areas    301
+/dammam/*    /areas    301
+/cleaning/jeddah    /cleaning    301
+/cleaning/jeddah/*    /cleaning    301
+/cleaning/dammam    /areas    301
+/cleaning/dammam/*    /areas    301
+/services/:service/jeddah/*    /services/:service    301
+/services/:service/dammam/*    /services/:service    301
+
+# دمج عائلة /cleaning/{city}/{district} → صفحة الحي الموحّدة (الرياض وباقي المدن المتبقية)
+/cleaning/:city/:district    /:city/:district    301

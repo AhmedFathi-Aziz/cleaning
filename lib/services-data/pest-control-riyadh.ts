@@ -1,5 +1,8 @@
 import { images } from "@/lib/assets";
+import { brandLogoLargePath } from "@/lib/brand";
 import type { ServiceArticle } from "@/lib/service-articles-types";
+
+const technicianFigure = images.cockroachControlRiyadhTechnician;
 
 export const pestControlRiyadhArticle: ServiceArticle = {
   slug: "pest-control-riyadh",
@@ -10,8 +13,9 @@ export const pestControlRiyadhArticle: ServiceArticle = {
   shortTitle: "رش حشرات بالرياض",
   excerpt:
     "شركة رش حشرات بالرياض تقدّم مكافحة وقائية وعلاجية للمنازل والفلل والمنشآت — تشخيص دقيق، مبيدات معتمدة، وخطة واضحة قبل التنفيذ مع مراعاة سلامة العائلة.",
-  image: images.servicesPest,
-  contentImage: images.servicesPest,
+  image: brandLogoLargePath,
+  heroImageFit: "contain",
+  contentImage: technicianFigure,
   contentImageAlt:
     "شركة رش حشرات بالرياض — فني مكافحة حشرات يجهّز معدات الرش الآمن داخل منزل سكني",
   icon: "pest_control",
@@ -164,7 +168,7 @@ export const pestControlRiyadhArticle: ServiceArticle = {
         "شرق الرياض: النخيل، المروج، القدس، الرحمانية، اليرموك — طلب شائع على **رش حشرات شقق** قبل التسليم أو بعد السفر.",
         "جنوب وغرب: السويدي، الشفا، العزيزية، ظهرة لبن، الدرعية، المهدية — فلل وعمارات؛ نحدد موعداً قريباً حسب ضغط الجدول.",
         "أحياء أخرى: النسيم، المروة، الفلاح، الحمراء، العريجاء، المنار، الروضة، الشميسي — ضمن التغطية. إن لم يظهر حيك، اتصل بنا؛ غالباً نخدم المنطقة أو نحدد أقرب موعد.",
-        "لتفاصيل محلية، راجع [مناطق التغطية](/areas) وصفحات الأحياء تحت `/cleaning/riyadh/...` حيث نربط السياق المحلي بخدمات النظافة والمكافحة.",
+        "لتفاصيل محلية، راجع [مناطق التغطية](/areas) وصفحات الأحياء `/riyadh/...` حيث نربط السياق المحلي بخدمات النظافة والمكافحة.",
       ],
       bullets: [
         "شمال: النرجس، الياسمين، الملقا، حطين",

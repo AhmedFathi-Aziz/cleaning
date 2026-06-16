@@ -1,4 +1,4 @@
-import { images } from "@/lib/assets";
+import { brandLogoLargePath } from "@/lib/brand";
 import type { ServiceArticle } from "@/lib/service-articles-types";
 
 export const pestControlArticle: ServiceArticle = {
@@ -10,7 +10,8 @@ export const pestControlArticle: ServiceArticle = {
   shortTitle: "رش حشرات",
   excerpt:
     "خدمات رش حشرات ومكافحة آفات للمنازل والفلل والمنشآت بخطط وقائية أو علاجية مع مراعاة سلامة السكان والشفافية في التوقعات.",
-  image: images.servicesPest,
+  image: brandLogoLargePath,
+  heroImageFit: "contain",
   icon: "pest_control",
   keywords: [
     "رش حشرات",

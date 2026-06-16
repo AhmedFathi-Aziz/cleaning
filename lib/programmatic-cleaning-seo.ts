@@ -1,4 +1,3 @@
-import jeddahCleaningDistricts from "@/src/data/jeddah-cleaning-districts.json";
 import riyadhCleaningDistricts from "@/src/data/riyadh-cleaning-districts.json";
 import { primaryCitySlug } from "@/lib/region";
 import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
@@ -8,7 +7,7 @@ type CleaningDistrictSeed = {
   districts: { name: string; slug: string }[];
 };
 
-const cleaningSeeds: CleaningDistrictSeed[] = [riyadhCleaningDistricts, jeddahCleaningDistricts];
+const cleaningSeeds: CleaningDistrictSeed[] = [riyadhCleaningDistricts];
 
 /**
  * أزواج المسار `/cleaning/[citySlug]/[districtSlug]` — كل مدينة وحي في locations.
@@ -26,10 +25,10 @@ export function isAllowedCleaningProgrammaticPair(citySlug: string, districtSlug
   return getNeighborhoodBySlug(citySlug, districtSlug) != null;
 }
 
-/** مسار صفحة التنظيف البرمجية إن وُجدت؛ وإلا null (لا تُنشَأ روابط لـ 404). */
+/** مسار قسم تنظيف المنازل داخل صفحة الحي الموحّدة — بديل `/cleaning/...` */
 export function getCleaningDistrictPath(citySlug: string, districtSlug: string): string | null {
   if (!isAllowedCleaningProgrammaticPair(citySlug, districtSlug)) return null;
-  return `/cleaning/${citySlug}/${districtSlug}`;
+  return `/${citySlug}/${districtSlug}#tanzeef-manazil`;
 }
 
 export function getCleaningDistrictPeersExcluding(citySlug: string, currentSlug: string) {
@@ -40,11 +39,6 @@ export function getCleaningDistrictPeersExcluding(citySlug: string, currentSlug:
 
 export function getPrimaryCleaningCitySlug(): string {
   return primaryCitySlug;
-}
-
-/** @deprecated استخدم getPrimaryCleaningCitySlug */
-export function getJeddahCleaningCitySlug(): string {
-  return jeddahCleaningDistricts.citySlug;
 }
 
 export function getCleaningSeeds(): CleaningDistrictSeed[] {

@@ -2,7 +2,11 @@ import Link from "next/link";
 
 import { Icon } from "@/components/Icon";
 import { neighborhoodLinkAccessibleLabel } from "@/lib/neighborhood-link-label";
-import { locations } from "@/src/data/locations";
+import {
+  getIndexableCitiesForLinking,
+  getNeighborhoodHubPath,
+  getServiceLinkFromNeighborhood,
+} from "@/lib/url-indexing-policy";
 
 /** Internal discovery strip: neighborhood hubs + sample service×location links from the homepage */
 export function CoverageDiscoveryStrip() {
@@ -19,7 +23,8 @@ export function CoverageDiscoveryStrip() {
               شركة تنظيف في مدن وأحياء السعودية
             </h2>
             <p className="mt-4 text-base font-medium leading-8 text-on-surface-variant md:text-lg">
-              لكل حي صفحة خاصة تربطك بخدمات التنظيف ومكافحة الحشرات المناسبة لموقعك، لتختار ما تحتاجه وتنسّق الموعد بثقة دون تعقيد.
+              لكل حي في الرياض صفحة مفهرسة تربطك بخدمات التنظيف ومكافحة الحشرات المناسبة — اختر حيك أو تواصل معنا
+              لبقية المدن.
             </p>
           </div>
           <Link
@@ -37,27 +42,26 @@ export function CoverageDiscoveryStrip() {
             انتقال سريع إلى تنظيف المنازل في أحياء مختلفة — اختر المدينة والحي الأقرب إليك من الصفحة الرئيسية.
           </p>
           <ul className="mt-5 flex flex-wrap justify-end gap-2">
-            {locations.map((city) => {
-              const first = city.neighborhoods[0];
-              if (!first) return null;
-              return (
-                <li key={city.slug}>
+            {getIndexableCitiesForLinking().flatMap((city) => {
+              const samples = city.neighborhoods.slice(0, 4);
+              return samples.map((neighborhood) => (
+                <li key={`${city.slug}-${neighborhood.slug}`}>
                   <Link
-                    href={`/services/house-cleaning/${city.slug}/${first.slug}`}
+                    href={getServiceLinkFromNeighborhood("house-cleaning", city.slug, neighborhood.slug)}
                     className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-primary transition hover:border-secondary/40 hover:bg-secondary/10 dark:border-slate-700 dark:bg-slate-800/80 md:text-sm"
                   >
                     <span>
-                      تنظيف منازل — {first.name} ({city.name})
+                      تنظيف منازل — {neighborhood.name} ({city.name})
                     </span>
                   </Link>
                 </li>
-              );
+              ));
             })}
           </ul>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {locations.map((city) => (
+          {getIndexableCitiesForLinking().map((city) => (
             <div
               key={city.slug}
               className="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/50 md:p-6"
@@ -70,7 +74,7 @@ export function CoverageDiscoveryStrip() {
                 {city.neighborhoods.map((n) => (
                   <li key={n.slug}>
                     <Link
-                      href={`/${city.slug}/${n.slug}`}
+                      href={getNeighborhoodHubPath(city.slug, n.slug)}
                       className="inline-block rounded-full bg-surface-container-low px-3 py-1.5 text-xs font-bold text-on-surface-variant transition hover:bg-primary hover:text-white md:text-sm"
                     >
                       {neighborhoodLinkAccessibleLabel(n.name, city.name)}

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Icon } from "@/components/Icon";
 import { primaryCityNameAr, primaryCitySlug } from "@/lib/region";
+import { getNeighborhoodHouseCleaningSectionHref } from "@/lib/url-indexing-policy";
 import { getCityBySlug } from "@/src/data/locations";
 
 /**
@@ -50,7 +51,7 @@ export function HomeServiceAreasTeaser() {
           {preview.map((neighborhood) => (
             <li key={neighborhood.slug}>
               <Link
-                href={`/cleaning/${primaryCitySlug}/${neighborhood.slug}`}
+                href={getNeighborhoodHouseCleaningSectionHref(primaryCitySlug, neighborhood.slug)}
                 className="group flex items-center justify-between gap-2 rounded-xl border border-slate-200/90 bg-white px-3 py-2.5 text-right shadow-sm transition hover:border-primary/22 hover:bg-slate-50/80 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800/80"
               >
                 <span className="min-w-0 truncate text-sm font-extrabold text-primary">حي {neighborhood.name}</span>

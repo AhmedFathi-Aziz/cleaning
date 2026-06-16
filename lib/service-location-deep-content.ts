@@ -2,12 +2,18 @@ import type { ServiceSection } from "@/lib/service-articles-types";
 import { cityClimateNote, cityDustNote, pickVariant } from "@/lib/content-seed-utils";
 import { getNeighborhoodServiceHighlights } from "@/lib/neighborhood-services-deep-content";
 import { getServiceArticle } from "@/lib/service-articles";
+import {
+  buildProgrammaticServiceLocationContent,
+  type ServiceLocationFaq,
+} from "@/lib/service-location-uniqueness";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
 
-export type ServiceLocationFaq = { question: string; answer: string };
+export type { ServiceLocationFaq };
 
 export type ServiceLocationPageContent = {
   localIntro: string[];
+  customerProblems: string[];
+  serviceRecommendations: string[];
   sections: ServiceSection[];
   faqs: ServiceLocationFaq[];
   preparationBullets: string[];
@@ -750,9 +756,7 @@ export function getServiceLocationPageContent(
   city: CityLocation,
   neighborhood: Neighborhood,
 ): ServiceLocationPageContent {
-  const ctx = buildCtx(city, neighborhood, serviceSlug);
-  const builder = builders[serviceSlug];
-  if (builder) return builder(ctx);
   const service = getServiceArticle(serviceSlug);
-  return buildGeneric(ctx, service?.shortTitle ?? "الخدمة");
+  const serviceLabel = service?.shortTitle ?? "الخدمة";
+  return buildProgrammaticServiceLocationContent(city, neighborhood, serviceSlug, serviceLabel);
 }

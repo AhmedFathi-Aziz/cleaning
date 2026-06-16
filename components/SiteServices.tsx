@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { images } from "@/lib/assets";
+import { brandLogoLargePath } from "@/lib/brand";
 import { Icon } from "@/components/Icon";
 import {
   buildServiceHeroImageAlt,
@@ -136,7 +138,7 @@ export function SiteServices() {
                 </Link>
               </div>
               <div className="relative h-64 overflow-hidden md:h-full">
-                <Image
+                <ResponsiveImage
                   src={images.servicesVilla}
                   alt={marketingLayoutImageAlt.villa}
                   title={marketingLayoutImageAlt.villa}
@@ -150,12 +152,13 @@ export function SiteServices() {
 
           <div className="group flex flex-col rounded-full bg-surface-container-low p-8 text-right shadow-none transition-all duration-500 hover:bg-surface-container-lowest hover:shadow-[0_12px_40px_rgba(30,58,138,0.06)] md:col-span-4">
             <div className="mb-6 h-48 overflow-hidden rounded-full">
-              <Image
+              <ResponsiveImage
                 src={images.servicesMajlis}
                 alt={marketingLayoutImageAlt.majlis}
                 title={marketingLayoutImageAlt.majlis}
                 width={800}
                 height={400}
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
               />
             </div>
@@ -167,14 +170,14 @@ export function SiteServices() {
             </p>
           </div>
 
-          <div className="group relative h-[400px] overflow-hidden rounded-full shadow-[0_12px_40px_rgba(30,58,138,0.06)] md:col-span-6">
+          <div className="group relative h-[400px] overflow-hidden rounded-full bg-white shadow-[0_12px_40px_rgba(30,58,138,0.06)] md:col-span-6">
             <Image
-              src={images.servicesPest}
+              src={brandLogoLargePath}
               alt={marketingLayoutImageAlt.pest}
               title={marketingLayoutImageAlt.pest}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
+              className="object-contain p-12 opacity-90"
             />
             <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-primary/90 to-transparent p-12 text-right">
               <Icon name="pest_control" className="mb-4 text-4xl text-white" />

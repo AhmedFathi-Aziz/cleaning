@@ -16,7 +16,7 @@
 title: عنوان المقال
 excerpt: جملتان تظهران في القائمة
 seoTitle: عنوان SEO (اختياري)
-seoDescription: وصف SEO (اختياري)
+seoDescription: وصف SEO (مطلوب — يجب أن يطابق عنوان المقال والمدينة؛ ممنوع نسخ وصف من مقال آخر أو مدينة أخرى)
 keywords: ["كلمة1", "كلمة2"]
 authorId: mohammed-ahmad
 coverImage: https://example.com/image.webp

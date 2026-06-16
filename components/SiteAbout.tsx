@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { PartnersLogoGrid } from "@/components/PartnersLogoGrid";
 import { PartnersTrustHeading } from "@/components/PartnersTrustHeading";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { Icon } from "@/components/Icon";
 import { images } from "@/lib/assets";
 import { brandNameAr } from "@/lib/brand";
@@ -122,7 +122,7 @@ export function SiteAbout() {
             <div className="relative">
               <div className="absolute -end-4 -top-4 h-full w-full rounded-3xl border border-primary/8 bg-white" aria-hidden />
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-[0_24px_60px_rgba(0,35,111,0.1)]">
-                <Image
+                <ResponsiveImage
                   src={images.aboutHero}
                   alt={`فريق ${brandNameAr} أثناء تنظيف منزل في الرياض`}
                   fill

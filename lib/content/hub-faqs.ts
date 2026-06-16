@@ -9,7 +9,7 @@ export const areasPageFaqs: FaqPair[] = [
   {
     question: "ما الفرق بين صفحة الحي وصفحة الخدمة؟",
     answer:
-      "صفحة الحي (/riyadh/al-narjis) تعطي نظرة عامة على الخدمات في ذلك الموقع. صفحة الخدمة (/services/house-cleaning) تشرح تفاصيل التنظيف بالكامل. صفحة التنظيف حسب الحي (/cleaning/riyadh/...) تركز على تنظيف المنازل والشقق محلياً.",
+      "صفحة الحي (/riyadh/al-narjis) تجمع كل الخدمات في ذلك الموقع بما فيها تنظيف المنازل والشقق (قسم #tanzeef-manazil). صفحة الخدمة (/services/house-cleaning) تشرح تفاصيل التنظيف بالكامل.",
   },
   {
     question: "هل تخدمون جدة والدمام أيضاً؟",

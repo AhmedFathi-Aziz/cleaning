@@ -36,6 +36,49 @@ function inferBlogAuthorId(slug, meta) {
   return TEAM.mohammedAhmad;
 }
 
+const RIYADH_MARKERS = /الرياض|riyadh|alriyad|al-riyad/i;
+const JEDDAH_MARKERS = /جدة|جده|jeddah/i;
+const LEAK_TOPIC = /تسرب|كشف تسرب|عزل مائي|عزل الأسطح|فاتورة المياه/i;
+const CLEANING_TOPIC = /تنظيف|cleaning|نظافة/i;
+
+function cityFlags(text) {
+  const hay = text ?? "";
+  return { riyadh: RIYADH_MARKERS.test(hay), jeddah: JEDDAH_MARKERS.test(hay) };
+}
+
+/** seoDescription يجب أن يطابق موضوع الصفحة والمدينة — ممنوع copy/paste بين المدن */
+function auditSeoDescription(slug, meta) {
+  const errors = [];
+  const titleHay = [slug, meta.title, meta.seoTitle].filter(Boolean).join(" ");
+  const desc = typeof meta.seoDescription === "string" ? meta.seoDescription.replace(/\\n/g, " ").trim() : "";
+
+  if (!desc) {
+    errors.push("seoDescription مطلوب ويجب أن يطابق موضوع المقال");
+    return errors;
+  }
+
+  const titleCities = cityFlags(titleHay);
+  const descCities = cityFlags(desc);
+
+  if (titleCities.riyadh && !titleCities.jeddah && descCities.jeddah) {
+    errors.push("seoDescription يذكر جدة بينما المقال عن الرياض فقط");
+  }
+  if (titleCities.jeddah && !titleCities.riyadh && descCities.riyadh) {
+    errors.push("seoDescription يذكر الرياض بينما المقال عن جدة فقط");
+  }
+  if (CLEANING_TOPIC.test(titleHay) && LEAK_TOPIC.test(desc) && !LEAK_TOPIC.test(titleHay)) {
+    errors.push("seoDescription عن تسربات/عزل بينما المقال عن التنظيف");
+  }
+  if (titleCities.riyadh && !titleCities.jeddah && !descCities.riyadh) {
+    errors.push("مقال عن الرياض لكن seoDescription لا يذكر الرياض");
+  }
+  if (titleCities.jeddah && !titleCities.riyadh && !descCities.jeddah) {
+    errors.push("مقال عن جدة لكن seoDescription لا يذكر جدة");
+  }
+
+  return errors;
+}
+
 function parseFrontmatter(block) {
   const data = {};
   for (const line of block.split(/\r?\n/)) {
@@ -84,6 +127,14 @@ function parseMarkdownFile(fileName) {
   }
 
   const authorId = inferBlogAuthorId(slug, meta);
+
+  const seoErrors = auditSeoDescription(slug, meta);
+  if (seoErrors.length) {
+    for (const err of seoErrors) {
+      console.error(`[sync-blog] ${fileName}: ${err}`);
+    }
+    throw new Error(`seoDescription لا يطابق موضوع المقال: ${fileName}`);
+  }
 
   return {
     slug,

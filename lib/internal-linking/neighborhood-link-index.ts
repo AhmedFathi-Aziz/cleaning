@@ -1,3 +1,4 @@
+import { shouldInternallyLinkToNeighborhoodHub } from "@/lib/url-indexing-policy";
 import { locations } from "@/src/data/locations";
 
 export type NeighborhoodLinkRule = {
@@ -81,10 +82,11 @@ const FALSE_POSITIVE_CONTEXT =
  * عند تحديد مدينة واحدة في النص تُستخدم أحياؤها فقط (لتفادي التباس الروضة/الحمراء…).
  */
 export function buildNeighborhoodLinkRules(cityContext: string | null): NeighborhoodLinkRule[] {
-  const cities =
+  const cities = (
     cityContext != null
       ? locations.filter((c) => c.slug === cityContext)
-      : locations.filter((c) => c.slug === "riyadh");
+      : locations.filter((c) => c.slug === "riyadh")
+  ).filter((c) => shouldInternallyLinkToNeighborhoodHub(c.slug));
 
   const rules: NeighborhoodLinkRule[] = [];
 

@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
           }
         : false,
   },
+  /**
+   * static export لا يدعم Image Optimization API — التحسين عند البناء عبر
+   * `npm run images:build` و `npm run images:responsive` + srcset في ResponsiveImage.
+   */
   images: {
     unoptimized: true,
     formats: ["image/avif", "image/webp"],

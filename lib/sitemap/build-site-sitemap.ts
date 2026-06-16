@@ -3,12 +3,12 @@ import type { MetadataRoute } from "next";
 import { featureArticles } from "@/lib/feature-articles";
 import { loadNationalNews } from "@/lib/national-news-store";
 import { loadPosts } from "@/lib/post-store";
-import { getCleaningProgrammaticStaticParams } from "@/lib/programmatic-cleaning-seo";
 import { pestGuides } from "@/lib/pest-guides";
 import { isPrimaryCitySlug } from "@/lib/region";
 import { getServiceLocationStaticParams } from "@/lib/service-location-pages";
 import { serviceArticles } from "@/lib/service-articles";
 import { siteUrl } from "@/lib/site";
+import { isNeighborhoodHubIndexable } from "@/lib/url-indexing-policy";
 import { locations } from "@/src/data/locations";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
@@ -50,7 +50,7 @@ const STATIC_PAGES: Array<{ path: string; priority: number; changeFrequency: Cha
   { path: "/contact", priority: 0.85, changeFrequency: "monthly" },
   { path: "/estimate", priority: 0.88, changeFrequency: "monthly" },
   { path: "/areas", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/cleaning", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/cleaning", priority: 0.88, changeFrequency: "weekly" },
   { path: "/guides/pest", priority: 0.9, changeFrequency: "weekly" },
   { path: "/blog", priority: 0.85, changeFrequency: "weekly" },
   { path: "/news", priority: 0.8, changeFrequency: "weekly" },
@@ -109,27 +109,21 @@ export function buildSiteSitemap(): MetadataRoute.Sitemap {
   );
 
   const neighborhoodEntries = locations.flatMap((city) =>
-    city.neighborhoods.map((neighborhood) =>
-      sitemapEntry(`/${city.slug}/${neighborhood.slug}`, {
-        lastModified: now,
-        priority: isPrimaryCitySlug(city.slug) ? 0.82 : 0.62,
-        changeFrequency: "monthly",
-      }),
-    ),
-  );
-
-  const cleaningEntries = getCleaningProgrammaticStaticParams().map(({ citySlug, districtSlug }) =>
-    sitemapEntry(`/cleaning/${citySlug}/${districtSlug}`, {
-      lastModified: now,
-      priority: isPrimaryCitySlug(citySlug) ? 0.85 : 0.65,
-      changeFrequency: "monthly",
-    }),
+    city.neighborhoods
+      .filter((neighborhood) => isNeighborhoodHubIndexable(city.slug))
+      .map((neighborhood) =>
+        sitemapEntry(`/${city.slug}/${neighborhood.slug}`, {
+          lastModified: now,
+          priority: isPrimaryCitySlug(city.slug) ? 0.82 : 0.62,
+          changeFrequency: "monthly",
+        }),
+      ),
   );
 
   const serviceLocationEntries = getServiceLocationStaticParams().map(({ category, city, neighborhood }) =>
     sitemapEntry(`/services/${category}/${city}/${neighborhood}`, {
       lastModified: now,
-      priority: isPrimaryCitySlug(city) ? 0.8 : 0.65,
+      priority: 0.8,
       changeFrequency: "monthly",
     }),
   );
@@ -142,7 +136,6 @@ export function buildSiteSitemap(): MetadataRoute.Sitemap {
     ...blogEntries,
     ...newsEntries,
     ...neighborhoodEntries,
-    ...cleaningEntries,
     ...serviceLocationEntries,
   ]);
 }

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Icon } from "@/components/Icon";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { PartnersMarquee } from "@/components/home/PartnersMarquee";
 import { StatsStrip } from "@/components/home/StatsStrip";
 import { images } from "@/lib/assets";
@@ -62,15 +63,13 @@ export function SiteHome() {
         aria-labelledby="hero-heading"
       >
         <div className="absolute inset-0 z-0 min-h-[inherit] overflow-hidden" aria-hidden>
-          <Image
+          <ResponsiveImage
             src={images.hero}
             alt={homeHeroImageAlt}
             title={homeHeroImageAlt}
             fill
             priority
-            fetchPriority="high"
             sizes="100vw"
-            quality={82}
             className="object-cover object-[18%_center] brightness-[0.98] contrast-[1.02] saturate-[0.95]"
           />
           {/* تدرجات بلون الموقع (كحلي/تركواز) لتناسق النص الأبيض والبطاقة */}

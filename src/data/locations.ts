@@ -71,35 +71,6 @@ const citiesSeed: CitySeed[] = [
     ],
   },
   {
-    name: "جدة",
-    slug: "jeddah",
-    neighborhoods: [
-      { name: "الروضة", slug: "al-rawdah" },
-      { name: "السلامة", slug: "al-salamah" },
-      { name: "الحمراء", slug: "al-hamra" },
-      { name: "الشاطئ", slug: "al-shati" },
-      { name: "الصفا", slug: "al-safa" },
-      { name: "النهضة", slug: "al-nahdah" },
-      { name: "الزهراء", slug: "al-zahra" },
-      { name: "النزهة", slug: "al-nuzhah" },
-      { name: "أبحر", slug: "abhur" },
-    ],
-  },
-  {
-    name: "الدمام",
-    slug: "dammam",
-    neighborhoods: [
-      { name: "الشاطئ", slug: "al-shati" },
-      { name: "المزروعية", slug: "al-mazruiyah" },
-      { name: "الفيصلية", slug: "al-faisaliyah" },
-      { name: "الندى", slug: "al-nada" },
-      { name: "الريان", slug: "al-rayan" },
-      { name: "طيبة", slug: "taybah" },
-      { name: "الضباب", slug: "al-dabab" },
-      { name: "بدر", slug: "badr" },
-    ],
-  },
-  {
     name: "الخبر",
     slug: "khobar",
     neighborhoods: [

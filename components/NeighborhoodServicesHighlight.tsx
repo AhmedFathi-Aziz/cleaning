@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { getNeighborhoodServiceHighlights } from "@/lib/neighborhood-services-deep-content";
 import { getServiceArticle } from "@/lib/service-articles";
+import { getServiceLinkFromNeighborhood } from "@/lib/url-indexing-policy";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
 
 export function NeighborhoodServicesHighlight({
@@ -35,7 +36,7 @@ export function NeighborhoodServicesHighlight({
         {blocks.map((block) => {
           const svc = getServiceArticle(block.slug);
           if (!svc) return null;
-          const href = `/services/${block.slug}/${city.slug}/${neighborhood.slug}`;
+          const href = getServiceLinkFromNeighborhood(block.slug, city.slug, neighborhood.slug);
           return (
             <article
               key={block.slug}

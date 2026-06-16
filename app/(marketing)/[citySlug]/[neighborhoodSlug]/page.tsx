@@ -3,13 +3,20 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/Icon";
+import { NeighborhoodHouseCleaningSection } from "@/components/NeighborhoodHouseCleaningSection";
 import { NeighborhoodPageJsonLd } from "@/components/SeoJsonLd";
 import { NeighborhoodLocalContextBlock } from "@/components/NeighborhoodLocalContextBlock";
 import { NeighborhoodServicesHighlight } from "@/components/NeighborhoodServicesHighlight";
 import { brandNameAr } from "@/lib/brand";
-import { isServiceLocationPairAllowed } from "@/lib/service-location-pages";
+import { isPrimaryCitySlug } from "@/lib/region";
 import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
 import { serviceArticles } from "@/lib/service-articles";
+import {
+  getNeighborhoodHubPath,
+  getServiceLinkFromNeighborhood,
+  isNeighborhoodHubIndexable,
+  isServiceLocationIndexable,
+} from "@/lib/url-indexing-policy";
 import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
 
 type PageProps = {
@@ -42,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = expandMetaDescription(
     `${snippet} احجز تنظيفاً احترافياً في حي ${neighborhood.name}، ${city.name} مع ${brandNameAr}.`,
   );
-  const canonical = `/${city.slug}/${neighborhood.slug}`;
+  const canonical = getNeighborhoodHubPath(city.slug, neighborhood.slug);
 
   return buildArabicPageMetadata({
     title,
@@ -52,11 +59,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `شركة تنظيف ${city.name}`,
       `خدمات تنظيف في حي ${neighborhood.name}`,
       `تنظيف منازل ${city.name}`,
+      `تنظيف منازل حي ${neighborhood.name}`,
       `تنظيف خزانات ${city.name}`,
       `رش حشرات ${city.name}`,
       `تنظيف حدائق ${city.name}`,
     ],
     canonical,
+    indexable: isNeighborhoodHubIndexable(city.slug),
   });
 }
 
@@ -115,6 +124,12 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
               <Link href="/contact" className="rounded-full bg-surface-container-low px-7 py-3 text-sm font-bold text-primary">
                 تواصل معنا
               </Link>
+              <Link
+                href={`#tanzeef-manazil`}
+                className="rounded-full border border-primary/20 bg-white px-7 py-3 text-sm font-bold text-primary"
+              >
+                تنظيف منازل وشقق
+              </Link>
             </div>
           </div>
         </header>
@@ -123,22 +138,23 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
 
         <NeighborhoodServicesHighlight city={city} neighborhood={neighborhood} />
 
+        <NeighborhoodHouseCleaningSection city={city} neighborhood={neighborhood} />
+
         <section className="mt-8 grid gap-5 md:grid-cols-3">
-          {serviceArticles
-            .filter((service) => isServiceLocationPairAllowed(service.slug, city.slug, neighborhood.slug))
-            .map((service) => (
+          {serviceArticles.map((service) => (
             <Link
               key={service.slug}
-              href={`/services/${service.slug}/${city.slug}/${neighborhood.slug}`}
+              href={getServiceLinkFromNeighborhood(service.slug, city.slug, neighborhood.slug)}
               className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
               <Icon name={service.icon} className="mb-4 text-3xl text-secondary" />
               <h2 className="font-headline text-xl font-extrabold text-primary">
                 {service.shortTitle} في حي {neighborhood.name}، {city.name}
               </h2>
-              <p className="mt-3 text-sm leading-7 text-on-surface-variant">
-                {service.excerpt}
-              </p>
+              <p className="mt-3 text-sm leading-7 text-on-surface-variant">{service.excerpt}</p>
+              {isServiceLocationIndexable(service.slug, city.slug, neighborhood.slug) ? (
+                <p className="mt-3 text-xs font-bold text-secondary">صفحة الحي متاحة</p>
+              ) : null}
             </Link>
           ))}
         </section>
@@ -176,10 +192,17 @@ export default async function NeighborhoodCleaningPage({ params }: PageProps) {
               ونحدد طريقة العمل المناسبة لكل غرفة أو سطح أو قطعة أثاث. هذا يجعل تجربة العميل أكثر دقة، ويساعد
               على تقديم نتيجة نظيفة ومنظمة تعكس جودة الخدمة في {city.name}.
             </p>
-            <p>
-              نحرص أن تجد في هذه الصفحة معلومات واضحة عن تنظيف حي {neighborhood.name} وخدمة قريبة من احتياجك الفعلي،
-              مع إمكانية حجز موعد مرن وتنفيذ يعتمد على فريق مدرب يعرف متطلبات الأحياء السكنية والتجارية في {city.name}.
-            </p>
+            {isPrimaryCitySlug(city.slug) ? (
+              <p>
+                نحرص أن تجد في هذه الصفحة معلومات واضحة عن تنظيف حي {neighborhood.name} وخدمة قريبة من احتياجك الفعلي،
+                مع إمكانية حجز موعد مرن وتنفيذ يعتمد على فريق مدرب يعرف متطلبات الأحياء السكنية والتجارية في الرياض.
+              </p>
+            ) : (
+              <p>
+                للتغطية التفصيلية في {city.name} تواصل معنا لتحديد الخدمة المناسبة — صفحات الأحياء خارج الرياض
+                للتصفح والوصول السريع ولا تُفهرس كصفحات مستقلة لتجنب تكرار المحتوى.
+              </p>
+            )}
           </div>
         </section>
       </article>

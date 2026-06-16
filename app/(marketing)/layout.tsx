@@ -1,7 +1,6 @@
-import { WhatsAppFloatingChip } from "@/components/ContactQuickForm";
-import { RelatedServicesSection } from "@/components/RelatedServicesSection";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WhatsAppFloatingChipLazy } from "@/components/WhatsAppFloatingChipLazy";
 
 export default function MarketingLayout({
   children,
@@ -12,9 +11,8 @@ export default function MarketingLayout({
     <>
       <SiteHeader />
       {children}
-      <RelatedServicesSection />
       <SiteFooter />
-      <WhatsAppFloatingChip />
+      <WhatsAppFloatingChipLazy />
     </>
   );
 }

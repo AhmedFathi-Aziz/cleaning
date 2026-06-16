@@ -1,14 +1,14 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CleaningDistrictProgrammaticView } from "@/components/CleaningDistrictProgrammaticView";
-import { CleaningProgrammaticDistrictJsonLd } from "@/components/SeoJsonLd";
 import { brandNameAr } from "@/lib/brand";
 import {
   getCleaningProgrammaticStaticParams,
   isAllowedCleaningProgrammaticPair,
 } from "@/lib/programmatic-cleaning-seo";
-import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
+import { buildArabicPageMetadata } from "@/lib/seo";
+import { getNeighborhoodHouseCleaningSectionHref, getNeighborhoodHubPath } from "@/lib/url-indexing-policy";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 type PageProps = {
@@ -30,28 +30,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const neighborhood = getNeighborhoodBySlug(citySlug, districtSlug);
   if (!city || !neighborhood) return { title: "غير موجود", robots: { index: false, follow: false } };
 
-  const title = fitMetaTitle(`تنظيف منازل في حي ${neighborhood.name} ${city.name} | ${brandNameAr}`);
-  const snippet = truncateForMetaDescription(neighborhood.nearbyLandmarksAr, 90);
-  const description = expandMetaDescription(
-    `تنظيف منازل وشقق في حي ${neighborhood.name}، ${city.name}. ${snippet} احجز مع ${brandNameAr}.`,
-  );
-  const canonical = `/cleaning/${city.slug}/${neighborhood.slug}`;
+  const canonical = getNeighborhoodHubPath(city.slug, neighborhood.slug);
 
   return buildArabicPageMetadata({
-    title,
-    description,
-    keywords: [
-      `تنظيف منازل حي ${neighborhood.name}`,
-      `تنظيف شقق ${neighborhood.name}`,
-      `شركة تنظيف ${neighborhood.name} ${city.name}`,
-      `تنظيف منازل ${city.name}`,
-      `تنظيف بيوت ${city.name}`,
-    ],
+    title: `تنظيف منازل في حي ${neighborhood.name} ${city.name} | ${brandNameAr}`,
+    description: `تم دمج صفحة تنظيف المنازل مع دليل حي ${neighborhood.name}. انتقل للصفحة الموحّدة.`,
     canonical,
+    indexable: false,
   });
 }
 
-export default async function CleaningDistrictProgrammaticPage({ params }: PageProps) {
+/** صفحة انتقالية — canonical يشير لصفحة الحي الموحّدة `/city/neighborhood#tanzeef-manazil` */
+export default async function CleaningDistrictRedirectPage({ params }: PageProps) {
   const { citySlug, districtSlug } = await params;
   if (!isAllowedCleaningProgrammaticPair(citySlug, districtSlug)) notFound();
 
@@ -59,16 +49,26 @@ export default async function CleaningDistrictProgrammaticPage({ params }: PageP
   const neighborhood = getNeighborhoodBySlug(citySlug, districtSlug);
   if (!city || !neighborhood) notFound();
 
-  const cleaningPath = `/cleaning/${city.slug}/${neighborhood.slug}`;
+  const target = getNeighborhoodHouseCleaningSectionHref(city.slug, neighborhood.slug);
 
   return (
-    <main className="bg-slate-50 px-6 pb-24 pt-28 md:px-8">
-      <CleaningProgrammaticDistrictJsonLd
-        city={city}
-        neighborhood={neighborhood}
-        cleaningPath={cleaningPath}
-      />
-      <CleaningDistrictProgrammaticView city={city} neighborhood={neighborhood} />
+    <main className="flex min-h-[60vh] items-center justify-center bg-slate-50 px-6 pt-28">
+      <div className="max-w-lg rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-sm">
+        <p className="text-sm font-extrabold text-secondary">تم دمج الصفحة</p>
+        <h1 className="mt-3 font-headline text-2xl font-extrabold text-primary">
+          تنظيف منازل حي {neighborhood.name}
+        </h1>
+        <p className="mt-4 text-base leading-8 text-on-surface-variant">
+          صفحات <code className="text-sm">/cleaning/...</code> دُمجت مع دليل الحي الموحّد لتجنب تكرار المحتوى في
+          نتائج البحث.
+        </p>
+        <Link
+          href={target}
+          className="mt-6 inline-flex rounded-full bg-primary px-8 py-3 text-sm font-bold text-white shadow-lg"
+        >
+          الانتقال لصفحة حي {neighborhood.name}
+        </Link>
+      </div>
     </main>
   );
 }

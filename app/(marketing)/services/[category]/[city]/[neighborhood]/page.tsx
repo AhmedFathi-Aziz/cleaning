@@ -84,7 +84,12 @@ export default async function ServiceLocationPage({ params }: PageProps) {
 
   return (
     <main className="bg-slate-50 px-6 pb-24 pt-28 md:px-8">
-      <ServiceLocationJsonLd service={service} city={city} neighborhood={neighborhood} />
+      <ServiceLocationJsonLd
+        service={service}
+        city={city}
+        neighborhood={neighborhood}
+        faqs={deepContent.faqs}
+      />
 
       <article className="mx-auto max-w-6xl text-right">
         <nav aria-label="فتات التنقل" className="mb-5 text-sm font-bold text-slate-600">

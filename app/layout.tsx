@@ -5,6 +5,7 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { JsonLd } from "@/components/JsonLd";
 import { images } from "@/lib/assets";
 import { brandEmail, brandNameAr, brandNameEn, brandPhoneDisplay } from "@/lib/brand";
+import { getLcpPreloadLinks } from "@/lib/responsive-image";
 import { arabicSeoKeywords, getMetadataBase } from "@/lib/seo";
 import { heroImageUrl, ogImageHeight, ogImageWidth, siteUrl } from "@/lib/site";
 
@@ -52,17 +53,10 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  /** لا نضع canonical هنا؛ كل مسار يحدّده في صفحته. خلاف ذلك ترث صفحات بلا alternates الرابط `/` بالخطأ. */
-  alternates: {
-    languages: {
-      "ar-SA": `${siteUrl}/`,
-      "x-default": `${siteUrl}/`,
-    },
-  },
+  /** لا نضع canonical ولا hreflang هنا — كل مسار يحدّده في buildArabicPageMetadata(). */
   openGraph: {
     type: "website",
     locale: "ar_SA",
-    alternateLocale: ["ar-SA", "en-US"],
     siteName: brandNameAr,
     url: siteUrl,
     title: "السعودية للتنظيف | تنظيف منازل ومكافحة حشرات في الرياض",
@@ -101,10 +95,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const lcpPreload = getLcpPreloadLinks(images.hero);
+
   return (
     <html lang="ar-SA" dir="rtl">
       <head>
-        <link rel="preload" href={images.hero} as="image" type="image/webp" fetchPriority="high" />
+        <link
+          rel="preload"
+          href={lcpPreload.href}
+          as="image"
+          type="image/webp"
+          fetchPriority="high"
+          {...(lcpPreload.imageSrcSet
+            ? { imageSrcSet: lcpPreload.imageSrcSet, imageSizes: "100vw" }
+            : {})}
+        />
       </head>
       <body
         className={`${cairo.variable} font-body bg-background text-on-background antialiased selection:bg-secondary-container selection:text-on-secondary-container`}

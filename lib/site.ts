@@ -26,7 +26,7 @@ function resolvePublicSiteUrl() {
 export const siteUrl = resolvePublicSiteUrl();
 
 /** صورة OG/LCP — فيلا عصرية بإضاءة طبيعية (خلفية الصفحة الرئيسية) */
-export const heroImageUrl = `${siteUrl}/images/services-villa.webp`;
+export const heroImageUrl = `${siteUrl}/images/hero.webp`;
 
 /** أبعاد `/images/hero.webp` الفعلية — يجب أن تطابق الملف لاجتياز فحص OG في Lighthouse */
 export const ogImageWidth = 512;
