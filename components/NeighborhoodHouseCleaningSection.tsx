@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { Icon } from "@/components/Icon";
-import { brandNameAr } from "@/lib/brand";
 import {
   getNeighborhoodHouseCleaningSectionHref,
   getNeighborhoodHubPath,

@@ -90,7 +90,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const heroForSchema =
     post.coverImage ??
     (post.coverKey ? absoluteUrl(`/api/media/${encodeURIComponent(post.coverKey)}`) : null);
-  const authorName = resolveArticleAuthorName({ authorId: post.authorId, author: post.author });
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",

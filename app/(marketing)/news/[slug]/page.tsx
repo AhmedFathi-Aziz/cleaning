@@ -122,7 +122,6 @@ export default async function NationalNewsArticlePage({ params }: { params: Prom
 }
 
 function buildNewsJsonLd(article: NationalNewsArticle, canonicalUrl: string) {
-  const authorName = resolveArticleAuthorName({ authorId: article.authorId, author: article.author });
   return {
     "@context": "https://schema.org",
     "@type": "NewsArticle",

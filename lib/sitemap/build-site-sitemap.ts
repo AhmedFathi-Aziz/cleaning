@@ -110,7 +110,7 @@ export function buildSiteSitemap(): MetadataRoute.Sitemap {
 
   const neighborhoodEntries = locations.flatMap((city) =>
     city.neighborhoods
-      .filter((neighborhood) => isNeighborhoodHubIndexable(city.slug))
+      .filter(() => isNeighborhoodHubIndexable(city.slug))
       .map((neighborhood) =>
         sitemapEntry(`/${city.slug}/${neighborhood.slug}`, {
           lastModified: now,

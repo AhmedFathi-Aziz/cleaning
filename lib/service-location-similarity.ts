@@ -1,6 +1,5 @@
 import { getServiceLocationPageContent } from "@/lib/service-location-deep-content";
 import { getServiceLocationStaticParams } from "@/lib/service-location-pages";
-import { getServiceArticle } from "@/lib/service-articles";
 import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 const SIMILARITY_THRESHOLD = 0.5;
