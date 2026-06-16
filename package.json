@@ -10,7 +10,7 @@
     "blog:export-kv": "node scripts/export-kv-posts-to-md.mjs && node scripts/download-kv-blog-media.mjs && npm run blog:sync",
     "news:sync": "node scripts/sync-national-news-articles.mjs",
     "content:sync": "npm run blog:sync && npm run news:sync",
-    "prebuild": "node scripts/optimize-favicon.mjs && npm run content:sync",
+    "prebuild": "node scripts/optimize-favicon.mjs && npm run content:sync && npm run redirects:generate",
     "build": "next build",
     "dev": "npm run content:sync && next dev --turbopack",
     "start": "npx serve@14 out",
@@ -22,7 +22,8 @@
     "images:shrink-cards": "node scripts/shrink-webp.mjs",
     "images:pages": "node scripts/optimize-page-images.mjs",
     "analyze:service-location": "npx tsx scripts/analyze-service-location-similarity.ts",
-    "audit:url-indexing": "npx tsx scripts/audit-url-indexing.ts"
+    "audit:url-indexing": "npx tsx scripts/audit-url-indexing.ts",
+    "redirects:generate": "npx tsx scripts/generate-service-location-redirects.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

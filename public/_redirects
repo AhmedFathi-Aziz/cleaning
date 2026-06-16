@@ -15,3 +15,30 @@
 
 # دمج عائلة /cleaning/{city}/{district} → صفحة الحي الموحّدة (الرياض وباقي المدن المتبقية)
 /cleaning/:city/:district    /:city/:district    301
+
+# --- service-location redirects (generated) ---
+# 2026-06-16T22:53:45.155Z — 22 قاعدة wildcard
+
+/services/pest-control/riyadh/:neighborhood    /services/pest-control-riyadh/riyadh/:neighborhood    301
+/services/carpet-cleaning/riyadh/:neighborhood    /services/carpet-cleaning-riyadh/riyadh/:neighborhood    301
+/services/sofa-cleaning/riyadh/*    /services/sofa-cleaning-riyadh    301
+/services/majlis-cleaning-riyadh/riyadh/*    /services/majlis-cleaning-riyadh    301
+/services/sofa-cleaning-riyadh/riyadh/*    /services/sofa-cleaning-riyadh    301
+/services/post-construction-cleaning-riyadh/riyadh/*    /services/post-construction-cleaning-riyadh    301
+/services/facade-cleaning/riyadh/*    /services/facade-cleaning    301
+/services/cockroach-control-riyadh/riyadh/*    /services/cockroach-control-riyadh    301
+/services/termite-control-riyadh/riyadh/*    /services/termite-control-riyadh    301
+/services/garden-cleaning/riyadh/*    /services/garden-cleaning    301
+/services/:service/khobar/*    /services/:service    301
+/services/:service/makkah/*    /services/:service    301
+/services/:service/madinah/*    /services/:service    301
+/services/:service/taif/*    /services/:service    301
+/services/:service/abha/*    /services/:service    301
+/services/:service/tabuk/*    /services/:service    301
+/services/:service/buraydah/*    /services/:service    301
+/services/:service/hail/*    /services/:service    301
+/services/:service/jazan/*    /services/:service    301
+/services/:service/najran/*    /services/:service    301
+/services/:service/al-ahsa/*    /services/:service    301
+/services/:service/jubail/*    /services/:service    301
+# --- end service-location redirects ---
