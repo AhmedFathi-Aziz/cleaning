@@ -237,7 +237,8 @@ export function buildArabicPageMetadata({
     metadataBase: getMetadataBase(),
     title: { absolute: fittedTitle },
     description: fittedDescription,
-    keywords: [...new Set([...keywords, ...arabicSeoKeywords])].slice(0, 52),
+    /** كلمات مفتاحية خاصة بالصفحة فقط — بدون حقن عالمي (تجنّب keyword stuffing) */
+    ...(keywords.length > 0 ? { keywords: [...new Set(keywords)].slice(0, 15) } : {}),
     alternates: buildPageAlternates(canonicalPath),
     robots,
     openGraph: {

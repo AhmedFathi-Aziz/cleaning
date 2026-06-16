@@ -13,6 +13,20 @@
 /services/:service/jeddah/*    /services/:service    301
 /services/:service/dammam/*    /services/:service    301
 
+# أحياء مدن غير الرياض — لا تُبنى صفحات؛ توجيه لدليل المناطق
+/khobar/*    /areas    301
+/makkah/*    /areas    301
+/madinah/*    /areas    301
+/taif/*    /areas    301
+/abha/*    /areas    301
+/tabuk/*    /areas    301
+/buraydah/*    /areas    301
+/hail/*    /areas    301
+/jazan/*    /areas    301
+/najran/*    /areas    301
+/al-ahsa/*    /areas    301
+/jubail/*    /areas    301
+
 # دمج عائلة /cleaning/{city}/{district} → صفحة الحي الموحّدة (الرياض وباقي المدن المتبقية)
 /cleaning/:city/:district    /:city/:district    301
 

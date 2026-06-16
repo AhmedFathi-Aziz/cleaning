@@ -1,5 +1,6 @@
 import { cityClimateNote, cityDustNote, pickVariant, variantIndex } from "@/lib/content-seed-utils";
 import { getNeighborhoodSpecificContent } from "@/lib/neighborhood-specific-content";
+import type { NeighborhoodSpecificProfile } from "@/lib/neighborhood-specific-content";
 import type { ServiceSection } from "@/lib/service-articles-types";
 import { getNeighborhoodServiceHighlights } from "@/lib/neighborhood-services-deep-content";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
@@ -108,6 +109,47 @@ function fill(template: string, ctx: UniquenessCtx, serviceLabel: string): strin
     .replaceAll("{landmarks}", ctx.landmarks)
     .replaceAll("{drive}", String(ctx.driveMin))
     .replaceAll("{service}", serviceLabel);
+}
+
+function hoodIssueList(specific: NeighborhoodSpecificProfile, family: ServiceFamily): string[] {
+  const merged = [
+    ...(specific.byFamily?.[family] ?? []),
+    ...specific.issues,
+    ...(specific.recommendations?.[family] ?? []),
+  ].filter((s): s is string => typeof s === "string" && s.trim().length > 0);
+  return [...new Set(merged)];
+}
+
+function pickHoodLines(
+  ctx: UniquenessCtx,
+  specific: NeighborhoodSpecificProfile,
+  family: ServiceFamily,
+  count: number,
+  slot: string,
+): string[] {
+  const issues = hoodIssueList(specific, family);
+  if (issues.length === 0) return [specific.localCase];
+  return Array.from(
+    { length: count },
+    (_, i) => issues[variantIndex(`${ctx.seed}:${slot}:${i}`, issues.length)]!,
+  );
+}
+
+function tagServiceHood(line: string, ctx: UniquenessCtx, serviceLabel: string): string {
+  if (line.includes(ctx.hood) && line.includes(serviceLabel)) return line;
+  return `${serviceLabel} — ${ctx.hood}: ${line}`;
+}
+
+function mergeUniqueLines(primary: string[], extra: string[], count: number): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  for (const line of [...primary, ...extra]) {
+    if (!line.trim() || seen.has(line)) continue;
+    seen.add(line);
+    out.push(line);
+    if (out.length >= count) break;
+  }
+  return out;
 }
 
 /** مقدمة فريدة: معالم الحي حرفياً + فقرة خدمة + سياق مدينة */
@@ -222,34 +264,25 @@ export function buildUniqueLocalIntro(ctx: UniquenessCtx, serviceLabel: string, 
 
   const specific = getNeighborhoodSpecificContent(ctx.citySlug, ctx.neighborhood.slug);
   const intro = [ctx.landmarks];
-  if (specific?.localCase) intro.push(specific.localCase);
-  intro.push(p2, cityDustNote(ctx.citySlug, ctx.cityName), p3);
+  // localCase يظهر في قسم «حالة محلية» — لا نكرّره في المقدمة
+  if (specific) {
+    intro.push(
+      tagServiceHood(pickHoodLines(ctx, specific, family, 1, "intro")[0]!, ctx, serviceLabel),
+      cityDustNote(ctx.citySlug, ctx.cityName),
+      fill(pickVariant(ctx.seed, "intro-sched", schedulingNotes), ctx, serviceLabel),
+    );
+  } else {
+    intro.push(p2, cityDustNote(ctx.citySlug, ctx.cityName), p3);
+  }
   return intro;
 }
 
 export function buildCustomerProblems(ctx: UniquenessCtx, family: ServiceFamily, serviceLabel: string): string[] {
   const specific = getNeighborhoodSpecificContent(ctx.citySlug, ctx.neighborhood.slug);
   if (specific) {
-    const familyIssues = specific.byFamily?.[family] ?? [];
-    const merged = [...familyIssues, ...specific.issues].filter(
-      (issue): issue is string => typeof issue === "string" && issue.trim().length > 0,
+    return pickHoodLines(ctx, specific, family, 4, "prob").map((line) =>
+      tagServiceHood(line, ctx, serviceLabel),
     );
-    const unique = [...new Set(merged)];
-    if (unique.length > 0) {
-      const bullets = Array.from({ length: 4 }, (_, i) => {
-        const issue = unique[variantIndex(`${ctx.seed}:hood-prob:${i}`, unique.length)];
-        if (!issue) return null;
-        return issue.includes("{hood}") || issue.includes("{city}")
-          ? fill(issue, ctx, serviceLabel)
-          : `في حي ${ctx.hood}: ${issue}`;
-      }).filter((b): b is string => Boolean(b));
-      if (bullets.length >= 3) {
-        while (bullets.length < 4) {
-          bullets.push(bullets[bullets.length - 1]!);
-        }
-        return bullets.slice(0, 4);
-      }
-    }
   }
 
   const fragments = landmarkFragments(ctx);
@@ -394,16 +427,14 @@ export function buildServiceRecommendations(
 
   const pool = actionTails[family];
   if (specific) {
-    const derived = [...(specific.byFamily?.[family] ?? []), ...specific.issues].filter(
-      (s): s is string => typeof s === "string" && s.trim().length > 0,
-    );
-    if (derived.length > 0) {
-      return [0, 1, 2, 3].map((i) => {
-        const issue = derived[i % derived.length];
-        const tail = pool[variantIndex(`${ctx.seed}:rec-tail:${i}`, pool.length)];
-        return `في حي ${ctx.hood} — ${issue}؛ توصيتنا لـ${serviceLabel}: ${tail}`;
-      });
-    }
+    const examples = specific.localExamples;
+    const issues = hoodIssueList(specific, family);
+    return Array.from({ length: 4 }, (_, i) => {
+      const ex = examples[variantIndex(`${ctx.seed}:rex:${i}`, Math.max(1, examples.length))];
+      if (ex) return `طلب من ${ctx.hood}: ${ex}`;
+      const issue = issues[variantIndex(`${ctx.seed}:rei:${i}`, Math.max(1, issues.length))]!;
+      return `قبل ${serviceLabel} في ${ctx.hood}: راعِ أن ${issue}`;
+    });
   }
 
   const bullets: string[] = [];
@@ -587,15 +618,21 @@ export function buildUniqueFaqs(ctx: UniquenessCtx, family: ServiceFamily, servi
       question: fill(f.question, ctx, serviceLabel),
       answer: fill(f.answer, ctx, serviceLabel),
     }));
-    if (hoodFaqs.length < 4) {
-      const pools = faqPools[family];
+    if (hoodFaqs.length < 4 && specific) {
+      const issues = hoodIssueList(specific, family);
       let i = 0;
       while (hoodFaqs.length < 4 && i < 8) {
-        const qIdx = variantIndex(`${ctx.seed}:faq-pad:${i}`, pools.questions.length);
-        const q = pools.questions[qIdx];
-        const a = pools.answers[qIdx % pools.answers.length];
-        if (q && a && !hoodFaqs.some((f) => f.question === fill(q, ctx, serviceLabel))) {
-          hoodFaqs.push({ question: fill(q, ctx, serviceLabel), answer: fill(a, ctx, serviceLabel) });
+        const issue = issues[variantIndex(`${ctx.seed}:faq-pad-i:${i}`, Math.max(1, issues.length))];
+        const ex =
+          specific.localExamples[
+            variantIndex(`${ctx.seed}:faq-pad-e:${i}`, Math.max(1, specific.localExamples.length))
+          ];
+        if (issue) {
+          const question = `${serviceLabel} في ${ctx.hood} و${issue}؟`;
+          const answer = ex ?? specific.localCase;
+          if (!hoodFaqs.some((f) => f.question === question)) {
+            hoodFaqs.push({ question, answer });
+          }
         }
         i++;
       }
@@ -865,6 +902,81 @@ export function buildCrossServiceSection(ctx: UniquenessCtx) {
   };
 }
 
+function buildProfileCrossServiceSection(
+  ctx: UniquenessCtx,
+  specific: NeighborhoodSpecificProfile,
+  family: ServiceFamily,
+  serviceLabel: string,
+): ServiceSection {
+  const otherFamilies = (Object.keys(specific.byFamily ?? {}) as ServiceFamily[]).filter((f) => f !== family);
+  const crossLines = otherFamilies.flatMap((f) => specific.byFamily?.[f]?.slice(0, 1) ?? []);
+  const bullets = mergeUniqueLines(
+    crossLines.map((line) => `${ctx.hood}: ${line}`),
+    pickHoodLines(ctx, specific, family, 2, "cross-b").map((line) =>
+      tagServiceHood(line, ctx, serviceLabel),
+    ),
+    4,
+  );
+  return {
+    heading: pickVariant(ctx.seed, "prof-cross-h", [
+      `خدمات مكمّلة لـ${serviceLabel} في حي ${ctx.hood}`,
+      `ما يُطلب مع ${serviceLabel} في ${ctx.hood}`,
+      `تنسيق زيارات متعددة — ${ctx.hood}`,
+    ]),
+    paragraphs: [
+      tagServiceHood(pickHoodLines(ctx, specific, family, 1, "cross-p")[0]!, ctx, serviceLabel),
+    ],
+    bullets: bullets.length >= 2 ? bullets : buildCrossServiceSection(ctx).bullets,
+  };
+}
+
+function buildProfileSchedulingSection(
+  ctx: UniquenessCtx,
+  serviceLabel: string,
+  specific: NeighborhoodSpecificProfile,
+  family: ServiceFamily,
+): ServiceSection {
+  const bullets = pickHoodLines(ctx, specific, family, 4, "sched").map((line) =>
+    tagServiceHood(line, ctx, serviceLabel),
+  );
+
+  return {
+    heading: pickVariant(ctx.seed, "prof-sched-h", [
+      `تنسيق موعد ${serviceLabel} في حي ${ctx.hood}`,
+      `الجدولة لحي ${ctx.hood} — نحو ${ctx.driveMin} دقيقة وصول`,
+      `حجز ${serviceLabel} لسكان ${ctx.hood} (${ctx.cityName})`,
+    ]),
+    paragraphs: [
+      tagServiceHood(pickHoodLines(ctx, specific, family, 1, "sched-p")[0]!, ctx, serviceLabel),
+    ],
+    bullets,
+  };
+}
+
+function buildProfileExecutionSection(
+  ctx: UniquenessCtx,
+  serviceLabel: string,
+  specific: NeighborhoodSpecificProfile,
+  family: ServiceFamily,
+): ServiceSection {
+  const issues = pickHoodLines(ctx, specific, family, 3, "exec");
+  const execParagraphs = issues.map(
+    (issue, i) => `${landmarkFragments(ctx)[i % landmarkFragments(ctx).length]} — ${tagServiceHood(issue, ctx, serviceLabel)}`,
+  );
+
+  return {
+    heading: pickVariant(ctx.seed, "prof-exec-h", [
+      `تنفيذ ${serviceLabel} في حي ${ctx.hood}`,
+      `خطوات العمل لـ${serviceLabel} — ${ctx.hood}`,
+      `كيف ننفّذ ${serviceLabel} في ${ctx.hood} (${ctx.cityName})`,
+    ]),
+    paragraphs: execParagraphs,
+    bullets: pickHoodLines(ctx, specific, family, 3, "exec-b").map((line) =>
+      tagServiceHood(line, ctx, serviceLabel),
+    ),
+  };
+}
+
 const preparationPools: string[][] = [
   ["تحديد أولويات الغرف في {hood} قبل الموعد.", "إخفاء أغراض شخصية حساسة.", "توفير ماء وكهرباء.", "إبلاغنا بموقف السيارة."],
   ["تفريغ الثلاجة من على الباب إن طُلب تنظيف عميق للمطبخ.", "ذكر وجود مكيف مركزي في {city}.", "تحديد مدخل الخدمة.", "تأكيد وقت انتهاء متوقع."],
@@ -874,8 +986,14 @@ const preparationPools: string[][] = [
   ["تغطية أواني مكشوفة قبل رش الحشرات.", "إبلاغ عن أطفال رضع.", "تفريغ منطقة السجاد.", "ذكر نوع البقع."],
 ];
 
-export function buildPreparationBullets(ctx: UniquenessCtx, serviceLabel: string): string[] {
-  const pool = pickVariant(ctx.seed, "prep", preparationPools);
+export function buildPreparationBullets(ctx: UniquenessCtx, serviceLabel: string, family: ServiceFamily): string[] {
+  const specific = getNeighborhoodSpecificContent(ctx.citySlug, ctx.neighborhood.slug);
+  if (specific) {
+    return pickHoodLines(ctx, specific, family, 4, "prep").map((line) =>
+      tagServiceHood(line, ctx, serviceLabel),
+    );
+  }
+  const pool = pickVariant(ctx.seed, `prep:${family}`, preparationPools);
   return pool.map((b) => fill(b, ctx, serviceLabel));
 }
 
@@ -903,7 +1021,7 @@ export function buildProgrammaticServiceLocationContent(
   const serviceRecommendations = buildServiceRecommendations(ctx, family, serviceLabel);
   const uniqueIntro = buildUniqueLocalIntro(ctx, serviceLabel, family);
   const uniqueFaqs = buildUniqueFaqs(ctx, family, serviceLabel);
-  const preparationBullets = buildPreparationBullets(ctx, serviceLabel);
+  const preparationBullets = buildPreparationBullets(ctx, serviceLabel, family);
   const narratives = buildNeighborhoodNarrativeBlocks(ctx, serviceLabel);
 
   const problemsSection: ServiceSection = {
@@ -925,7 +1043,10 @@ export function buildProgrammaticServiceLocationContent(
   const contextSection: ServiceSection = specific
     ? {
         heading: `${serviceLabel} في حي ${ctx.hood} — سياق محلي (${ctx.cityName})`,
-        paragraphs: [ctx.landmarks, cityClimateNote(ctx.citySlug)],
+        paragraphs: [
+          ctx.landmarks,
+          tagServiceHood(pickHoodLines(ctx, specific, family, 1, "ctx")[0]!, ctx, serviceLabel),
+        ],
       }
     : {
         heading: `${serviceLabel} في حي ${ctx.hood} — سياق محلي (${ctx.cityName})`,
@@ -962,8 +1083,15 @@ export function buildProgrammaticServiceLocationContent(
     ...(specific ? [] : [narrativeSection]),
     problemsSection,
     recommendationsSection,
-    buildSchedulingSection(ctx, serviceLabel),
-    buildExecutionSection(ctx, family, serviceLabel),
+    ...(specific
+      ? [
+          buildProfileSchedulingSection(ctx, serviceLabel, specific, family),
+          buildProfileExecutionSection(ctx, serviceLabel, specific, family),
+        ]
+      : [
+          buildSchedulingSection(ctx, serviceLabel),
+          buildExecutionSection(ctx, family, serviceLabel),
+        ]),
   ];
 
   const highlight = getNeighborhoodServiceHighlights(city, neighborhood).find((b) => b.slug === serviceSlug);
@@ -975,7 +1103,11 @@ export function buildProgrammaticServiceLocationContent(
     });
   }
 
-  sections.push(buildCrossServiceSection(ctx));
+  sections.push(
+    specific
+      ? buildProfileCrossServiceSection(ctx, specific, family, serviceLabel)
+      : buildCrossServiceSection(ctx),
+  );
 
   return {
     localIntro: uniqueIntro,

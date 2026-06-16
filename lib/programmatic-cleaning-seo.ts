@@ -1,6 +1,6 @@
 import riyadhCleaningDistricts from "@/src/data/riyadh-cleaning-districts.json";
 import { primaryCitySlug } from "@/lib/region";
-import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
+import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 type CleaningDistrictSeed = {
   citySlug: string;
@@ -10,15 +10,10 @@ type CleaningDistrictSeed = {
 const cleaningSeeds: CleaningDistrictSeed[] = [riyadhCleaningDistricts];
 
 /**
- * أزواج المسار `/cleaning/[citySlug]/[districtSlug]` — كل مدينة وحي في locations.
+ * لا نُنشئ صفحات `/cleaning/{city}/{district}` — تُوجَّه 301 إلى صفحة الحي الموحّدة عبر `_redirects`.
  */
 export function getCleaningProgrammaticStaticParams(): { citySlug: string; districtSlug: string }[] {
-  return locations.flatMap((city) =>
-    city.neighborhoods.map((neighborhood) => ({
-      citySlug: city.slug,
-      districtSlug: neighborhood.slug,
-    })),
-  );
+  return [];
 }
 
 export function isAllowedCleaningProgrammaticPair(citySlug: string, districtSlug: string): boolean {

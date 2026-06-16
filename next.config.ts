@@ -5,6 +5,26 @@ const nextConfig: NextConfig = {
   ...(process.env.NODE_ENV === "production" ? { output: "export" as const } : {}),
   poweredByHeader: false,
   staticPageGenerationTimeout: 180,
+  async redirects() {
+    if (process.env.NODE_ENV === "production") return [];
+    return [
+      { source: "/cleaning/:city/:district", destination: "/:city/:district", permanent: true },
+      { source: "/jeddah/:path*", destination: "/areas", permanent: true },
+      { source: "/dammam/:path*", destination: "/areas", permanent: true },
+      { source: "/khobar/:path*", destination: "/areas", permanent: true },
+      { source: "/makkah/:path*", destination: "/areas", permanent: true },
+      { source: "/madinah/:path*", destination: "/areas", permanent: true },
+      { source: "/taif/:path*", destination: "/areas", permanent: true },
+      { source: "/abha/:path*", destination: "/areas", permanent: true },
+      { source: "/tabuk/:path*", destination: "/areas", permanent: true },
+      { source: "/buraydah/:path*", destination: "/areas", permanent: true },
+      { source: "/hail/:path*", destination: "/areas", permanent: true },
+      { source: "/jazan/:path*", destination: "/areas", permanent: true },
+      { source: "/najran/:path*", destination: "/areas", permanent: true },
+      { source: "/al-ahsa/:path*", destination: "/areas", permanent: true },
+      { source: "/jubail/:path*", destination: "/areas", permanent: true },
+    ];
+  },
   experimental: {
     staticGenerationMaxConcurrency: 1,
     staticGenerationRetryCount: 5,

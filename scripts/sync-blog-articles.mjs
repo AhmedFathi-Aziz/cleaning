@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const blogDir = path.join(root, "content", "blog");
+const blogImageDir = path.join(root, "public", "images", "blog");
 const outDir = path.join(root, "lib", "generated");
 const outFile = path.join(outDir, "blog-articles.ts");
 
@@ -79,6 +80,49 @@ function auditSeoDescription(slug, meta) {
   return errors;
 }
 
+function extFromUrl(url) {
+  const m = url.match(/\.(jpe?g|png|webp)(?:\?|$)/i);
+  return m ? m[1].toLowerCase().replace("jpeg", "jpg") : "webp";
+}
+
+/** يحمّل غلاف Cloudinary محلياً لتحسين LCP وإزالة الاعتماد على CDN خارجي */
+async function resolveCoverImage(slug, meta) {
+  if (meta.coverKey) {
+    return {
+      coverImage: meta.coverImage ? String(meta.coverImage) : undefined,
+      coverKey: String(meta.coverKey),
+    };
+  }
+
+  const url = meta.coverImage ? String(meta.coverImage) : null;
+  if (!url) return { coverImage: undefined, coverKey: null };
+
+  if (!url.includes("cloudinary.com")) {
+    return { coverImage: url, coverKey: null };
+  }
+
+  const ext = extFromUrl(url);
+  const fileName = `${slug}.${ext}`;
+  const diskPath = path.join(blogImageDir, fileName);
+  const publicPath = `/images/blog/${fileName}`;
+
+  if (!fs.existsSync(diskPath)) {
+    fs.mkdirSync(blogImageDir, { recursive: true });
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const buf = Buffer.from(await res.arrayBuffer());
+      fs.writeFileSync(diskPath, buf);
+      console.log(`[sync-blog] cover → ${fileName} (${buf.length} bytes)`);
+    } catch (err) {
+      console.warn(`[sync-blog] cover download failed for ${slug}: ${err.message}`);
+      return { coverImage: url, coverKey: null };
+    }
+  }
+
+  return { coverImage: publicPath, coverKey: null };
+}
+
 function parseFrontmatter(block) {
   const data = {};
   for (const line of block.split(/\r?\n/)) {
@@ -108,7 +152,7 @@ function parseFrontmatter(block) {
   return data;
 }
 
-function parseMarkdownFile(fileName) {
+async function parseMarkdownFile(fileName) {
   const slug = fileName.replace(/\.md$/i, "");
   if (!slug || slug.startsWith("_")) return null;
 
@@ -136,6 +180,8 @@ function parseMarkdownFile(fileName) {
     throw new Error(`seoDescription لا يطابق موضوع المقال: ${fileName}`);
   }
 
+  const cover = await resolveCoverImage(slug, meta);
+
   return {
     slug,
     title: String(meta.title),
@@ -145,14 +191,14 @@ function parseMarkdownFile(fileName) {
     seoDescription: meta.seoDescription ? String(meta.seoDescription) : undefined,
     keywords: Array.isArray(meta.keywords) ? meta.keywords.map(String) : undefined,
     authorId,
-    coverImage: meta.coverImage ? String(meta.coverImage) : undefined,
-    coverKey: meta.coverKey === null || meta.coverKey === undefined ? null : String(meta.coverKey),
+    coverImage: cover.coverImage,
+    coverKey: cover.coverKey,
     publishedAt: String(meta.publishedAt),
     updatedAt: meta.updatedAt ? String(meta.updatedAt) : undefined,
   };
 }
 
-function main() {
+async function main() {
   if (!fs.existsSync(blogDir)) {
     console.warn("[sync-blog] مجلد content/blog غير موجود.");
     fs.mkdirSync(outDir, { recursive: true });
@@ -164,10 +210,13 @@ function main() {
     return;
   }
 
-  const posts = fs
+  const fileNames = fs
     .readdirSync(blogDir)
-    .filter((n) => n.endsWith(".md") && !n.startsWith("_") && n.toLowerCase() !== "readme.md")
-    .map(parseMarkdownFile)
+    .filter((n) => n.endsWith(".md") && !n.startsWith("_") && n.toLowerCase() !== "readme.md");
+
+  const posts = (
+    await Promise.all(fileNames.map((name) => parseMarkdownFile(name)))
+  )
     .filter(Boolean)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
@@ -187,4 +236,7 @@ export function getStaticBlogSlugs(): string[] {
   console.log(`[sync-blog] ${posts.length} مقال → lib/generated/blog-articles.ts`);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

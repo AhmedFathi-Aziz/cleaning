@@ -4,7 +4,7 @@ import { Icon } from "@/components/Icon";
 import { NeighborhoodLocalContextBlock } from "@/components/NeighborhoodLocalContextBlock";
 import { NeighborhoodServicesHighlight } from "@/components/NeighborhoodServicesHighlight";
 import { brandNameAr } from "@/lib/brand";
-import { getCleaningDistrictPeersExcluding } from "@/lib/programmatic-cleaning-seo";
+import { getCleaningDistrictPath, getCleaningDistrictPeersExcluding } from "@/lib/programmatic-cleaning-seo";
 import { isPrimaryCitySlug } from "@/lib/region";
 import type { CityLocation, Neighborhood } from "@/src/data/locations";
 
@@ -131,17 +131,20 @@ export function CleaningDistrictProgrammaticView({ city, neighborhood }: Props) 
           صفحات برمجية مستقلة لكل حي لتسهيل العثور على خدمة قريبة من عنوانك.
         </p>
         <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {otherDistricts.map((d) => (
+          {otherDistricts.map((d) => {
+            const href = getCleaningDistrictPath(city.slug, d.slug) ?? `/${city.slug}/${d.slug}`;
+            return (
             <li key={d.slug}>
               <Link
-                href={`/cleaning/${city.slug}/${d.slug}`}
+                href={href}
                 className="flex h-full flex-col justify-between rounded-2xl border border-slate-100 bg-surface-container-low p-4 text-right transition hover:border-primary/25 hover:shadow-md"
               >
                 <span className="font-bold text-primary">حي {d.name}</span>
                 <span className="mt-2 text-xs font-semibold text-secondary">تنظيف منازل وشقق</span>
               </Link>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </section>
     </article>

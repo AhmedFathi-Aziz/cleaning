@@ -37,6 +37,19 @@ export function getIndexableCitiesForLinking() {
   return locations.filter((city) => shouldInternallyLinkToNeighborhoodHub(city.slug));
 }
 
+/** معاملات generateStaticParams لصفحات الأحياء المفهرسة فقط (الرياض). */
+export function getIndexableNeighborhoodStaticParams(): {
+  citySlug: string;
+  neighborhoodSlug: string;
+}[] {
+  const city = locations.find((c) => c.slug === primaryCitySlug);
+  if (!city) return [];
+  return city.neighborhoods.map((neighborhood) => ({
+    citySlug: city.slug,
+    neighborhoodSlug: neighborhood.slug,
+  }));
+}
+
 export function getNeighborhoodHubPath(citySlug: string, neighborhoodSlug: string): string {
   return `/${citySlug}/${neighborhoodSlug}`;
 }

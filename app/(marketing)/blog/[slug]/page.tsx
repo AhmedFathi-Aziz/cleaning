@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -6,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArticleAuthorCard } from "@/components/ArticleAuthorCard";
 import { ArticleReadingShell } from "@/components/ArticleReadingShell";
 import { BlogCoverPlaceholder } from "@/components/BlogCoverPlaceholder";
+import { ResponsiveImage } from "@/components/ResponsiveImage";
 import { getBlogArticleContextLinks } from "@/lib/article-context-links";
 import { resolveArticleAuthorName, buildArticleAuthorSchema } from "@/lib/article-author";
 import { brandNameAr } from "@/lib/brand";
@@ -139,14 +139,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-[2rem] shadow-lg">
             {hero ? (
               <>
-                <Image
+                <ResponsiveImage
                   src={hero}
                   alt={post.seoTitle ?? post.title}
                   fill
                   priority
                   className="object-cover"
                   sizes="(min-width: 1024px) 1152px, 100vw"
-                  unoptimized
                 />
                 <div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/20 to-transparent"

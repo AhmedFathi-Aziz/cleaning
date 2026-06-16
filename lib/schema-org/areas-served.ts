@@ -21,7 +21,7 @@ function cityEntity(ar: string, en: string): JsonLdValue {
   };
 }
 
-/** Country + Riyadh / Jeddah / Dammam for sitewide LocalBusiness relevance. */
+/** Country + الرياض — يتوافق مع استراتيجية الفهرسة (الرياض أولاً). */
 export function buildPrimarySaudiCitiesAreaServed(): JsonLdValue[] {
   return [
     {

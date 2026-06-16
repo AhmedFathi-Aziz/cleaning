@@ -12,12 +12,13 @@ import { isPrimaryCitySlug } from "@/lib/region";
 import { buildArabicPageMetadata, expandMetaDescription, fitMetaTitle, truncateForMetaDescription } from "@/lib/seo";
 import { serviceArticles } from "@/lib/service-articles";
 import {
+  getIndexableNeighborhoodStaticParams,
   getNeighborhoodHubPath,
   getServiceLinkFromNeighborhood,
   isNeighborhoodHubIndexable,
   isServiceLocationIndexable,
 } from "@/lib/url-indexing-policy";
-import { getCityBySlug, getNeighborhoodBySlug, locations } from "@/src/data/locations";
+import { getCityBySlug, getNeighborhoodBySlug } from "@/src/data/locations";
 
 type PageProps = {
   params: Promise<{
@@ -29,12 +30,7 @@ type PageProps = {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return locations.flatMap((city) =>
-    city.neighborhoods.map((neighborhood) => ({
-      citySlug: city.slug,
-      neighborhoodSlug: neighborhood.slug,
-    })),
-  );
+  return getIndexableNeighborhoodStaticParams();
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
