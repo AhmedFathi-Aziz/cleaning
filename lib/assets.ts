@@ -54,4 +54,6 @@ export const images = {
     "/images/post-construction-cleaning-riyadh/equipment-steam.webp",
   cockroachControlRiyadhTechnician: "/images/cockroach-control-riyadh/technician-spraying.webp",
   cockroachControlRiyadhKitchen: "/images/cockroach-control-riyadh/kitchen-gel-treatment.webp",
+  termiteControlRiyadhInspection: "/images/termite-control-riyadh/wood-inspection.webp",
+  termiteControlRiyadhSoilTreatment: "/images/termite-control-riyadh/soil-barrier-treatment.webp",
 } as const;

@@ -4,6 +4,7 @@ type LinkRule = { phrase: string; href: string };
 
 const PEST_SERVICE = "/services/pest-control";
 const PEST_SERVICE_RIYADH = "/services/pest-control-riyadh";
+const TERMITE_SERVICE_RIYADH = "/services/termite-control-riyadh";
 
 /**
  * مرادفات طبيعية → صفحات خدمة المكافحة (بدون حشو كلمات مفتاحية).
@@ -12,7 +13,10 @@ const PEST_SERVICE_RIYADH = "/services/pest-control-riyadh";
 export const PEST_SERVICE_SYNONYM_RULES: LinkRule[] = [
   { phrase: "شركة رش حشرات بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "شركة مكافحة حشرات بالرياض", href: PEST_SERVICE_RIYADH },
-  { phrase: "مكافحة النمل الأبيض بالرياض", href: PEST_SERVICE_RIYADH },
+  { phrase: "مكافحة النمل الأبيض بالرياض", href: TERMITE_SERVICE_RIYADH },
+  { phrase: "شركة مكافحة النمل الأبيض بالرياض", href: TERMITE_SERVICE_RIYADH },
+  { phrase: "مكافحة الأرضة بالرياض", href: TERMITE_SERVICE_RIYADH },
+  { phrase: "فحص النمل الأبيض بالرياض", href: TERMITE_SERVICE_RIYADH },
   { phrase: "رش صراصير بالرياض", href: PEST_SERVICE_RIYADH },
   { phrase: "مكافحة الصراصير بالرياض", href: "/services/cockroach-control-riyadh" },
   { phrase: "شركة مكافحة صراصير بالرياض", href: "/services/cockroach-control-riyadh" },
@@ -46,8 +50,9 @@ const EXTRA_PHRASES_BY_GUIDE_SLUG: Record<string, string[]> = {
 /** روابط عرضية من دليل حشرة → صفحة الخدمة المناسبة */
 const GUIDE_TO_SERVICE_HINTS: Record<string, LinkRule[]> = {
   termites: [
-    { phrase: "برنامج معالجة الأرضة", href: PEST_SERVICE_RIYADH },
-    { phrase: "فحص النمل الأبيض", href: PEST_SERVICE_RIYADH },
+    { phrase: "برنامج معالجة الأرضة", href: TERMITE_SERVICE_RIYADH },
+    { phrase: "فحص النمل الأبيض", href: TERMITE_SERVICE_RIYADH },
+    { phrase: "معالجة أرضة", href: TERMITE_SERVICE_RIYADH },
   ],
   cockroaches: [{ phrase: "رش صراصير احترافي", href: PEST_SERVICE_RIYADH }],
   "bed-bugs": [{ phrase: "برنامج بق الفراش", href: PEST_SERVICE_RIYADH }],
@@ -105,5 +110,6 @@ export function buildPestGuideAutolinkRules(pestGuideSlug?: string): LinkRule[] 
 
 export function getPestGuidePrimaryServiceHref(guideSlug: string): string {
   if (guideSlug === "after-spray-safety") return PEST_SERVICE;
+  if (guideSlug === "termites") return TERMITE_SERVICE_RIYADH;
   return PEST_SERVICE_RIYADH;
 }
