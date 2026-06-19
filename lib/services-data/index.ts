@@ -20,6 +20,7 @@ import { sofaCleaningArticle } from "./sofa-cleaning";
 import { sofaCleaningRiyadhArticle } from "./sofa-cleaning-riyadh";
 import { villaCleaningRiyadhArticle } from "./villa-cleaning-riyadh";
 import { waterTankCleaningArticle } from "./water-tank-cleaning";
+import { antControlArticle } from "./ant-control-riyadh";
 
 const baseServiceArticles: ServiceArticle[] = [
   cleaningCompanyRiyadhArticle,
@@ -40,6 +41,7 @@ const baseServiceArticles: ServiceArticle[] = [
   pestControlArticle,
   waterTankCleaningArticle,
   gardenCleaningArticle,
+  antControlArticle,
 ];
 
 function mergeFaqsByQuestion(

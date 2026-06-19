@@ -26,6 +26,7 @@ const LANDING_SERVICE_SLUGS = [
   "pest-control-riyadh",
   "cockroach-control-riyadh",
   "termite-control-riyadh",
+  "ant-control-riyadh",
   "water-tank-cleaning",
   "facade-cleaning",
 ] as const;
