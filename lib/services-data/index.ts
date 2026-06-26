@@ -21,6 +21,7 @@ import { sofaCleaningRiyadhArticle } from "./sofa-cleaning-riyadh";
 import { villaCleaningRiyadhArticle } from "./villa-cleaning-riyadh";
 import { waterTankCleaningArticle } from "./water-tank-cleaning";
 import { antControlArticle } from "./ant-control-riyadh";
+import { bedBugControlRiyadhArticle } from "./bed-bug-control-riyadh";
 
 const baseServiceArticles: ServiceArticle[] = [
   cleaningCompanyRiyadhArticle,
@@ -42,6 +43,7 @@ const baseServiceArticles: ServiceArticle[] = [
   waterTankCleaningArticle,
   gardenCleaningArticle,
   antControlArticle,
+  bedBugControlRiyadhArticle,
 ];
 
 function mergeFaqsByQuestion(

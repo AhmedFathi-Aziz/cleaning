@@ -222,6 +222,11 @@ const pageConfigs = [
       },
     ],
   },
+  {
+    folderName: "مكافحة البق بالرياض",
+    logoHeroPrefix: "bed-bug-control-riyadh",
+    jobs: [],
+  },
 ];
 
 async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {
