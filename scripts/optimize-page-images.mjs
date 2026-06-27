@@ -227,6 +227,11 @@ const pageConfigs = [
     logoHeroPrefix: "bed-bug-control-riyadh",
     jobs: [],
   },
+  {
+    folderName: "مكافحة الفئران بالرياض",
+    logoHeroPrefix: "rat-control-riyadh",
+    jobs: [],
+  },
 ];
 
 async function writeHeroWebp(outputPath, pipeline, quality, maxKb) {
