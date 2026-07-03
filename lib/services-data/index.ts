@@ -24,6 +24,7 @@ import { antControlArticle } from "./ant-control-riyadh";
 import { bedBugControlRiyadhArticle } from "./bed-bug-control-riyadh";
 import { ratControlRiyadhArticle } from "./rat-control-riyadh";
 import { pigeonControlRiyadhArticle } from "./pigeon-control-riyadh";
+import { geckoControlRiyadhArticle } from "./gecko-control-riyadh";
 
 const baseServiceArticles: ServiceArticle[] = [
   cleaningCompanyRiyadhArticle,
@@ -48,6 +49,7 @@ const baseServiceArticles: ServiceArticle[] = [
   bedBugControlRiyadhArticle,
   ratControlRiyadhArticle,
   pigeonControlRiyadhArticle,
+  geckoControlRiyadhArticle,
 ];
 
 function mergeFaqsByQuestion(
